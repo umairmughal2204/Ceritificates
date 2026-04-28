@@ -437,6 +437,62 @@
       return data
     }
 
+    async function lockImageAspect(img) {
+      // Wait for image to be fully decoded so naturalWidth/Height are accurate.
+      try {
+        if (!img.complete) {
+          await new Promise((resolve) => {
+            img.addEventListener('load', resolve, { once: true })
+            img.addEventListener('error', resolve, { once: true })
+          })
+        }
+        if (typeof img.decode === 'function') {
+          await img.decode().catch(() => null)
+        }
+      } catch (_error) {}
+
+      const rect = img.getBoundingClientRect()
+      const boxW = rect.width || img.clientWidth || 0
+      const boxH = rect.height || img.clientHeight || 0
+      const natW = img.naturalWidth || boxW
+      const natH = img.naturalHeight || boxH
+      if (!boxW || !boxH || !natW || !natH) {
+        return null
+      }
+
+      const ratio = Math.min(boxW / natW, boxH / natH)
+      const fitW = natW * ratio
+      const fitH = natH * ratio
+
+      const previous = {
+        width: img.style.width,
+        height: img.style.height,
+        maxWidth: img.style.maxWidth,
+        maxHeight: img.style.maxHeight,
+        objectFit: img.style.objectFit,
+      }
+
+      img.style.width = `${fitW}px`
+      img.style.height = `${fitH}px`
+      img.style.maxWidth = `${fitW}px`
+      img.style.maxHeight = `${fitH}px`
+      img.style.objectFit = 'fill'
+
+      return { img, previous }
+    }
+
+    function restoreImageAspect(entry) {
+      if (!entry) {
+        return
+      }
+      const { img, previous } = entry
+      img.style.width = previous.width
+      img.style.height = previous.height
+      img.style.maxWidth = previous.maxWidth
+      img.style.maxHeight = previous.maxHeight
+      img.style.objectFit = previous.objectFit
+    }
+
     async function downloadExactPdf(button) {
       const status = document.getElementById('download-status')
       const pages = Array.from(document.querySelectorAll('.page'))
@@ -451,26 +507,52 @@
         status.textContent = 'Preparing exact PDF layout...'
       }
 
+      const lockedImages = []
       try {
+        document.body.classList.add('export-mode')
+
+        const trackedImages = Array.from(document.querySelectorAll('.logo-img, .exit-img'))
+        for (const img of trackedImages) {
+          const entry = await lockImageAspect(img)
+          if (entry) {
+            lockedImages.push(entry)
+          }
+        }
+
+        await new Promise((resolve) => requestAnimationFrame(() => resolve(null)))
+        await new Promise((resolve) => requestAnimationFrame(() => resolve(null)))
+
         const { jsPDF } = window.jspdf
-        const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+        let pdf = null
 
         for (let idx = 0; idx < pages.length; idx += 1) {
           const page = pages[idx]
           const canvas = await html2canvas(page, {
-            scale: 2,
+            scale: 3,
             useCORS: true,
             backgroundColor: '#ffffff',
+            imageTimeout: 0,
           })
           const image = canvas.toDataURL('image/png')
+          const widthPx = canvas.width
+          const heightPx = canvas.height
 
-          if (idx > 0) {
-            pdf.addPage()
+          if (!pdf) {
+            pdf = new jsPDF({
+              orientation: widthPx > heightPx ? 'landscape' : 'portrait',
+              unit: 'px',
+              format: [widthPx, heightPx],
+            })
+          } else {
+            pdf.addPage([widthPx, heightPx], widthPx > heightPx ? 'landscape' : 'portrait')
           }
 
-          pdf.addImage(image, 'PNG', 0, 0, 210, 297, undefined, 'FAST')
+          pdf.addImage(image, 'PNG', 0, 0, widthPx, heightPx)
         }
 
+        if (!pdf) {
+          throw new Error('No page captured for PDF generation.')
+        }
         pdf.save('safety-spectrum-london-elc.pdf')
         if (status) {
           status.textContent = 'PDF downloaded successfully.'
@@ -481,6 +563,10 @@
           status.textContent = 'Download failed. Please try again.'
         }
       } finally {
+        for (const entry of lockedImages) {
+          restoreImageAspect(entry)
+        }
+        document.body.classList.remove('export-mode')
         button.disabled = false
         button.textContent = originalText
       }
