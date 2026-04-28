@@ -276,6 +276,27 @@
   }
 }
 
+.appliance-table label {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  font-size: 14px;
+  color: var(--text-h);
+}
+
+.appliance-table input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-height: 42px;
+  padding: 10px 12px;
+  font: inherit;
+  color: var(--text-h);
+  background: rgba(255, 255, 255, 0.95);
+}
+
 .appliance-row {
   border: 1px solid var(--border);
   border-radius: 14px;

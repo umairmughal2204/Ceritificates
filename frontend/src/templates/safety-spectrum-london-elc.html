@@ -20,13 +20,13 @@
         <div class="meta-row">
           <div class="meta-cell">
             <span class="meta-label">Date</span>
-            <span class="meta-value">22/12/2025</span>
+            <span class="meta-value" id="elc-inspection-date-top">22/12/2025</span>
           </div>
           <div class="meta-cell meta-center">
             <span class="meta-label">Certificate Reference</span>
           </div>
           <div class="meta-cell meta-right">
-            <span class="meta-value">665397&nbsp;&nbsp;SE17&nbsp;1DX</span>
+            <span class="meta-value" id="elc-ref-postcode-top">665397&nbsp;&nbsp;SE17&nbsp;1DX</span>
           </div>
         </div>
       </section>
@@ -53,11 +53,11 @@
         <div class="grid one">
           <div class="row">
             <div class="label">Name:</div>
-            <div class="field">City Relay</div>
+            <div class="field" id="elc-client-name">City Relay</div>
           </div>
           <div class="row full">
             <div class="label">Address:</div>
-            <div class="field">1, 1 Townley Street and Elephant Houses SE17 1DX</div>
+            <div class="field" id="elc-client-address">1, 1 Townley Street and Elephant Houses SE17 1DX</div>
           </div>
         </div>
       </section>
@@ -69,7 +69,7 @@
             <div class="bar">PURPOSE OF CERTIFICATE</div>
             <div class="panel-body">
               <div class="purpose-row">
-                <div class="purpose-text">To certify continued compliance<br/>of an existing installation</div>
+                <div class="purpose-text" id="elc-purpose-text">To certify continued compliance<br/>of an existing installation</div>
                 <div class="checkbox-box">N/A</div>
               </div>
             </div>
@@ -79,8 +79,8 @@
             <div class="bar">EXTENT OF INSTALLATION COVERED BY THIS CERTIFICATE</div>
             <div class="panel-body">
               <div class="extent-row">
-                <div class="extent-item">&gt; 75 Emergency Lights Tested</div>
-                <div class="extent-item">All the Emergency Lights are working fine</div>
+                <div class="extent-item" id="elc-extent-1">&gt; 75 Emergency Lights Tested</div>
+                <div class="extent-item" id="elc-extent-2">All the Emergency Lights are working fine</div>
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@
         <div class="grid one">
           <div class="row full">
             <div class="label">Address:</div>
-            <div class="field">1, 1 Townley Street and Elephant Houses SE17 1DX</div>
+            <div class="field" id="elc-installation-address">1, 1 Townley Street and Elephant Houses SE17 1DX</div>
           </div>
         </div>
       </section>
@@ -104,9 +104,9 @@
         <div class="cert-grid">
           <div class="cert-row">
             <div class="label">Trading Title</div>
-            <div class="field">Safety Spectrum London</div>
+            <div class="field" id="elc-trading-title">Safety Spectrum London</div>
             <div class="label">Contractor responsible for carrying out the<br/>inspection and testing (address)</div>
-            <div class="field">Safety Spectrum London<br/>58A Tudor Road Hayes UB3 2QD</div>
+            <div class="field" id="elc-contractor-address">Safety Spectrum London<br/>58A Tudor Road Hayes UB3 2QD</div>
           </div>
 
           <div class="cert-text">
@@ -119,7 +119,7 @@
             <div class="sign-row">
               <div class="sign-cell">
                 <div class="label">Name (capitals)</div>
-                <div class="field">Shahzil Pal</div>
+                <div class="field" id="elc-inspector-name">Shahzil Pal</div>
               </div>
               <div class="sign-cell">
                 <div class="label">Inspecting Signature</div>
@@ -129,7 +129,7 @@
             <div class="sign-row">
               <div class="sign-cell">
                 <div class="label">Date</div>
-                <div class="field">22/12/2025</div>
+                <div class="field" id="elc-signed-date">22/12/2025</div>
               </div>
               <div class="sign-cell"></div>
             </div>
@@ -166,7 +166,7 @@
             <div class="next-recommend">
               I/We*, the person identified in 6, RECOMMEND that this installation is further inspected and tested after an interval of not more than
             </div>
-            <div class="field months">6 Months</div>
+            <div class="field months" id="elc-next-interval">6 Months</div>
           </div>
         </div>
       </section>
@@ -338,11 +338,11 @@
           <div class="notes-area" aria-label="Notes">
             <div class="notes-label">Notes</div>
             <div class="notes-box">
-              <div>1 emergency light present in main entrance</div>
-              <div>1 emergency light present in kitchen</div>
-              <div>1 emergency light present in living area</div>
-              <div>2 emergency lights present in second floor</div>
-              <div>3 emergency lights present in third floor</div>
+              <div id="elc-note-1">1 emergency light present in main entrance</div>
+              <div id="elc-note-2">1 emergency light present in kitchen</div>
+              <div id="elc-note-3">1 emergency light present in living area</div>
+              <div id="elc-note-4">2 emergency lights present in second floor</div>
+              <div id="elc-note-5">3 emergency lights present in third floor</div>
             </div>
           </div>
         </div>
@@ -385,6 +385,58 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script>
+    function setText(id, value) {
+      const el = document.getElementById(id)
+      if (!el || value === undefined || value === null) {
+        return
+      }
+      el.textContent = String(value)
+    }
+
+    function setHtml(id, value) {
+      const el = document.getElementById(id)
+      if (!el || value === undefined || value === null) {
+        return
+      }
+      el.innerHTML = String(value)
+    }
+
+    function applyFormData() {
+      const raw = localStorage.getItem('elc_form_data')
+      if (!raw) {
+        return null
+      }
+
+      let data = null
+      try {
+        data = JSON.parse(raw)
+      } catch (error) {
+        console.error('Invalid stored ELC form data', error)
+        return null
+      }
+
+      setText('elc-inspection-date-top', data.inspectionDate)
+      setText('elc-ref-postcode-top', `${data.certificateReference || ''}  ${data.postcode || ''}`.trim())
+      setText('elc-client-name', data.clientName)
+      setText('elc-client-address', data.clientAddress)
+      setHtml('elc-purpose-text', String(data.purposeText || '').replace(/\n/g, '<br/>'))
+      setText('elc-extent-1', data.extentLine1)
+      setText('elc-extent-2', data.extentLine2)
+      setText('elc-installation-address', data.installationAddress)
+      setText('elc-trading-title', data.tradingTitle)
+      setHtml('elc-contractor-address', String(data.contractorAddress || '').replace(/\n/g, '<br/>'))
+      setText('elc-inspector-name', data.inspectorName)
+      setText('elc-signed-date', data.signedDate)
+      setText('elc-next-interval', data.nextInspectionInterval)
+
+      const notes = Array.isArray(data.notes) ? data.notes : []
+      for (let idx = 0; idx < 5; idx += 1) {
+        setText(`elc-note-${idx + 1}`, notes[idx] || '')
+      }
+
+      return data
+    }
+
     async function downloadExactPdf(button) {
       const status = document.getElementById('download-status')
       const pages = Array.from(document.querySelectorAll('.page'))
@@ -432,6 +484,17 @@
         button.disabled = false
         button.textContent = originalText
       }
+    }
+
+    const params = new URLSearchParams(window.location.search)
+    applyFormData()
+    if (params.get('autodownload') === '1') {
+      window.addEventListener('load', () => {
+        const button = document.querySelector('.download-btn')
+        if (button instanceof HTMLButtonElement) {
+          window.setTimeout(() => downloadExactPdf(button), 250)
+        }
+      })
     }
   </script>
 </body>
