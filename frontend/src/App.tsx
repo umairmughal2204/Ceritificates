@@ -14,6 +14,7 @@ const pdfOptions = [
 
 const elcPdfName = 'Safety Spectrum London elc'
 const fscPdfName = 'Safety Spectrum London fsc'
+const patPdfName = 'pat Safety spectrum london'
 
 type ElcFormData = {
   inspectionDate: string
@@ -68,6 +69,38 @@ type FscFormData = {
   twelveMonthInspectionMarks: FscMark[]
   twelveMonthTestMarks: FscMark[]
   additionalMarks: FscMark[]
+}
+
+type PatRow = {
+  applianceId: string
+  testDate: string
+  description: string
+  location: string
+  serialNumber: string
+  retestPeriod: string
+  retestDate: string
+  status: string
+}
+
+type PatFormData = {
+  certificateNumber: string
+  clientAddress: string
+  clientPostcode: string
+  installationAddress: string
+  installationPostcode: string
+  tradingTitle: string
+  contractorAddress: string
+  contractorPostcode: string
+  registrationNumber: string
+  telephoneNumber: string
+  inspectorName: string
+  inspectorPosition: string
+  signature: string
+  certificateDate: string
+  testEquipmentUsed: string
+  equipmentSerialNumber: string
+  rows: PatRow[]
+  totalAppliances: string
 }
 
 const toPdfDate = (value: string) => {
@@ -223,6 +256,68 @@ const defaultFscForm: FscFormData = {
   additionalMarks: ['tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'na', 'na'],
 }
 
+const defaultPatForm: PatFormData = {
+  certificateNumber: '255045',
+  clientAddress: 'Glets,5 Quadrant Rd, Croydon',
+  clientPostcode: 'CR7 7DB',
+  installationAddress: 'Glets,5 Quadrant Rd, Croydon',
+  installationPostcode: 'CR7 7DB',
+  tradingTitle: 'Safety Spectrum London',
+  contractorAddress: '58A Tudor Road Hayes UB3 2QD',
+  contractorPostcode: 'UB3 2QD',
+  registrationNumber: '16678881',
+  telephoneNumber: '+44 20 4628 6504',
+  inspectorName: 'Giorgio Demetriou',
+  inspectorPosition: 'Qualified Supervisor',
+  signature: 'GDemetriou',
+  certificateDate: '2025-12-17',
+  testEquipmentUsed: 'Megger PAT4 Dv3',
+  equipmentSerialNumber: '7812',
+  rows: [
+    {
+      applianceId: '00001',
+      testDate: '2025-12-17',
+      description: 'Washing machine 1',
+      location: 'Kitchen',
+      serialNumber: '',
+      retestPeriod: '12',
+      retestDate: '2026-12-17',
+      status: 'Pass',
+    },
+    {
+      applianceId: '00002',
+      testDate: '2025-12-17',
+      description: 'Washing machine 2',
+      location: 'Kitchen',
+      serialNumber: '',
+      retestPeriod: '12',
+      retestDate: '2026-12-17',
+      status: 'Fail',
+    },
+    {
+      applianceId: '00003',
+      testDate: '2025-12-17',
+      description: 'Microwave',
+      location: 'Kitchen',
+      serialNumber: '',
+      retestPeriod: '12',
+      retestDate: '2026-12-17',
+      status: 'Pass',
+    },
+    {
+      applianceId: '00004',
+      testDate: '2025-12-17',
+      description: 'Stove',
+      location: 'Kitchen',
+      serialNumber: '',
+      retestPeriod: '12',
+      retestDate: '2026-12-17',
+      status: 'Pass',
+    },
+  ],
+  totalAppliances: 'Total Appliances for Report: 4',
+}
+
 function MarkSelect({
   label,
   value,
@@ -245,12 +340,13 @@ function MarkSelect({
 }
 
 function App() {
-  const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form'>('home')
+  const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form' | 'pat-form'>('home')
   const [selectedPdf, setSelectedPdf] = useState(pdfOptions[0])
   const [activeSection, setActiveSection] = useState(0)
   const [isGenerating, setIsGenerating] = useState(false)
   const [form, setForm] = useState<ElcFormData>(defaultElcForm)
   const [fscForm, setFscForm] = useState<FscFormData>(defaultFscForm)
+  const [patForm, setPatForm] = useState<PatFormData>(defaultPatForm)
 
   const openSelectedLayout = () => {
     if (selectedPdf === elcPdfName) {
@@ -263,7 +359,12 @@ function App() {
       setActiveView('fsc-form')
       return
     }
-    window.alert('Layout is currently available only for FSC and ELC certificates.')
+    if (selectedPdf === patPdfName) {
+      setActiveSection(0)
+      setActiveView('pat-form')
+      return
+    }
+    window.alert('Layout is currently available only for FSC, PAT and ELC certificates.')
   }
 
   const updateField = (field: keyof ElcFormData, value: string) => {
@@ -338,6 +439,33 @@ function App() {
     setIsGenerating(true)
     localStorage.setItem('fsc_form_data', JSON.stringify(payload))
     window.open('/src/templates/safety-spectrum-london-fsc.html?autodownload=1', '_blank', 'noopener,noreferrer')
+    window.setTimeout(() => setIsGenerating(false), 800)
+  }
+
+  const updatePatField = <K extends keyof PatFormData>(field: K, value: PatFormData[K]) => {
+    setPatForm((current) => ({ ...current, [field]: value }))
+  }
+
+  const updatePatRow = (index: number, field: keyof PatRow, value: string) => {
+    setPatForm((current) => {
+      const next = current.rows.map((row, idx) => (idx === index ? { ...row, [field]: value } : row))
+      return { ...current, rows: next }
+    })
+  }
+
+  const downloadPatPdf = () => {
+    const payload = {
+      ...patForm,
+      certificateDate: toPdfDate(patForm.certificateDate),
+      rows: patForm.rows.map((row) => ({
+        ...row,
+        testDate: toPdfDate(row.testDate),
+        retestDate: toPdfDate(row.retestDate),
+      })),
+    }
+    setIsGenerating(true)
+    localStorage.setItem('pat_form_data', JSON.stringify(payload))
+    window.open('/src/templates/safety-spectrum-london-pat.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
 
@@ -690,6 +818,121 @@ function App() {
               disabled={isGenerating}
             >
               {isLast ? (isGenerating ? 'Generating...' : 'Download Filled FSC') : 'Next'}
+            </button>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  if (activeView === 'pat-form') {
+    const sections = [
+      'Certificate & client details',
+      'Contractor details',
+      'Appliance test rows',
+      'Review',
+    ]
+    const isLast = activeSection === sections.length - 1
+
+    return (
+      <main className="page-shell wizard-page">
+        <section className="wizard-header-panel">
+          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+            Back to templates
+          </button>
+          <p className="eyebrow">PAT 1-page form</p>
+          <h1>{sections[activeSection]}</h1>
+          <p className="lede">Fill all PAT fields and download with the same template design.</p>
+        </section>
+
+        <section className="wizard-progress" aria-label="Form sections">
+          {sections.map((title, idx) => (
+            <button
+              key={title}
+              type="button"
+              className={`wizard-step${idx === activeSection ? ' active' : ''}`}
+              onClick={() => setActiveSection(idx)}
+            >
+              <span>{idx + 1}</span>
+              <small>{title}</small>
+            </button>
+          ))}
+        </section>
+
+        <section className="form-panel">
+          {activeSection === 0 && (
+            <div className="form-grid">
+              <label>Certificate Number<input value={patForm.certificateNumber} onChange={(e) => updatePatField('certificateNumber', e.target.value)} /></label>
+              <label>Certificate Date<input type="date" value={patForm.certificateDate} onChange={(e) => updatePatField('certificateDate', e.target.value)} /></label>
+              <label className="wide">Client Address<input value={patForm.clientAddress} onChange={(e) => updatePatField('clientAddress', e.target.value)} /></label>
+              <label>Client Postcode<input value={patForm.clientPostcode} onChange={(e) => updatePatField('clientPostcode', e.target.value)} /></label>
+              <label className="wide">Installation Address<input value={patForm.installationAddress} onChange={(e) => updatePatField('installationAddress', e.target.value)} /></label>
+              <label>Installation Postcode<input value={patForm.installationPostcode} onChange={(e) => updatePatField('installationPostcode', e.target.value)} /></label>
+              <label className="wide">Total Appliances Text<input value={patForm.totalAppliances} onChange={(e) => updatePatField('totalAppliances', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 1 && (
+            <div className="form-grid">
+              <label>Trading Title<input value={patForm.tradingTitle} onChange={(e) => updatePatField('tradingTitle', e.target.value)} /></label>
+              <label className="wide">Contractor Address<input value={patForm.contractorAddress} onChange={(e) => updatePatField('contractorAddress', e.target.value)} /></label>
+              <label>Contractor Postcode<input value={patForm.contractorPostcode} onChange={(e) => updatePatField('contractorPostcode', e.target.value)} /></label>
+              <label>Registration Number<input value={patForm.registrationNumber} onChange={(e) => updatePatField('registrationNumber', e.target.value)} /></label>
+              <label>Telephone Number<input value={patForm.telephoneNumber} onChange={(e) => updatePatField('telephoneNumber', e.target.value)} /></label>
+              <label>Inspector Name<input value={patForm.inspectorName} onChange={(e) => updatePatField('inspectorName', e.target.value)} /></label>
+              <label>Inspector Position<input value={patForm.inspectorPosition} onChange={(e) => updatePatField('inspectorPosition', e.target.value)} /></label>
+              <label>Signature<input value={patForm.signature} onChange={(e) => updatePatField('signature', e.target.value)} /></label>
+              <label>Test Equipment Used<input value={patForm.testEquipmentUsed} onChange={(e) => updatePatField('testEquipmentUsed', e.target.value)} /></label>
+              <label>Equipment Serial Number<input value={patForm.equipmentSerialNumber} onChange={(e) => updatePatField('equipmentSerialNumber', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 2 && (
+            <div className="appliance-table">
+              <h3>Appliance details and test results (4 rows)</h3>
+              {patForm.rows.map((row, idx) => (
+                <div key={`pat-row-${idx}`} className="appliance-row">
+                  <label>Appliance ID<input value={row.applianceId} onChange={(e) => updatePatRow(idx, 'applianceId', e.target.value)} /></label>
+                  <label>Test Date<input type="date" value={row.testDate} onChange={(e) => updatePatRow(idx, 'testDate', e.target.value)} /></label>
+                  <label className="wide">Description<input value={row.description} onChange={(e) => updatePatRow(idx, 'description', e.target.value)} /></label>
+                  <label>Location<input value={row.location} onChange={(e) => updatePatRow(idx, 'location', e.target.value)} /></label>
+                  <label>Serial Number<input value={row.serialNumber} onChange={(e) => updatePatRow(idx, 'serialNumber', e.target.value)} /></label>
+                  <label>Retest Period<input value={row.retestPeriod} onChange={(e) => updatePatRow(idx, 'retestPeriod', e.target.value)} /></label>
+                  <label>Retest Date<input type="date" value={row.retestDate} onChange={(e) => updatePatRow(idx, 'retestDate', e.target.value)} /></label>
+                  <label>Status<input value={row.status} onChange={(e) => updatePatRow(idx, 'status', e.target.value)} /></label>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {activeSection === 3 && (
+            <div className="review-card">
+              <p>Certificate: <strong>{patForm.certificateNumber}</strong></p>
+              <p>Client postcode: <strong>{patForm.clientPostcode}</strong></p>
+              <p>Inspector: <strong>{patForm.inspectorName}</strong></p>
+              <p>Rows filled: <strong>{patForm.rows.filter((r) => r.applianceId.trim() || r.description.trim()).length}</strong></p>
+              <button type="button" className="primary-action" onClick={downloadPatPdf} disabled={isGenerating}>
+                {isGenerating ? 'Generating...' : 'Download Filled PAT'}
+              </button>
+            </div>
+          )}
+
+          <div className="wizard-footer">
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={() => setActiveSection((s) => Math.max(0, s - 1))}
+              disabled={activeSection === 0}
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              className="primary-action"
+              onClick={() => (isLast ? downloadPatPdf() : setActiveSection((s) => s + 1))}
+              disabled={isGenerating}
+            >
+              {isLast ? (isGenerating ? 'Generating...' : 'Download Filled PAT') : 'Next'}
             </button>
           </div>
         </section>
