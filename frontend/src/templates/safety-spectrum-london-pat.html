@@ -130,7 +130,7 @@
 								<th>Status</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="pat-results-body">
 							<tr>
 								<td id="pat-row-1-id">00001</td>
 								<td id="pat-row-1-test-date">17/12/2025</td>
@@ -212,6 +212,31 @@
 				el.textContent = String(value)
 			}
 
+			function renderPatRows(rows) {
+				const tbody = document.getElementById('pat-results-body')
+				if (!tbody || !Array.isArray(rows) || !rows.length) return
+				tbody.innerHTML = ''
+				for (const row of rows) {
+					const tr = document.createElement('tr')
+					const values = [
+						row.applianceId || '',
+						row.testDate || '',
+						row.description || '',
+						row.location || '',
+						row.serialNumber || '',
+						row.retestPeriod || '',
+						row.retestDate || '',
+						row.status || '',
+					]
+					for (const value of values) {
+						const td = document.createElement('td')
+						td.textContent = String(value)
+						tr.appendChild(td)
+					}
+					tbody.appendChild(tr)
+				}
+			}
+
 			function applyPatData() {
 				const raw = localStorage.getItem('pat_form_data')
 				if (!raw) return null
@@ -240,20 +265,9 @@
 				setText('pat-equipment-serial', data.equipmentSerialNumber)
 
 				const rows = Array.isArray(data.rows) ? data.rows : []
-				for (let i = 0; i < 4; i += 1) {
-					const row = rows[i]
-					if (!row) continue
-					setText(`pat-row-${i + 1}-id`, row.applianceId)
-					setText(`pat-row-${i + 1}-test-date`, row.testDate)
-					setText(`pat-row-${i + 1}-description`, row.description)
-					setText(`pat-row-${i + 1}-location`, row.location)
-					setText(`pat-row-${i + 1}-serial`, row.serialNumber)
-					setText(`pat-row-${i + 1}-retest-period`, row.retestPeriod)
-					setText(`pat-row-${i + 1}-retest-date`, row.retestDate)
-					setText(`pat-row-${i + 1}-status`, row.status)
-				}
-
-				setText('pat-total-appliances', data.totalAppliances)
+				renderPatRows(rows)
+				const total = data.totalAppliances || `Total Appliances for Report: ${rows.length}`
+				setText('pat-total-appliances', total)
 				return data
 			}
 

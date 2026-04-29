@@ -453,7 +453,29 @@ function App() {
     })
   }
 
+  const addPatRow = () => {
+    setPatForm((current) => ({
+      ...current,
+      rows: [
+        ...current.rows,
+        {
+          applianceId: '',
+          testDate: current.certificateDate,
+          description: '',
+          location: '',
+          serialNumber: '',
+          retestPeriod: '12',
+          retestDate: current.certificateDate,
+          status: '',
+        },
+      ],
+    }))
+  }
+
   const downloadPatPdf = () => {
+    const rowsCount = patForm.rows.filter(
+      (row) => row.applianceId.trim() || row.description.trim() || row.location.trim(),
+    ).length
     const payload = {
       ...patForm,
       certificateDate: toPdfDate(patForm.certificateDate),
@@ -462,6 +484,7 @@ function App() {
         testDate: toPdfDate(row.testDate),
         retestDate: toPdfDate(row.retestDate),
       })),
+      totalAppliances: `Total Appliances for Report: ${rowsCount}`,
     }
     setIsGenerating(true)
     localStorage.setItem('pat_form_data', JSON.stringify(payload))
@@ -889,7 +912,10 @@ function App() {
 
           {activeSection === 2 && (
             <div className="appliance-table">
-              <h3>Appliance details and test results (4 rows)</h3>
+              <h3>Appliance details and test results ({patForm.rows.length} rows)</h3>
+              <button type="button" className="secondary-action" onClick={addPatRow}>
+                Add More Row
+              </button>
               {patForm.rows.map((row, idx) => (
                 <div key={`pat-row-${idx}`} className="appliance-row">
                   <label>Appliance ID<input value={row.applianceId} onChange={(e) => updatePatRow(idx, 'applianceId', e.target.value)} /></label>
