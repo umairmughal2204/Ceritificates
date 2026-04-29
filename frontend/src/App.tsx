@@ -13,6 +13,7 @@ const pdfOptions = [
 ]
 
 const elcPdfName = 'Safety Spectrum London elc'
+const fscPdfName = 'Safety Spectrum London fsc'
 
 type ElcFormData = {
   inspectionDate: string
@@ -30,6 +31,43 @@ type ElcFormData = {
   signedDate: string
   nextInspectionInterval: string
   notes: string[]
+}
+
+type FscMark = 'tick' | 'na' | 'blank'
+
+type FscFormData = {
+  metaDate: string
+  metaReference: string
+  clientName: string
+  clientAddress: string
+  extent: string
+  limitations: string
+  systemDetails: string
+  systemAddress: string
+  tradingTitle: string
+  contractorAddress: string
+  contractorName: string
+  contractorPosition: string
+  certDate: string
+  signature: string
+  variations: string
+  refDoc1: string
+  refDoc2: string
+  nextDate: string
+  deviationMarks: { mark1: FscMark; mark2: FscMark }
+  condition: string
+  assessment: string
+  summaryMarks: { line1: FscMark; line2: FscMark; line3: FscMark; line4: FscMark }
+  batteryMarks: FscMark[]
+  premisesMarks: FscMark[]
+  documentationMarks: FscMark[]
+  falseAlarmMarks: FscMark[]
+  actionDetails: string
+  testedMarks: FscMark[]
+  repairMarks: FscMark[]
+  twelveMonthInspectionMarks: FscMark[]
+  twelveMonthTestMarks: FscMark[]
+  additionalMarks: FscMark[]
 }
 
 const toPdfDate = (value: string) => {
@@ -65,21 +103,167 @@ const defaultElcForm: ElcFormData = {
   ],
 }
 
+const PREMISES_LABELS = [
+  'Manual call points suitably sited',
+  'Manual call points suitably unobstructed',
+  'Manual call points conspicuous',
+  'All exits, including new exits have manual call points',
+  'Automatic fire detectors suitable for building use or occupancy',
+  'Automatic fire detectors suitably sited',
+  'Fire alarm devices suitably sited',
+  'No partitions within 500mm horizontally of any automatic fire detector',
+  'No storage within 300mm of ceilings',
+  'Clear space of 500mm exists below each automatic fire detector',
+  'Each automatic fire detectors ability to receive the stimulus not impeded',
+  'Building use or occupancy does not make detectors unsuitable',
+  'Additional fire detection provided in extensions/alterations',
+]
+
+const TESTED_LABELS = [
+  'Fire alarm functions of CIE checked by operation of detector/call point',
+  'Operation of fire alarm devices',
+  'Controls and visual indicators at CIE checked',
+  'Ancillary functions of CIE tested',
+  'For CIE, manufacturers checks and tests performed',
+  'Fault indicators and circuits checked by simulation of fault',
+  'Automatic transmission of alarm signal to receiving centre',
+  'Automatic transmission of other signals to receiving centre',
+  'Radio systems serviced per manufacturer',
+  'For other equipment, manufacturer\'s checks performed',
+  'Printers checked for correct operation',
+  'Printers checked that characters are legible',
+  'Print consumables available in sufficient quantities',
+  'Standby battery disconnected and full load alarm simulated',
+  'Specific gravity of each cell of vented batteries checked',
+  'Mains disconnected and batteries momentarily load tested',
+]
+
+const REPAIR_LABELS = [
+  'Emergency call out arrangement in place (third party)',
+  'Name and telephone of third party at main CIE',
+  'Records and documentation give maintenance info',
+  'User records faults or damage in log book',
+  'User arranges for repairs as soon as possible',
+]
+
+const INSP12_LABELS = [
+  'Automatic fire detectors unpainted',
+  'Automatic fire detectors undamaged',
+  'Ancillary functions of CIE tested',
+  'Visual fire alarm devices not obstructed',
+  'Lenses of visual fire alarm devices are clean',
+  'Readily-accessible cable fixings secure',
+  'Readily-accessible cable fixings undamaged',
+  'Cause and effect programme confirmed correct',
+]
+
+const TEST12_LABELS = [
+  'Switch mechanism of every manual call point',
+  'Fire alarm devices checked for correct operation',
+  'Automatic fire detectors functionally tested',
+  'All unmonitored permanently-illuminated lamps replaced',
+  'CIE manufacturer\'s annual checks and tests carried out',
+  'Radio signal strengths checked for adequacy',
+  'Analogue values within manufacturer range',
+  'Standby power supply capacity checked',
+  'Manufacturer recommended checks for other components',
+]
+
+const ADDITIONAL_LABELS = [
+  'Adequate number of call points (Clause 20.2)',
+  'Adequate provision of fire detection for category',
+  'Sound pressure levels comply with Clause 16.2',
+  'Changes in use, layout or construction not reduced effectiveness',
+  'Cabling has fire resistance complying with Clause 26.2',
+  'Circuits monitored in compliance with Clause 12.2',
+  'Requirements of BS 7671 are met (Clause 29)',
+  'Standby power supplied provided',
+  'Standby power supplies comply with Clause 25.4',
+  'Exposure to false alarms is not excessive',
+  'Existing records checked',
+  'Log book available',
+]
+
+const defaultFscForm: FscFormData = {
+  metaDate: '2026-04-13',
+  metaReference: '894930988 SE1 9NX',
+  clientName: 'Duc Nguyen',
+  clientAddress: 'Apartment C1602, NEO Bankside, 70 Holland Street, London, SE1 9NX',
+  extent: 'Grade D LD fire detection automatic system',
+  limitations: 'N/A',
+  systemDetails:
+    "1 alarm present in kitchen\n1 alarm present in hallway\nAlarms lights are on but they didn't make sound",
+  systemAddress: 'Apartment C1602, NEO Bankside, 70 Holland Street, London, SE1 9NX',
+  tradingTitle: 'Safety Spectrum London',
+  contractorAddress: '58A Tudor Road Hayes UB3 2QD',
+  contractorName: 'Mushtaq Khan',
+  contractorPosition: 'Qualified Supervisor',
+  certDate: '2026-04-13',
+  signature: 'Jh',
+  variations: 'N/A',
+  refDoc1: '',
+  refDoc2: '',
+  nextDate: '2026-10-13',
+  deviationMarks: { mark1: 'na', mark2: 'na' },
+  condition: 'Good Condition',
+  assessment: 'SATISFACTORY',
+  summaryMarks: { line1: 'na', line2: 'na', line3: 'na', line4: 'na' },
+  batteryMarks: ['tick', 'tick', 'na'],
+  premisesMarks: Array(13).fill('tick') as FscMark[],
+  documentationMarks: ['na', 'na'],
+  falseAlarmMarks: ['na', 'na', 'na'],
+  actionDetails: '',
+  testedMarks: [
+    'tick', 'tick', 'na', 'na', 'na', 'tick', 'na', 'na',
+    'na', 'na', 'na', 'na', 'na', 'tick', 'na', 'tick',
+  ],
+  repairMarks: ['na', 'na', 'na', 'na', 'na'],
+  twelveMonthInspectionMarks: ['tick', 'tick', 'na', 'tick', 'na', 'tick', 'tick', 'na'],
+  twelveMonthTestMarks: ['tick', 'tick', 'tick', 'na', 'na', 'tick', 'tick', 'tick', 'na'],
+  additionalMarks: ['tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'tick', 'na', 'na'],
+}
+
+function MarkSelect({
+  label,
+  value,
+  onChange,
+}: {
+  label: string
+  value: FscMark
+  onChange: (v: FscMark) => void
+}) {
+  return (
+    <label className="wide">
+      {label}
+      <select value={value} onChange={(e) => onChange(e.target.value as FscMark)}>
+        <option value="tick">Tick (✓)</option>
+        <option value="na">N/A</option>
+        <option value="blank">Blank</option>
+      </select>
+    </label>
+  )
+}
+
 function App() {
-  const [activeView, setActiveView] = useState<'home' | 'elc-form'>('home')
+  const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form'>('home')
   const [selectedPdf, setSelectedPdf] = useState(pdfOptions[0])
   const [activeSection, setActiveSection] = useState(0)
   const [isGenerating, setIsGenerating] = useState(false)
   const [form, setForm] = useState<ElcFormData>(defaultElcForm)
+  const [fscForm, setFscForm] = useState<FscFormData>(defaultFscForm)
 
   const openSelectedLayout = () => {
-    if (selectedPdf !== elcPdfName) {
-      window.alert('Layout is currently available only for Safety Spectrum London elc.')
+    if (selectedPdf === elcPdfName) {
+      setActiveSection(0)
+      setActiveView('elc-form')
       return
     }
-
-    setActiveSection(0)
-    setActiveView('elc-form')
+    if (selectedPdf === fscPdfName) {
+      setActiveSection(0)
+      setActiveView('fsc-form')
+      return
+    }
+    window.alert('Layout is currently available only for FSC and ELC certificates.')
   }
 
   const updateField = (field: keyof ElcFormData, value: string) => {
@@ -116,6 +300,44 @@ function App() {
     setIsGenerating(true)
     localStorage.setItem('elc_form_data', JSON.stringify(payload))
     window.open('/src/templates/safety-spectrum-london-elc.html?autodownload=1', '_blank', 'noopener,noreferrer')
+    window.setTimeout(() => setIsGenerating(false), 800)
+  }
+
+  const updateFscField = <K extends keyof FscFormData>(field: K, value: FscFormData[K]) => {
+    setFscForm((current) => ({ ...current, [field]: value }))
+  }
+
+  const updateFscMarkArray = (
+    field:
+      | 'batteryMarks'
+      | 'premisesMarks'
+      | 'documentationMarks'
+      | 'falseAlarmMarks'
+      | 'testedMarks'
+      | 'repairMarks'
+      | 'twelveMonthInspectionMarks'
+      | 'twelveMonthTestMarks'
+      | 'additionalMarks',
+    index: number,
+    value: FscMark,
+  ) => {
+    setFscForm((current) => {
+      const next = [...current[field]]
+      next[index] = value
+      return { ...current, [field]: next }
+    })
+  }
+
+  const downloadFscPdf = () => {
+    const payload = {
+      ...fscForm,
+      metaDate: toPdfDate(fscForm.metaDate),
+      certDate: toPdfDate(fscForm.certDate),
+      nextDate: toPdfDate(fscForm.nextDate),
+    }
+    setIsGenerating(true)
+    localStorage.setItem('fsc_form_data', JSON.stringify(payload))
+    window.open('/src/templates/safety-spectrum-london-fsc.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
 
@@ -219,6 +441,262 @@ function App() {
     )
   }
 
+  if (activeView === 'fsc-form') {
+    const sections = [
+      'Page 1: Client & system',
+      'Page 1: Contractor & next inspection',
+      'Page 2: Deviations',
+      'Page 3: Summary',
+      'Page 3: Inspections schedule',
+      'Page 4: Items tested & repairs',
+      'Page 4: 12-month schedules',
+      'Page 5: Additional checks',
+      'Review',
+    ]
+    const isLast = activeSection === sections.length - 1
+
+    return (
+      <main className="page-shell wizard-page">
+        <section className="wizard-header-panel">
+          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+            Back to templates
+          </button>
+          <p className="eyebrow">FSC 5-page form</p>
+          <h1>{sections[activeSection]}</h1>
+          <p className="lede">Every field maps to the certificate. Data replaces template values before download.</p>
+        </section>
+
+        <section className="wizard-progress" aria-label="Form sections">
+          {sections.map((title, idx) => (
+            <button
+              key={title}
+              type="button"
+              className={`wizard-step${idx === activeSection ? ' active' : ''}`}
+              onClick={() => setActiveSection(idx)}
+            >
+              <span>{idx + 1}</span>
+              <small>{title}</small>
+            </button>
+          ))}
+        </section>
+
+        <section className="form-panel">
+          {activeSection === 0 && (
+            <div className="form-grid">
+              <label>Date<input type="date" value={fscForm.metaDate} onChange={(e) => updateFscField('metaDate', e.target.value)} /></label>
+              <label className="wide">Certificate Reference<input value={fscForm.metaReference} onChange={(e) => updateFscField('metaReference', e.target.value)} /></label>
+              <label>Client Name<input value={fscForm.clientName} onChange={(e) => updateFscField('clientName', e.target.value)} /></label>
+              <label className="wide">Client Address<input value={fscForm.clientAddress} onChange={(e) => updateFscField('clientAddress', e.target.value)} /></label>
+              <label className="wide">Extent of installation<input value={fscForm.extent} onChange={(e) => updateFscField('extent', e.target.value)} /></label>
+              <label className="wide">Limitations<input value={fscForm.limitations} onChange={(e) => updateFscField('limitations', e.target.value)} /></label>
+              <label className="wide">Details of system (lines separated by Enter)
+                <textarea
+                  rows={3}
+                  value={fscForm.systemDetails}
+                  onChange={(e) => updateFscField('systemDetails', e.target.value)}
+                />
+              </label>
+              <label className="wide">System Address<input value={fscForm.systemAddress} onChange={(e) => updateFscField('systemAddress', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 1 && (
+            <div className="form-grid">
+              <label>Trading Title<input value={fscForm.tradingTitle} onChange={(e) => updateFscField('tradingTitle', e.target.value)} /></label>
+              <label className="wide">Contractor Address<input value={fscForm.contractorAddress} onChange={(e) => updateFscField('contractorAddress', e.target.value)} /></label>
+              <label>Name<input value={fscForm.contractorName} onChange={(e) => updateFscField('contractorName', e.target.value)} /></label>
+              <label>Position<input value={fscForm.contractorPosition} onChange={(e) => updateFscField('contractorPosition', e.target.value)} /></label>
+              <label>Cert Date<input type="date" value={fscForm.certDate} onChange={(e) => updateFscField('certDate', e.target.value)} /></label>
+              <label>Signature<input value={fscForm.signature} onChange={(e) => updateFscField('signature', e.target.value)} /></label>
+              <label className="wide">Variations<input value={fscForm.variations} onChange={(e) => updateFscField('variations', e.target.value)} /></label>
+              <label className="wide">Related Reference Document 1<input value={fscForm.refDoc1} onChange={(e) => updateFscField('refDoc1', e.target.value)} /></label>
+              <label className="wide">Related Reference Document 2<input value={fscForm.refDoc2} onChange={(e) => updateFscField('refDoc2', e.target.value)} /></label>
+              <label>Next Inspection Date<input type="date" value={fscForm.nextDate} onChange={(e) => updateFscField('nextDate', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 2 && (
+            <div className="form-grid">
+              <MarkSelect
+                label="No remedial action is required"
+                value={fscForm.deviationMarks.mark1}
+                onChange={(v) => updateFscField('deviationMarks', { ...fscForm.deviationMarks, mark1: v })}
+              />
+              <MarkSelect
+                label="The following observations are made"
+                value={fscForm.deviationMarks.mark2}
+                onChange={(v) => updateFscField('deviationMarks', { ...fscForm.deviationMarks, mark2: v })}
+              />
+            </div>
+          )}
+
+          {activeSection === 3 && (
+            <div className="form-grid">
+              <label className="wide">General condition<input value={fscForm.condition} onChange={(e) => updateFscField('condition', e.target.value)} /></label>
+              <label className="wide">Overall Assessment<input value={fscForm.assessment} onChange={(e) => updateFscField('assessment', e.target.value)} /></label>
+              <MarkSelect
+                label="Outstanding defects reported to responsible person"
+                value={fscForm.summaryMarks.line1}
+                onChange={(v) => updateFscField('summaryMarks', { ...fscForm.summaryMarks, line1: v })}
+              />
+              <MarkSelect
+                label="Work / faults entered in log book (clause 40.2)"
+                value={fscForm.summaryMarks.line2}
+                onChange={(v) => updateFscField('summaryMarks', { ...fscForm.summaryMarks, line2: v })}
+              />
+              <MarkSelect
+                label="False alarms occurred (past 12 months)"
+                value={fscForm.summaryMarks.line3}
+                onChange={(v) => updateFscField('summaryMarks', { ...fscForm.summaryMarks, line3: v })}
+              />
+              <MarkSelect
+                label="Rate of false alarms per 100 detectors"
+                value={fscForm.summaryMarks.line4}
+                onChange={(v) => updateFscField('summaryMarks', { ...fscForm.summaryMarks, line4: v })}
+              />
+            </div>
+          )}
+
+          {activeSection === 4 && (
+            <div className="form-grid">
+              <h3 className="wide">Quarterly inspection of vented batteries</h3>
+              {(['Batteries checked', 'Battery connections checked', 'Electrolyte levels checked'] as string[]).map((label, idx) => (
+                <MarkSelect
+                  key={`battery-${idx}`}
+                  label={label}
+                  value={fscForm.batteryMarks[idx]}
+                  onChange={(v) => updateFscMarkArray('batteryMarks', idx, v)}
+                />
+              ))}
+              <h3 className="wide">Premises (13 items)</h3>
+              {PREMISES_LABELS.map((label, idx) => (
+                <MarkSelect
+                  key={`premises-${idx}`}
+                  label={`${idx + 1}. ${label}`}
+                  value={fscForm.premisesMarks[idx]}
+                  onChange={(v) => updateFscMarkArray('premisesMarks', idx, v)}
+                />
+              ))}
+              <h3 className="wide">Documentation</h3>
+              {(['System log book examined', 'Faults attended to'] as string[]).map((label, idx) => (
+                <MarkSelect
+                  key={`doc-${idx}`}
+                  label={label}
+                  value={fscForm.documentationMarks[idx]}
+                  onChange={(v) => updateFscMarkArray('documentationMarks', idx, v)}
+                />
+              ))}
+              <h3 className="wide">False alarms</h3>
+              {(['Record of false alarms (Clause 30.2i)', 'Action taken complies (Clause 30.2j)', 'Rate during previous 12 months'] as string[]).map((label, idx) => (
+                <MarkSelect
+                  key={`false-${idx}`}
+                  label={label}
+                  value={fscForm.falseAlarmMarks[idx]}
+                  onChange={(v) => updateFscMarkArray('falseAlarmMarks', idx, v)}
+                />
+              ))}
+              <label className="wide">Details of action taken (free text)
+                <textarea rows={3} value={fscForm.actionDetails} onChange={(e) => updateFscField('actionDetails', e.target.value)} />
+              </label>
+            </div>
+          )}
+
+          {activeSection === 5 && (
+            <div className="form-grid">
+              <h3 className="wide">Schedule of items tested (16 items)</h3>
+              {TESTED_LABELS.map((label, idx) => (
+                <MarkSelect
+                  key={`tested-${idx}`}
+                  label={`${idx + 1}. ${label}`}
+                  value={fscForm.testedMarks[idx]}
+                  onChange={(v) => updateFscMarkArray('testedMarks', idx, v)}
+                />
+              ))}
+              <h3 className="wide">Repair arrangements (5 items)</h3>
+              {REPAIR_LABELS.map((label, idx) => (
+                <MarkSelect
+                  key={`repair-${idx}`}
+                  label={`${idx + 1}. ${label}`}
+                  value={fscForm.repairMarks[idx]}
+                  onChange={(v) => updateFscMarkArray('repairMarks', idx, v)}
+                />
+              ))}
+            </div>
+          )}
+
+          {activeSection === 6 && (
+            <div className="form-grid">
+              <h3 className="wide">12-month schedule of items inspected</h3>
+              {INSP12_LABELS.map((label, idx) => (
+                <MarkSelect
+                  key={`12m-insp-${idx}`}
+                  label={`${idx + 1}. ${label}`}
+                  value={fscForm.twelveMonthInspectionMarks[idx]}
+                  onChange={(v) => updateFscMarkArray('twelveMonthInspectionMarks', idx, v)}
+                />
+              ))}
+              <h3 className="wide">12-month schedule of items tested</h3>
+              {TEST12_LABELS.map((label, idx) => (
+                <MarkSelect
+                  key={`12m-test-${idx}`}
+                  label={`${idx + 1}. ${label}`}
+                  value={fscForm.twelveMonthTestMarks[idx]}
+                  onChange={(v) => updateFscMarkArray('twelveMonthTestMarks', idx, v)}
+                />
+              ))}
+            </div>
+          )}
+
+          {activeSection === 7 && (
+            <div className="form-grid">
+              <h3 className="wide">Additional checks upon change of servicing organisation</h3>
+              {ADDITIONAL_LABELS.map((label, idx) => (
+                <MarkSelect
+                  key={`add-${idx}`}
+                  label={`${idx + 1}. ${label}`}
+                  value={fscForm.additionalMarks[idx]}
+                  onChange={(v) => updateFscMarkArray('additionalMarks', idx, v)}
+                />
+              ))}
+            </div>
+          )}
+
+          {activeSection === 8 && (
+            <div className="review-card">
+              <p>Client: <strong>{fscForm.clientName}</strong></p>
+              <p>Reference: <strong>{fscForm.metaReference}</strong></p>
+              <p>Inspector: <strong>{fscForm.contractorName} ({fscForm.contractorPosition})</strong></p>
+              <p>Premises ticked: <strong>{fscForm.premisesMarks.filter((m) => m === 'tick').length}/13</strong></p>
+              <p>Tested ticked: <strong>{fscForm.testedMarks.filter((m) => m === 'tick').length}/16</strong></p>
+              <button type="button" className="primary-action" onClick={downloadFscPdf} disabled={isGenerating}>
+                {isGenerating ? 'Generating...' : 'Download Filled FSC'}
+              </button>
+            </div>
+          )}
+
+          <div className="wizard-footer">
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={() => setActiveSection((s) => Math.max(0, s - 1))}
+              disabled={activeSection === 0}
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              className="primary-action"
+              onClick={() => (isLast ? downloadFscPdf() : setActiveSection((s) => s + 1))}
+              disabled={isGenerating}
+            >
+              {isLast ? (isGenerating ? 'Generating...' : 'Download Filled FSC') : 'Next'}
+            </button>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
   return (
     <main className="page-shell">
       <section className="hero-panel">
@@ -273,7 +751,7 @@ function App() {
           <p className="eyebrow">Current selection</p>
           <h2>{selectedPdf}</h2>
           <p className="selection-copy">
-            Click the button to open the ELC layout and download as PDF.
+            Click the button to open the form and download the filled certificate.
           </p>
         </div>
         <button type="button" className="primary-action" onClick={openSelectedLayout}>
