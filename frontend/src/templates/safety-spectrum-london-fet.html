@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Portable Fire Extinguisher Report</title>
+		<link rel="stylesheet" href="./safety-spectrum-london-fet.css" />
+	</head>
+	<body>
+		<div id="fet-toolbar" style="position: fixed; top: 16px; right: 16px; z-index: 9999; display: flex; gap: 10px; align-items: center; font-family: Arial, Helvetica, sans-serif;">
+			<span id="download-status" style="color: #444; font-size: 12px;">Downloads the same visible layout.</span>
+			<button type="button" id="download-btn" onclick="downloadExactPdf(this)" style="border: 0; border-radius: 999px; padding: 10px 16px; background: #1f3b82; color: #fff; font-weight: 700; cursor: pointer;">Download PDF</button>
+		</div>
+		<main class="document" aria-label="Portable Fire Extinguisher Report">
+			<section class="page cover-page">
+				<img class="cover-page__image" src="/src/assets/page-1.png" alt="Portable Fire Extinguisher Report cover page" />
+			</section>
+
+			<section class="page detail-page">
+				<div class="meta-strip">
+					<div class="meta-strip__group meta-strip__group--date">
+						<div class="meta-strip__label">Date</div>
+						<div class="meta-strip__value" id="fet-date">18/02/2026</div>
+					</div>
+					<div class="meta-strip__group meta-strip__group--ref">
+						<div class="meta-strip__label meta-strip__label--wide">Certificate Serial No/Ref:</div>
+						<div class="meta-strip__value" id="fet-reference">81773182 SW9 8SE</div>
+					</div>
+				</div>
+
+				<header class="report-head">
+					<div class="report-head__brand">
+						<img class="report-head__logo" src="/src/assets/logo.png" alt="Safety Spectrum London" />
+					</div>
+					<div class="report-head__title">
+						<div>Safety Spectrum London</div>
+						<div>Portable Fire</div>
+						<div>Extinguisher Report</div>
+					</div>
+					<img class="report-head__fire-logo" src="/src/assets/fire%20logo.png" alt="" aria-hidden="true" />
+				</header>
+
+				<section class="slab">
+					<div class="slab__tag">Details Of Premsies</div>
+					<div class="slab__body">
+						<div class="field-row">
+							<div class="field-row__label">Name</div>
+							<div class="field-row__value" id="fet-premises-name">GLETS</div>
+						</div>
+						<div class="field-row">
+							<div class="field-row__label">Address</div>
+							<div class="field-row__value" id="fet-premises-address">Basement, F318 Coldharbour Lne, Lambeth, SW9 8SE</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="slab">
+					<div class="slab__tag slab__tag--long">Additional Comments (if any)</div>
+					<div class="slab__body">
+						<div class="comments-box" id="fet-comments">N/A</div>
+					</div>
+				</section>
+
+				<section class="slab slab--contractor">
+					<div class="slab__tag slab__tag--long">Particulars Of Contractor</div>
+					<div class="slab__body slab__body--contractor">
+						<div class="field-row field-row--title">
+							<div class="field-row__label">Trading Title</div>
+							<div class="field-row__value field-row__value--center" id="fet-trading-title">Safety Spectrum London</div>
+						</div>
+						<div class="field-row field-row--address">
+							<div class="field-row__label">Address</div>
+							<div class="field-row__value field-row__value--address" id="fet-contractor-address">14 Serbert<br />Road, London<br />E7 0NQ</div>
+						</div>
+						<div class="signature-grid">
+							<div class="signature-grid__item">
+								<div class="signature-grid__label">Name</div>
+								<div class="signature-grid__value signature-grid__value--center" id="fet-contractor-name">G. Stewart</div>
+							</div>
+							<div class="signature-grid__item">
+								<div class="signature-grid__label">Signature</div>
+								<div class="signature-grid__value signature-grid__value--script" id="fet-signature"></div>
+							</div>
+							<div class="signature-grid__item">
+								<div class="signature-grid__label">Position</div>
+								<div class="signature-grid__value signature-grid__value--center" id="fet-contractor-position">Engineer</div>
+							</div>
+							<div class="signature-grid__item">
+								<div class="signature-grid__label">Date</div>
+								<div class="signature-grid__value signature-grid__value--center" id="fet-contractor-date">18/02/2026</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<div class="important-note">
+					This safety report is an important and valuable document which should be retained for future reference
+				</div>
+
+				<footer class="page-footer">
+					<div class="page-footer__left">&copy; 2017 iCertifi.co.uk</div>
+					<div class="page-footer__right">Page&nbsp;&nbsp;2 of 3</div>
+				</footer>
+			</section>
+
+			<section class="page table-page">
+				<section class="slab slab--table">
+					<div class="slab__tag slab__tag--table">Portable Fire Extinguishers</div>
+					<div class="slab__body slab__body--table">
+						<table class="ext-table" aria-label="Portable fire extinguishers">
+							<thead>
+								<tr>
+									<th>Item No.</th>
+									<th>Location</th>
+									<th>Make</th>
+									<th>Serial Number</th>
+									<th>Type</th>
+									<th>Capacity L</th>
+									<th>Remarks</th>
+									<th>Retest</th>
+								</tr>
+							</thead>
+							<tbody id="fet-ext-body">
+								<tr>
+									<td>1</td><td>Kitchen</td><td>sentinel</td><td>N/A</td><td>Co2</td><td>2 litre</td><td>Good condition</td><td>18/02/2027</td>
+								</tr>
+								<tr>
+									<td>2</td><td>Near main door</td><td>fire cheif</td><td>N/A</td><td>Foam</td><td>6 litre</td><td>Good condition</td><td>18/02/2027</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section class="slab slab--intervals">
+					<div class="intervals-title">Fire Extinguishers Maintenance Recomended Intervals</div>
+					<div class="intervals-grid">
+						<div class="intervals-grid__head">EXTINGUISHER TYPE</div>
+						<div class="intervals-grid__head">VISUAL INSPECTION</div>
+						<div class="intervals-grid__head">BASIC SERVICE</div>
+						<div class="intervals-grid__head">EXTENDED SERVICE</div>
+
+						<div>Water and water based</div><div>Monthly</div><div>Annually</div><div>5 Years</div>
+						<div>Powder</div><div>Monthly</div><div>Annually</div><div>5 Years</div>
+						<div>Powder - primary sealed</div><div>Monthly</div><div>Annually</div><div>10 Years</div>
+						<div>Co2</div><div>Monthly</div><div>Annually</div><div>10 Years</div>
+					</div>
+				</section>
+
+				<footer class="page-footer">
+					<div class="page-footer__left">&copy; 2017 iCertifi.co.uk</div>
+					<div class="page-footer__right">Page&nbsp;&nbsp;3 of 3</div>
+				</footer>
+			</section>
+		</main>
+
+		<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+		<script>
+			function setText(id, value) {
+				if (value === undefined || value === null || value === '') return
+				const el = document.getElementById(id)
+				if (!el) return
+				el.textContent = String(value)
+			}
+
+			function setHtml(id, value) {
+				if (value === undefined || value === null || value === '') return
+				const el = document.getElementById(id)
+				if (!el) return
+				el.innerHTML = String(value)
+			}
+
+			function renderRows(rows) {
+				const body = document.getElementById('fet-ext-body')
+				if (!body || !Array.isArray(rows) || !rows.length) return
+				body.innerHTML = ''
+				const columnCount = 8
+				for (const row of rows) {
+					const tr = document.createElement('tr')
+					const values = [
+						row.itemNo || '', row.location || '', row.make || '', row.serialNumber || '',
+						row.type || '', row.capacity || '', row.remarks || '', row.retest || '',
+					]
+					for (const value of values) {
+						const td = document.createElement('td')
+						td.textContent = String(value)
+						tr.appendChild(td)
+					}
+					body.appendChild(tr)
+				}
+
+				// Keep the page-3 table height consistent with the original design.
+				const minVisibleRows = 23
+				const remaining = Math.max(0, minVisibleRows - rows.length)
+				for (let i = 0; i < remaining; i += 1) {
+					const tr = document.createElement('tr')
+					for (let c = 0; c < columnCount; c += 1) {
+						tr.appendChild(document.createElement('td'))
+					}
+					body.appendChild(tr)
+				}
+			}
+
+			function applyFetData() {
+				const raw = localStorage.getItem('fet_form_data')
+				if (!raw) return null
+				let data = null
+				try { data = JSON.parse(raw) } catch (_error) { return null }
+
+				setText('fet-date', data.date)
+				setText('fet-reference', data.reference)
+				setText('fet-premises-name', data.premisesName)
+				setText('fet-premises-address', data.premisesAddress)
+				setText('fet-comments', data.comments)
+				setText('fet-trading-title', data.tradingTitle)
+				setHtml('fet-contractor-address', String(data.contractorAddress || '').replace(/\n/g, '<br />'))
+				setText('fet-contractor-name', data.contractorName)
+				setText('fet-signature', data.signature)
+				setText('fet-contractor-position', data.contractorPosition)
+				setText('fet-contractor-date', data.contractorDate)
+				renderRows(data.rows)
+				return data
+			}
+
+			async function downloadExactPdf(button) {
+				const status = document.getElementById('download-status')
+				const pages = Array.from(document.querySelectorAll('.page'))
+				if (!pages.length) return
+				button.disabled = true
+				const originalText = button.textContent
+				button.textContent = 'Generating...'
+				if (status) status.textContent = 'Preparing exact PDF layout...'
+
+				try {
+					const { jsPDF } = window.jspdf
+					let pdf = null
+					for (let idx = 0; idx < pages.length; idx += 1) {
+						const canvas = await html2canvas(pages[idx], {
+							scale: 3,
+							useCORS: true,
+							backgroundColor: '#ffffff',
+							imageTimeout: 0,
+						})
+						const image = canvas.toDataURL('image/png')
+						const widthPx = canvas.width
+						const heightPx = canvas.height
+						if (!pdf) {
+							pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [widthPx, heightPx] })
+						} else {
+							pdf.addPage([widthPx, heightPx], 'portrait')
+						}
+						pdf.addImage(image, 'PNG', 0, 0, widthPx, heightPx)
+					}
+					if (!pdf) throw new Error('No pages captured')
+					pdf.save('safety-spectrum-london-fet.pdf')
+					if (status) status.textContent = 'PDF downloaded successfully.'
+				} catch (_error) {
+					if (status) status.textContent = 'Download failed. Please try again.'
+				} finally {
+					button.disabled = false
+					button.textContent = originalText
+				}
+			}
+
+			const params = new URLSearchParams(window.location.search)
+			applyFetData()
+			if (params.get('autodownload') === '1') {
+				window.addEventListener('load', () => {
+					const button = document.getElementById('download-btn')
+					if (button instanceof HTMLButtonElement) window.setTimeout(() => downloadExactPdf(button), 350)
+				})
+			}
+		</script>
+	</body>
+</html>

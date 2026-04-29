@@ -15,6 +15,7 @@ const pdfOptions = [
 const elcPdfName = 'Safety Spectrum London elc'
 const fscPdfName = 'Safety Spectrum London fsc'
 const patPdfName = 'pat Safety spectrum london'
+const fetPdfName = 'fet safety spectrum london'
 
 type ElcFormData = {
   inspectionDate: string
@@ -101,6 +102,32 @@ type PatFormData = {
   equipmentSerialNumber: string
   rows: PatRow[]
   totalAppliances: string
+}
+
+type FetRow = {
+  itemNo: string
+  location: string
+  make: string
+  serialNumber: string
+  type: string
+  capacity: string
+  remarks: string
+  retest: string
+}
+
+type FetFormData = {
+  date: string
+  reference: string
+  premisesName: string
+  premisesAddress: string
+  comments: string
+  tradingTitle: string
+  contractorAddress: string
+  contractorName: string
+  signature: string
+  contractorPosition: string
+  contractorDate: string
+  rows: FetRow[]
 }
 
 const toPdfDate = (value: string) => {
@@ -318,6 +345,42 @@ const defaultPatForm: PatFormData = {
   totalAppliances: 'Total Appliances for Report: 4',
 }
 
+const defaultFetForm: FetFormData = {
+  date: '2026-02-18',
+  reference: '81773182 SW9 8SE',
+  premisesName: 'GLETS',
+  premisesAddress: 'Basement, F318 Coldharbour Lne, Lambeth, SW9 8SE',
+  comments: 'N/A',
+  tradingTitle: 'Safety Spectrum London',
+  contractorAddress: '14 Serbert\nRoad, London\nE7 0NQ',
+  contractorName: 'G. Stewart',
+  signature: '',
+  contractorPosition: 'Engineer',
+  contractorDate: '2026-02-18',
+  rows: [
+    {
+      itemNo: '1',
+      location: 'Kitchen',
+      make: 'sentinel',
+      serialNumber: 'N/A',
+      type: 'Co2',
+      capacity: '2 litre',
+      remarks: 'Good condition',
+      retest: '2027-02-18',
+    },
+    {
+      itemNo: '2',
+      location: 'Near main door',
+      make: 'fire cheif',
+      serialNumber: 'N/A',
+      type: 'Foam',
+      capacity: '6 litre',
+      remarks: 'Good condition',
+      retest: '2027-02-18',
+    },
+  ],
+}
+
 function MarkSelect({
   label,
   value,
@@ -340,13 +403,14 @@ function MarkSelect({
 }
 
 function App() {
-  const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form' | 'pat-form'>('home')
+  const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form' | 'pat-form' | 'fet-form'>('home')
   const [selectedPdf, setSelectedPdf] = useState(pdfOptions[0])
   const [activeSection, setActiveSection] = useState(0)
   const [isGenerating, setIsGenerating] = useState(false)
   const [form, setForm] = useState<ElcFormData>(defaultElcForm)
   const [fscForm, setFscForm] = useState<FscFormData>(defaultFscForm)
   const [patForm, setPatForm] = useState<PatFormData>(defaultPatForm)
+  const [fetForm, setFetForm] = useState<FetFormData>(defaultFetForm)
 
   const openSelectedLayout = () => {
     if (selectedPdf === elcPdfName) {
@@ -364,7 +428,12 @@ function App() {
       setActiveView('pat-form')
       return
     }
-    window.alert('Layout is currently available only for FSC, PAT and ELC certificates.')
+    if (selectedPdf === fetPdfName) {
+      setActiveSection(0)
+      setActiveView('fet-form')
+      return
+    }
+    window.alert('Layout is currently available only for FSC, PAT, FET and ELC certificates.')
   }
 
   const updateField = (field: keyof ElcFormData, value: string) => {
@@ -489,6 +558,52 @@ function App() {
     setIsGenerating(true)
     localStorage.setItem('pat_form_data', JSON.stringify(payload))
     window.open('/src/templates/safety-spectrum-london-pat.html?autodownload=1', '_blank', 'noopener,noreferrer')
+    window.setTimeout(() => setIsGenerating(false), 800)
+  }
+
+  const updateFetField = <K extends keyof FetFormData>(field: K, value: FetFormData[K]) => {
+    setFetForm((current) => ({ ...current, [field]: value }))
+  }
+
+  const updateFetRow = (index: number, field: keyof FetRow, value: string) => {
+    setFetForm((current) => {
+      const next = current.rows.map((row, idx) => (idx === index ? { ...row, [field]: value } : row))
+      return { ...current, rows: next }
+    })
+  }
+
+  const addFetRow = () => {
+    setFetForm((current) => ({
+      ...current,
+      rows: [
+        ...current.rows,
+        {
+          itemNo: String(current.rows.length + 1),
+          location: '',
+          make: '',
+          serialNumber: '',
+          type: '',
+          capacity: '',
+          remarks: '',
+          retest: current.contractorDate,
+        },
+      ],
+    }))
+  }
+
+  const downloadFetPdf = () => {
+    const payload = {
+      ...fetForm,
+      date: toPdfDate(fetForm.date),
+      contractorDate: toPdfDate(fetForm.contractorDate),
+      rows: fetForm.rows.map((row) => ({
+        ...row,
+        retest: toPdfDate(row.retest),
+      })),
+    }
+    setIsGenerating(true)
+    localStorage.setItem('fet_form_data', JSON.stringify(payload))
+    window.open('/src/templates/safety-spectrum-london-fet.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
 
@@ -959,6 +1074,120 @@ function App() {
               disabled={isGenerating}
             >
               {isLast ? (isGenerating ? 'Generating...' : 'Download Filled PAT') : 'Next'}
+            </button>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  if (activeView === 'fet-form') {
+    const sections = [
+      'Page 2: Meta and premises',
+      'Page 2: Contractor details',
+      'Page 3: Extinguisher rows',
+      'Review',
+    ]
+    const isLast = activeSection === sections.length - 1
+
+    return (
+      <main className="page-shell wizard-page">
+        <section className="wizard-header-panel">
+          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+            Back to templates
+          </button>
+          <p className="eyebrow">FET 3-page form</p>
+          <h1>{sections[activeSection]}</h1>
+          <p className="lede">Fill all FET fields and download with exact template style.</p>
+        </section>
+
+        <section className="wizard-progress" aria-label="Form sections">
+          {sections.map((title, idx) => (
+            <button
+              key={title}
+              type="button"
+              className={`wizard-step${idx === activeSection ? ' active' : ''}`}
+              onClick={() => setActiveSection(idx)}
+            >
+              <span>{idx + 1}</span>
+              <small>{title}</small>
+            </button>
+          ))}
+        </section>
+
+        <section className="form-panel">
+          {activeSection === 0 && (
+            <div className="form-grid">
+              <label>Date<input type="date" value={fetForm.date} onChange={(e) => updateFetField('date', e.target.value)} /></label>
+              <label className="wide">Certificate Serial No/Ref<input value={fetForm.reference} onChange={(e) => updateFetField('reference', e.target.value)} /></label>
+              <label>Premises Name<input value={fetForm.premisesName} onChange={(e) => updateFetField('premisesName', e.target.value)} /></label>
+              <label className="wide">Premises Address<input value={fetForm.premisesAddress} onChange={(e) => updateFetField('premisesAddress', e.target.value)} /></label>
+              <label className="wide">Additional Comments<input value={fetForm.comments} onChange={(e) => updateFetField('comments', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 1 && (
+            <div className="form-grid">
+              <label>Trading Title<input value={fetForm.tradingTitle} onChange={(e) => updateFetField('tradingTitle', e.target.value)} /></label>
+              <label className="wide">Contractor Address (use new lines)
+                <textarea rows={3} value={fetForm.contractorAddress} onChange={(e) => updateFetField('contractorAddress', e.target.value)} />
+              </label>
+              <label>Contractor Name<input value={fetForm.contractorName} onChange={(e) => updateFetField('contractorName', e.target.value)} /></label>
+              <label>Signature<input value={fetForm.signature} onChange={(e) => updateFetField('signature', e.target.value)} /></label>
+              <label>Position<input value={fetForm.contractorPosition} onChange={(e) => updateFetField('contractorPosition', e.target.value)} /></label>
+              <label>Date<input type="date" value={fetForm.contractorDate} onChange={(e) => updateFetField('contractorDate', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 2 && (
+            <div className="appliance-table">
+              <h3>Portable Fire Extinguishers ({fetForm.rows.length} rows)</h3>
+              <button type="button" className="secondary-action" onClick={addFetRow}>
+                Add More Row
+              </button>
+              {fetForm.rows.map((row, idx) => (
+                <div key={`fet-row-${idx}`} className="appliance-row">
+                  <label>Item No<input value={row.itemNo} onChange={(e) => updateFetRow(idx, 'itemNo', e.target.value)} /></label>
+                  <label>Location<input value={row.location} onChange={(e) => updateFetRow(idx, 'location', e.target.value)} /></label>
+                  <label>Make<input value={row.make} onChange={(e) => updateFetRow(idx, 'make', e.target.value)} /></label>
+                  <label>Serial Number<input value={row.serialNumber} onChange={(e) => updateFetRow(idx, 'serialNumber', e.target.value)} /></label>
+                  <label>Type<input value={row.type} onChange={(e) => updateFetRow(idx, 'type', e.target.value)} /></label>
+                  <label>Capacity L<input value={row.capacity} onChange={(e) => updateFetRow(idx, 'capacity', e.target.value)} /></label>
+                  <label className="wide">Remarks<input value={row.remarks} onChange={(e) => updateFetRow(idx, 'remarks', e.target.value)} /></label>
+                  <label>Retest Date<input type="date" value={row.retest} onChange={(e) => updateFetRow(idx, 'retest', e.target.value)} /></label>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {activeSection === 3 && (
+            <div className="review-card">
+              <p>Reference: <strong>{fetForm.reference}</strong></p>
+              <p>Premises: <strong>{fetForm.premisesName}</strong></p>
+              <p>Contractor: <strong>{fetForm.contractorName}</strong></p>
+              <p>Rows filled: <strong>{fetForm.rows.filter((r) => r.itemNo.trim() || r.location.trim() || r.make.trim()).length}</strong></p>
+              <button type="button" className="primary-action" onClick={downloadFetPdf} disabled={isGenerating}>
+                {isGenerating ? 'Generating...' : 'Download Filled FET'}
+              </button>
+            </div>
+          )}
+
+          <div className="wizard-footer">
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={() => setActiveSection((s) => Math.max(0, s - 1))}
+              disabled={activeSection === 0}
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              className="primary-action"
+              onClick={() => (isLast ? downloadFetPdf() : setActiveSection((s) => s + 1))}
+              disabled={isGenerating}
+            >
+              {isLast ? (isGenerating ? 'Generating...' : 'Download Filled FET') : 'Next'}
             </button>
           </div>
         </section>
