@@ -16,6 +16,7 @@ const elcPdfName = 'Safety Spectrum London elc'
 const fscPdfName = 'Safety Spectrum London fsc'
 const patPdfName = 'pat Safety spectrum london'
 const fetPdfName = 'fet safety spectrum london'
+const legionellaPdfName = 'Legionella'
 
 type ElcFormData = {
   inspectionDate: string
@@ -128,6 +129,57 @@ type FetFormData = {
   contractorPosition: string
   contractorDate: string
   rows: FetRow[]
+}
+
+type LegionellaFormData = {
+  page1PropertyAddress: string
+  page1ClientName: string
+  page1AssessorName: string
+  page1Reference: string
+  page1AssessmentDate: string
+  page1PropertyType: string
+  page1DutyHolder: string
+  page1ResponsiblePersons: string
+  page1PolicyExists: string
+  page1TrainedCompetent: string
+  page1ContractorsApproved: string
+  page1WrittenScheme: string
+  page1SchematicSupplied: string
+  page1Occupied: string
+  page1CoverNote: string
+  page1Location: string
+  page1InspectedOn: string
+  page1OurRef: string
+  page1FooterCompany: string
+  page5Scope: string
+  page5Limitations: string
+  page5SystemType: string
+  page5WholesomeSupply: string
+  page5FittingsSuitable: string
+  page5Overview: string
+  page5ControlStrategy: string
+  page7PhotoUrl: string
+  page8Note: string
+  page9Note: string
+  page14PhotoUrl: string
+  page15PhotoUrl: string
+  page16PhotoUrl: string
+  page17PhotoUrl: string
+  page17Note: string
+  page23Photo1Url: string
+  page23Photo2Url: string
+  page23Photo3Url: string
+  page23Photo4Url: string
+  page25Summary: string
+  page25RiskLevel: string
+  page25RiskText: string
+  page25ReviewDate: string
+  page26Subtitle: string
+  page26AssessorName: string
+  page26Email: string
+  page26AssessmentDate: string
+  page26Copy: string
+  page27SchematicUrl: string
 }
 
 const toPdfDate = (value: string) => {
@@ -381,6 +433,62 @@ const defaultFetForm: FetFormData = {
   ],
 }
 
+const defaultLegionellaForm: LegionellaFormData = {
+  page1PropertyAddress: '13 Tudor Road , LU3 1RN',
+  page1ClientName: 'Arete Health Limited',
+  page1AssessorName: 'Mr. Muhammad Faizan',
+  page1Reference: '000455',
+  page1AssessmentDate: '2026-01-12',
+  page1PropertyType: 'House',
+  page1DutyHolder: 'Arete Health Limited',
+  page1ResponsiblePersons: 'Arete Health Limited',
+  page1PolicyExists: 'Unknown',
+  page1TrainedCompetent: 'Unknown',
+  page1ContractorsApproved: 'Unknown',
+  page1WrittenScheme: 'Unknown',
+  page1SchematicSupplied: '*No',
+  page1Occupied: '*No',
+  page1CoverNote:
+    "*Please note that if the property is not occupied at time of inspection it is not possible to assess the risk of persons who may be vulnerable to Legionnaire's Disease. Therefore, the assessment will require review once the property is occupied. Properties which are unoccupied for periods of 2 weeks or more present a risk due to water stagnation- further details are contained in section 8 of this assessment.",
+  page1Location: '14 Sebert Road,\nLondon, E7 0NQ',
+  page1InspectedOn: '12-Jan-2026',
+  page1OurRef: 'P000455',
+  page1FooterCompany: 'Safety Spectrum London',
+  page5Scope: '13 Tudor Road , LU3 1RN',
+  page5Limitations: '',
+  page5SystemType: 'Mains-fed cold water supply Hot water is provided via a combi boiler.',
+  page5WholesomeSupply: 'Yes',
+  page5FittingsSuitable: 'Yes',
+  page5Overview:
+    'The property is supplied by a standard domestic hot and cold water system. Hot water is generated via a combi boiler (no stored hot water cylinder present), meaning water is heated on demand and not stored, reducing Legionella risk. The system distributes hot and cold water to the kitchen, bathroom, and any additional hand basins present within the property.',
+  page5ControlStrategy: '',
+  page7PhotoUrl: '',
+  page8Note: '',
+  page9Note:
+    'Water temperature- control measures: Ensure boiler/water heater is set to 60°C so that water reaches outlets at above 50°C. Ensure cold water does not exceed 20°C by making sure pipes and storage tanks are insulated. Ensure water temperature at outlets is 39-43°C where TMVs are fitted, or above 50°C at the hot pipe feeding the TMV if it is accessible. TMVs should be tested at least annually.',
+  page14PhotoUrl: '',
+  page15PhotoUrl: '',
+  page16PhotoUrl: '',
+  page17PhotoUrl: '',
+  page17Note:
+    'showers/spray/taps/hose pipes should be flushed through weekly. Shower heads and other outlets should be de-scaled at least every 3-6 months. Consideration should be given to replacing spray taps with normal taps.',
+  page23Photo1Url: '',
+  page23Photo2Url: '',
+  page23Photo3Url: '',
+  page23Photo4Url: '',
+  page25Summary: '',
+  page25RiskLevel: 'Risk level 1',
+  page25RiskText: ' - Minor',
+  page25ReviewDate: '08/12/2027',
+  page26Subtitle: "Legionella Risk Assessment For\n39 St Luke's Street, London,  SW3 3RP",
+  page26AssessorName: 'Mr. Muhammad Faizan',
+  page26Email: 'info@safetyspectrumlondon.co.uk',
+  page26AssessmentDate: '08/12/2025',
+  page26Copy:
+    'This Legionella risk assessment has been produced by a competent assessor in accordance with the requirements of Approved Code of Practice L8, HSG 274 Part 2 and other relevant HSE guidance. If you have any queries with this certificate please contact the assessor that produced it in the first instance, their details are shown above.',
+  page27SchematicUrl: '',
+}
+
 function MarkSelect({
   label,
   value,
@@ -403,7 +511,7 @@ function MarkSelect({
 }
 
 function App() {
-  const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form' | 'pat-form' | 'fet-form'>('home')
+  const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form' | 'pat-form' | 'fet-form' | 'legionella-form'>('home')
   const [selectedPdf, setSelectedPdf] = useState(pdfOptions[0])
   const [activeSection, setActiveSection] = useState(0)
   const [isGenerating, setIsGenerating] = useState(false)
@@ -411,6 +519,7 @@ function App() {
   const [fscForm, setFscForm] = useState<FscFormData>(defaultFscForm)
   const [patForm, setPatForm] = useState<PatFormData>(defaultPatForm)
   const [fetForm, setFetForm] = useState<FetFormData>(defaultFetForm)
+  const [legionellaForm, setLegionellaForm] = useState<LegionellaFormData>(defaultLegionellaForm)
 
   const openSelectedLayout = () => {
     if (selectedPdf === elcPdfName) {
@@ -433,7 +542,12 @@ function App() {
       setActiveView('fet-form')
       return
     }
-    window.alert('Layout is currently available only for FSC, PAT, FET and ELC certificates.')
+    if (selectedPdf === legionellaPdfName) {
+      setActiveSection(0)
+      setActiveView('legionella-form')
+      return
+    }
+    window.alert('Layout is currently available only for FSC, PAT, FET, Legionella and ELC certificates.')
   }
 
   const updateField = (field: keyof ElcFormData, value: string) => {
@@ -604,6 +718,21 @@ function App() {
     setIsGenerating(true)
     localStorage.setItem('fet_form_data', JSON.stringify(payload))
     window.open('/src/templates/safety-spectrum-london-fet.html?autodownload=1', '_blank', 'noopener,noreferrer')
+    window.setTimeout(() => setIsGenerating(false), 800)
+  }
+
+  const updateLegionellaField = <K extends keyof LegionellaFormData>(field: K, value: LegionellaFormData[K]) => {
+    setLegionellaForm((current) => ({ ...current, [field]: value }))
+  }
+
+  const downloadLegionellaPdf = () => {
+    const payload = {
+      ...legionellaForm,
+      page1AssessmentDate: toPdfDate(legionellaForm.page1AssessmentDate),
+    }
+    setIsGenerating(true)
+    localStorage.setItem('legionella_form_data', JSON.stringify(payload))
+    window.open('/src/templates/safety-spectrum-london-legionella.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
 
@@ -1188,6 +1317,160 @@ function App() {
               disabled={isGenerating}
             >
               {isLast ? (isGenerating ? 'Generating...' : 'Download Filled FET') : 'Next'}
+            </button>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  if (activeView === 'legionella-form') {
+    const sections = [
+      'Page 1 fields',
+      'Page 5 fields',
+      'Pages 7,8,9 fields',
+      'Pages 14,15,16,17 fields',
+      'Page 23 fields',
+      'Pages 25,26,27 fields',
+      'Review',
+    ]
+    const isLast = activeSection === sections.length - 1
+
+    return (
+      <main className="page-shell wizard-page">
+        <section className="wizard-header-panel">
+          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+            Back to templates
+          </button>
+          <p className="eyebrow">Legionella 27-page form</p>
+          <h1>{sections[activeSection]}</h1>
+          <p className="lede">Only requested pages are editable; all other pages remain static.</p>
+        </section>
+
+        <section className="wizard-progress" aria-label="Form sections">
+          {sections.map((title, idx) => (
+            <button
+              key={title}
+              type="button"
+              className={`wizard-step${idx === activeSection ? ' active' : ''}`}
+              onClick={() => setActiveSection(idx)}
+            >
+              <span>{idx + 1}</span>
+              <small>{title}</small>
+            </button>
+          ))}
+        </section>
+
+        <section className="form-panel">
+          {activeSection === 0 && (
+            <div className="form-grid">
+              <label className="wide">Page 1 Property Address<input value={legionellaForm.page1PropertyAddress} onChange={(e) => updateLegionellaField('page1PropertyAddress', e.target.value)} /></label>
+              <label>Page 1 Client Name<input value={legionellaForm.page1ClientName} onChange={(e) => updateLegionellaField('page1ClientName', e.target.value)} /></label>
+              <label>Page 1 Assessor Name<input value={legionellaForm.page1AssessorName} onChange={(e) => updateLegionellaField('page1AssessorName', e.target.value)} /></label>
+              <label>Page 1 Reference<input value={legionellaForm.page1Reference} onChange={(e) => updateLegionellaField('page1Reference', e.target.value)} /></label>
+              <label>Page 1 Assessment Date<input type="date" value={legionellaForm.page1AssessmentDate} onChange={(e) => updateLegionellaField('page1AssessmentDate', e.target.value)} /></label>
+              <label>Page 1 Property Type<input value={legionellaForm.page1PropertyType} onChange={(e) => updateLegionellaField('page1PropertyType', e.target.value)} /></label>
+              <label>Page 1 Duty Holder<input value={legionellaForm.page1DutyHolder} onChange={(e) => updateLegionellaField('page1DutyHolder', e.target.value)} /></label>
+              <label className="wide">Page 1 Responsible Persons<input value={legionellaForm.page1ResponsiblePersons} onChange={(e) => updateLegionellaField('page1ResponsiblePersons', e.target.value)} /></label>
+              <label>Policy Exists<input value={legionellaForm.page1PolicyExists} onChange={(e) => updateLegionellaField('page1PolicyExists', e.target.value)} /></label>
+              <label>Trained / Competent<input value={legionellaForm.page1TrainedCompetent} onChange={(e) => updateLegionellaField('page1TrainedCompetent', e.target.value)} /></label>
+              <label>Contractors Approved<input value={legionellaForm.page1ContractorsApproved} onChange={(e) => updateLegionellaField('page1ContractorsApproved', e.target.value)} /></label>
+              <label>Written Scheme<input value={legionellaForm.page1WrittenScheme} onChange={(e) => updateLegionellaField('page1WrittenScheme', e.target.value)} /></label>
+              <label>Schematic Supplied<input value={legionellaForm.page1SchematicSupplied} onChange={(e) => updateLegionellaField('page1SchematicSupplied', e.target.value)} /></label>
+              <label>Occupied<input value={legionellaForm.page1Occupied} onChange={(e) => updateLegionellaField('page1Occupied', e.target.value)} /></label>
+              <label className="wide">Page 1 Cover Note<input value={legionellaForm.page1CoverNote} onChange={(e) => updateLegionellaField('page1CoverNote', e.target.value)} /></label>
+              <label className="wide">Page 1 Location (multi-line)
+                <textarea rows={3} value={legionellaForm.page1Location} onChange={(e) => updateLegionellaField('page1Location', e.target.value)} />
+              </label>
+              <label>Page 1 Inspected On<input value={legionellaForm.page1InspectedOn} onChange={(e) => updateLegionellaField('page1InspectedOn', e.target.value)} /></label>
+              <label>Page 1 Our Ref<input value={legionellaForm.page1OurRef} onChange={(e) => updateLegionellaField('page1OurRef', e.target.value)} /></label>
+              <label>Page 1 Footer Company<input value={legionellaForm.page1FooterCompany} onChange={(e) => updateLegionellaField('page1FooterCompany', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 1 && (
+            <div className="form-grid">
+              <label className="wide">Page 5 Scope<input value={legionellaForm.page5Scope} onChange={(e) => updateLegionellaField('page5Scope', e.target.value)} /></label>
+              <label className="wide">Page 5 Limitations<input value={legionellaForm.page5Limitations} onChange={(e) => updateLegionellaField('page5Limitations', e.target.value)} /></label>
+              <label className="wide">Page 5 System Type<input value={legionellaForm.page5SystemType} onChange={(e) => updateLegionellaField('page5SystemType', e.target.value)} /></label>
+              <label>Wholesome Supply<input value={legionellaForm.page5WholesomeSupply} onChange={(e) => updateLegionellaField('page5WholesomeSupply', e.target.value)} /></label>
+              <label>Fittings Suitable<input value={legionellaForm.page5FittingsSuitable} onChange={(e) => updateLegionellaField('page5FittingsSuitable', e.target.value)} /></label>
+              <label className="wide">Page 5 Overview<input value={legionellaForm.page5Overview} onChange={(e) => updateLegionellaField('page5Overview', e.target.value)} /></label>
+              <label className="wide">Page 5 Control Strategy<input value={legionellaForm.page5ControlStrategy} onChange={(e) => updateLegionellaField('page5ControlStrategy', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 2 && (
+            <div className="form-grid">
+              <label className="wide">Page 7 Photo URL<input value={legionellaForm.page7PhotoUrl} onChange={(e) => updateLegionellaField('page7PhotoUrl', e.target.value)} /></label>
+              <label className="wide">Page 8 Note<input value={legionellaForm.page8Note} onChange={(e) => updateLegionellaField('page8Note', e.target.value)} /></label>
+              <label className="wide">Page 9 Note<input value={legionellaForm.page9Note} onChange={(e) => updateLegionellaField('page9Note', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 3 && (
+            <div className="form-grid">
+              <label className="wide">Page 14 Photo URL<input value={legionellaForm.page14PhotoUrl} onChange={(e) => updateLegionellaField('page14PhotoUrl', e.target.value)} /></label>
+              <label className="wide">Page 15 Photo URL<input value={legionellaForm.page15PhotoUrl} onChange={(e) => updateLegionellaField('page15PhotoUrl', e.target.value)} /></label>
+              <label className="wide">Page 16 Photo URL<input value={legionellaForm.page16PhotoUrl} onChange={(e) => updateLegionellaField('page16PhotoUrl', e.target.value)} /></label>
+              <label className="wide">Page 17 Photo URL<input value={legionellaForm.page17PhotoUrl} onChange={(e) => updateLegionellaField('page17PhotoUrl', e.target.value)} /></label>
+              <label className="wide">Page 17 Note<input value={legionellaForm.page17Note} onChange={(e) => updateLegionellaField('page17Note', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 4 && (
+            <div className="form-grid">
+              <label className="wide">Page 23 Photo 1 URL<input value={legionellaForm.page23Photo1Url} onChange={(e) => updateLegionellaField('page23Photo1Url', e.target.value)} /></label>
+              <label className="wide">Page 23 Photo 2 URL<input value={legionellaForm.page23Photo2Url} onChange={(e) => updateLegionellaField('page23Photo2Url', e.target.value)} /></label>
+              <label className="wide">Page 23 Photo 3 URL<input value={legionellaForm.page23Photo3Url} onChange={(e) => updateLegionellaField('page23Photo3Url', e.target.value)} /></label>
+              <label className="wide">Page 23 Photo 4 URL<input value={legionellaForm.page23Photo4Url} onChange={(e) => updateLegionellaField('page23Photo4Url', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 5 && (
+            <div className="form-grid">
+              <label className="wide">Page 25 Summary<input value={legionellaForm.page25Summary} onChange={(e) => updateLegionellaField('page25Summary', e.target.value)} /></label>
+              <label>Page 25 Risk Level<input value={legionellaForm.page25RiskLevel} onChange={(e) => updateLegionellaField('page25RiskLevel', e.target.value)} /></label>
+              <label>Page 25 Risk Text<input value={legionellaForm.page25RiskText} onChange={(e) => updateLegionellaField('page25RiskText', e.target.value)} /></label>
+              <label>Page 25 Review Date<input value={legionellaForm.page25ReviewDate} onChange={(e) => updateLegionellaField('page25ReviewDate', e.target.value)} /></label>
+              <label className="wide">Page 26 Subtitle (multi-line)
+                <textarea rows={3} value={legionellaForm.page26Subtitle} onChange={(e) => updateLegionellaField('page26Subtitle', e.target.value)} />
+              </label>
+              <label>Page 26 Assessor Name<input value={legionellaForm.page26AssessorName} onChange={(e) => updateLegionellaField('page26AssessorName', e.target.value)} /></label>
+              <label>Page 26 Email<input value={legionellaForm.page26Email} onChange={(e) => updateLegionellaField('page26Email', e.target.value)} /></label>
+              <label>Page 26 Assessment Date<input value={legionellaForm.page26AssessmentDate} onChange={(e) => updateLegionellaField('page26AssessmentDate', e.target.value)} /></label>
+              <label className="wide">Page 26 Certificate Copy<input value={legionellaForm.page26Copy} onChange={(e) => updateLegionellaField('page26Copy', e.target.value)} /></label>
+              <label className="wide">Page 27 Schematic URL<input value={legionellaForm.page27SchematicUrl} onChange={(e) => updateLegionellaField('page27SchematicUrl', e.target.value)} /></label>
+            </div>
+          )}
+
+          {activeSection === 6 && (
+            <div className="review-card">
+              <p>Reference: <strong>{legionellaForm.page1Reference}</strong></p>
+              <p>Property: <strong>{legionellaForm.page1PropertyAddress}</strong></p>
+              <p>Assessor: <strong>{legionellaForm.page1AssessorName}</strong></p>
+              <button type="button" className="primary-action" onClick={downloadLegionellaPdf} disabled={isGenerating}>
+                {isGenerating ? 'Generating...' : 'Download Filled Legionella'}
+              </button>
+            </div>
+          )}
+
+          <div className="wizard-footer">
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={() => setActiveSection((s) => Math.max(0, s - 1))}
+              disabled={activeSection === 0}
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              className="primary-action"
+              onClick={() => (isLast ? downloadLegionellaPdf() : setActiveSection((s) => s + 1))}
+              disabled={isGenerating}
+            >
+              {isLast ? (isGenerating ? 'Generating...' : 'Download Filled Legionella') : 'Next'}
             </button>
           </div>
         </section>

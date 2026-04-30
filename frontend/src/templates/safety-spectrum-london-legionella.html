@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Legionella Report</title>
+  <link rel="stylesheet" href="./safety-spectrum-london-legionella.css">
+</head>
+<body>
+  <div id="leg-toolbar" style="position: fixed; top: 16px; right: 16px; z-index: 9999; display: flex; gap: 10px; align-items: center; font-family: Arial, Helvetica, sans-serif;">
+    <span id="download-status" style="color: #444; font-size: 12px;">Downloads the same visible layout.</span>
+    <button type="button" id="download-btn" onclick="downloadExactPdf(this)" style="border: 0; border-radius: 999px; padding: 10px 16px; background: #1f3b82; color: #fff; font-weight: 700; cursor: pointer;">Download PDF</button>
+  </div>
+  <div class="book">
+    <section class="page created water-page cover-page">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content cover-content">
+        <img class="brand-logo cover-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+
+        <div class="cover-title">Legionella Risk Assessment</div>
+
+        <div class="cover-main">
+          <div class="cover-left">
+            <div class="cover-row"><strong>Property address:</strong> <span id="leg-p1-property-address">13 Tudor Road , LU3 1RN</span></div>
+            <div class="cover-row"><strong>Client name:</strong> <span id="leg-p1-client-name">Arete Health Limited</span></div>
+            <div class="cover-row"><strong>Assessor name:</strong> <span id="leg-p1-assessor-name">Mr. Muhammad Faizan</span></div>
+            <div class="cover-row"><strong>Reference:</strong> <span id="leg-p1-reference">000455</span></div>
+            <div class="cover-row highlight"><strong>Assessment Date:</strong> <span id="leg-p1-assessment-date">12/01/2026</span></div>
+            <div class="cover-row"><strong>Property type:</strong> <span id="leg-p1-property-type">House</span></div>
+            <div class="cover-row"><strong>Name of Duty holder:</strong> <span id="leg-p1-duty-holder">Arete Health Limited</span></div>
+            <div class="cover-row"><strong>Name(s) of responsible person(s):</strong> <span id="leg-p1-responsible-persons">Arete Health Limited</span></div>
+
+            <div class="existing-bar">Existing information</div>
+            <div class="cover-row small">Does a policy exist which clearly lays out individuals' responsibilities? <span id="leg-p1-policy-exists">Unknown</span></div>
+            <div class="cover-row small">Are persons identified within the policy trained/competent? <span id="leg-p1-trained-competent">Unknown</span></div>
+            <div class="cover-row small">Have contractors been approved and are they competent? <span id="leg-p1-contractors-approved">Unknown</span></div>
+          </div>
+
+          <div class="cover-photo"></div>
+        </div>
+
+        <div class="section-bar cover-question">Does a written scheme of control currently exist for the property? <span id="leg-p1-written-scheme">Unknown</span></div>
+
+        <div class="cover-answers">
+          <div>Has a schematic drawing been supplied by the client? <span id="leg-p1-schematic-supplied">*No</span></div>
+          <div>Is property currently occupied? <span id="leg-p1-occupied">*No</span></div>
+        </div>
+
+        <div class="cover-note" id="leg-p1-cover-note">
+          *Please note that if the property is not occupied at time of inspection it is not possible to assess the risk of persons who may be vulnerable to Legionnaire's Disease. Therefore, the assessment will require review once the property is occupied. Properties which are unoccupied for periods of 2 weeks or more present a risk due to water stagnation- further details are contained in section 8 of this assessment.
+        </div>
+
+        <div class="cover-footer">
+          <div class="cover-footer-left">
+            <div><strong>LOCATION :</strong> <span id="leg-p1-location">14 Sebert Road,<br>London, E7 0NQ</span></div>
+            <div style="margin-top: 1.5mm;"><strong>INSPECTED ON :</strong> <span id="leg-p1-inspected-on">12-Jan-2026</span></div>
+            <div style="margin-top: 1.5mm;"><strong>OUR REF:</strong> <span id="leg-p1-our-ref">P000455</span></div>
+            <div style="margin-top: 1.5mm;" id="leg-p1-footer-company">Safety Spectrum London</div>
+          </div>
+          <div class="cover-logo-box">
+            <img class="cover-footer-logo cover-footer-logo-top" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum Logo">
+            <img class="cover-footer-logo cover-footer-logo-bottom" src="/src/assets/IFSM logo.png" alt="IFSM and BOHS logo">
+          </div>
+        </div>
+      </div>
+      <div class="page-label">Page 1 of 27</div>
+    </section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-02.png" alt="Page 2"></section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-03.png" alt="Page 3"></section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-04.png" alt="Page 4"></section>
+
+    <section class="page created water-page page-5">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content report-layout">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+
+        <div class="section-bar center">Details Of Water System(s)</div>
+
+        <div class="content-stack">
+          <div class="section-bar">Scope of assessment (Whole property)</div>
+          <div class="field-box single-line" id="leg-p5-scope">13 Tudor Road , LU3 1RN</div>
+
+          <div class="field-box paragraph small-gap">
+            *Please note that inaccessible sections of pipework such as those situated under floors or recessed in walls have not been inspected as part of this risk assessment.<br>
+            This Legionella Competency Scheme only covers assessments of hot and cold water systems, not water bodies or water associated within HVAC(heating, ventilation, air conditioning) services.
+          </div>
+
+          <div class="section-bar">Limitations Type of hot and cold water system</div>
+          <div class="field-box blank-short" id="leg-p5-limitations"></div>
+
+          <div class="section-bar">Type of hot and cold water system</div>
+          <div class="field-box medium-copy" id="leg-p5-system-type">Mains-fed cold water supply Hot water is provided via a combi boiler.</div>
+
+          <div class="section-bar">Initial questions</div>
+          <div class="field-box qa-box">
+            <div><strong>Is water from a wholesome supply?</strong> <span id="leg-p5-wholesome-supply">Yes</span></div>
+            <div><strong>Are all visible materials and fittings used suitable for application?</strong> <span id="leg-p5-fittings-suitable">Yes</span></div>
+          </div>
+
+          <div class="section-bar">Brief overview of system including boiler/water heater, rooms served and outlets</div>
+          <div class="field-box paragraph" id="leg-p5-overview">
+            The property is supplied by a standard domestic hot and cold water system. Hot water is generated via a combi boiler (no stored hot water cylinder present), meaning water is heated on demand and not stored, reducing Legionella risk. The system distributes hot and cold water to the kitchen, bathroom, and any additional hand basins present within the property.
+          </div>
+
+          <div class="section-bar">Description of current control strategy, if any</div>
+          <div class="field-box blank-short" id="leg-p5-control-strategy"></div>
+        </div>
+      </div>
+      <div class="page-label">Page 5 of 27</div>
+    </section>
+
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-06.png" alt="Page 6"></section>
+
+    <section class="page created water-page photo-page" data-page="7">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <div class="photo-frame photo-7" id="leg-p7-photo"></div>
+      </div>
+      <div class="page-label">Page 7 of 27</div>
+    </section>
+
+    <section class="page created water-page blank-background" data-page="8">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <div class="bottom-note medium" id="leg-p8-note"></div>
+      </div>
+      <div class="page-label">Page 8 of 27</div>
+    </section>
+
+    <section class="page created water-page note-page" data-page="9">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <div class="bottom-note large" id="leg-p9-note">
+          Water temperature- control measures: Ensure boiler/water heater is set to 60&deg;C so that water reaches outlets at above 50&deg;C. Ensure cold water does not exceed 20&deg;C by making sure pipes and storage tanks are insulated. Ensure water temperature at outlets is 39-43&deg;C where TMVs are fitted, or above 50&deg;C at the hot pipe feeding the TMV if it is accessible. TMVs should be tested at least annually.
+        </div>
+      </div>
+      <div class="page-label">Page 9 of 27</div>
+    </section>
+
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-10.png" alt="Page 10"></section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-11.png" alt="Page 11"></section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-12.png" alt="Page 12"></section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-13.png" alt="Page 13"></section>
+
+    <section class="page created water-page photo-page" data-page="14">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <div class="photo-frame photo-14" id="leg-p14-photo"></div>
+      </div>
+      <div class="page-label">Page 14 of 27</div>
+    </section>
+
+    <section class="page created water-page photo-page" data-page="15">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <div class="photo-frame photo-15 wide-photo" id="leg-p15-photo"></div>
+      </div>
+      <div class="page-label">Page 15 of 27</div>
+    </section>
+
+    <section class="page created water-page photo-page" data-page="16">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <div class="photo-frame photo-16 wide-photo" id="leg-p16-photo"></div>
+      </div>
+      <div class="page-label">Page 16 of 27</div>
+    </section>
+
+    <section class="page created water-page photo-page note-photo-page" data-page="17">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <div class="photo-frame photo-17" id="leg-p17-photo"></div>
+        <div class="bottom-note medium" id="leg-p17-note">
+          showers/spray/taps/hose pipes should be flushed through weekly. Shower heads and other outlets should be de-scaled at least every 3-6 months. Consideration should be given to replacing spray taps with normal taps.
+        </div>
+      </div>
+      <div class="page-label">Page 17 of 27</div>
+    </section>
+
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-18.png" alt="Page 18"></section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-19.png" alt="Page 19"></section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-20.png" alt="Page 20"></section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-21.png" alt="Page 21"></section>
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-22.png" alt="Page 22"></section>
+
+    <section class="page created water-page page-23">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <div class="section-bar center">Further photos</div>
+        <div class="photo-grid-2x2">
+          <div class="gallery-photo gallery-1" id="leg-p23-photo-1"></div>
+          <div class="gallery-photo gallery-2" id="leg-p23-photo-2"></div>
+          <div class="gallery-photo gallery-3" id="leg-p23-photo-3"></div>
+          <div class="gallery-photo gallery-4" id="leg-p23-photo-4"></div>
+        </div>
+      </div>
+      <div class="page-label">Page 23 of 27</div>
+    </section>
+
+    <section class="page static"><img class="full" src="/src/assets/Legionella.pdf-24.png" alt="Page 24"></section>
+
+    <section class="page created water-page page-25">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content report-layout">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+
+        <div class="section-bar center">Assessment Summary</div>
+
+        <div class="content-stack summary-stack">
+          <div class="section-bar">Summary of Risk Assessment</div>
+          <div class="field-box blank-medium" id="leg-p25-summary"></div>
+
+          <div class="section-bar">Overall Risk Rating</div>
+          <div class="field-box single-line"><strong id="leg-p25-risk-level">Risk level 1</strong><span id="leg-p25-risk-text"> - Minor</span></div>
+
+          <div class="section-bar">Assessment review date</div>
+          <div class="field-box single-line"><strong>Assessment review date</strong> <span id="leg-p25-review-date">08/12/2027</span></div>
+          <div class="field-box paragraph compact-box">
+            *This risk assessment should be reviewed on change of occupancy or changes to the water system.
+          </div>
+
+          <div class="section-bar center">Disclaimer</div>
+          <div class="field-box paragraph compact-box">
+            This risk assessment has been carried out using information provided by the client and the property's occupants at the time of assessment. It is hereby understood and agreed that the person/s named in this risk assessment shall not be liable in respect of any claim or costs or expenses arising out of the following:
+            <ul>
+              <li>Any neglect, error or omission occurring or committed prior to the date of this document in respect of Legionella risk assessments</li>
+              <li>The collection of water samples for Legionella testing, the cleaning of water systems, Legionella testing and/or putting in place physical Legionella controls.</li>
+            </ul>
+          </div>
+
+          <div class="plain-copy">
+            Further information on Legionella control is available in the following publications, which are available to download free from the HSE website www.hse.gov.uk
+            <ul>
+              <li>Legionnaires' Disease: The Control of Legionella Bacteria in Water Systems- Approved Code of Practice L8 (2013) HSE</li>
+              <li>Legionnaires' Disease: Part 2: The Control of Legionella Bacteria in Hot and Cold Water Systems HSG274 (2014) HSE</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="page-label">Page 25 of 27</div>
+    </section>
+
+    <section class="page created water-page page-26">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content certificate-page">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <h1 class="certificate-title">Certificate of Compliance</h1>
+        <div class="certificate-subtitle" id="leg-p26-subtitle">Legionella Risk Assessment For<br>39 St Luke's Street, London, &nbsp;SW3 3RP</div>
+
+        <div class="certificate-details">
+          <div><strong>Assessor's Name:</strong> <span id="leg-p26-assessor-name">Mr. Muhammad Faizan</span></div>
+          <div><strong>Email:</strong> <span class="linkish" id="leg-p26-email">info@safetyspectrumlondon.co.uk</span></div>
+          <div><strong><u>Assessment Date:</u></strong> <u id="leg-p26-assessment-date">08/12/2025</u></div>
+        </div>
+
+        <div class="certificate-copy" id="leg-p26-copy">
+          This Legionella risk assessment has been produced by a competent assessor in accordance with the requirements of Approved Code of Practice L8, HSG 274 Part 2 and other relevant HSE guidance. If you have any queries with this certificate please contact the assessor that produced it in the first instance, their details are shown above.
+        </div>
+
+        <div class="certificate-watermark">Certificate</div>
+      </div>
+      <div class="page-label">Page 26 of 27</div>
+    </section>
+
+    <section class="page created water-page page-27">
+      <div class="water-overlay"></div>
+      <div class="water-mask top-left"></div>
+      <div class="page-content">
+        <img class="brand-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+        <div class="section-bar center">Schematic Drawing of Water System</div>
+        <div class="schematic-wrap">
+          <div class="schematic" id="leg-p27-schematic"></div>
+        </div>
+      </div>
+      <div class="page-label">Page 27 of 27</div>
+    </section>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script>
+    function setText(id, value) {
+      if (value === undefined || value === null || value === '') return
+      const el = document.getElementById(id)
+      if (!el) return
+      el.textContent = String(value)
+    }
+
+    function setHtml(id, value) {
+      if (value === undefined || value === null || value === '') return
+      const el = document.getElementById(id)
+      if (!el) return
+      el.innerHTML = String(value)
+    }
+
+    function setBgImage(id, url) {
+      if (!url) return
+      const el = document.getElementById(id)
+      if (!el) return
+      el.style.backgroundImage = `url("${url}")`
+    }
+
+    function applyLegionellaData() {
+      const raw = localStorage.getItem('legionella_form_data')
+      if (!raw) return null
+      let data = null
+      try { data = JSON.parse(raw) } catch (_error) { return null }
+
+      setText('leg-p1-property-address', data.page1PropertyAddress)
+      setText('leg-p1-client-name', data.page1ClientName)
+      setText('leg-p1-assessor-name', data.page1AssessorName)
+      setText('leg-p1-reference', data.page1Reference)
+      setText('leg-p1-assessment-date', data.page1AssessmentDate)
+      setText('leg-p1-property-type', data.page1PropertyType)
+      setText('leg-p1-duty-holder', data.page1DutyHolder)
+      setText('leg-p1-responsible-persons', data.page1ResponsiblePersons)
+      setText('leg-p1-policy-exists', data.page1PolicyExists)
+      setText('leg-p1-trained-competent', data.page1TrainedCompetent)
+      setText('leg-p1-contractors-approved', data.page1ContractorsApproved)
+      setText('leg-p1-written-scheme', data.page1WrittenScheme)
+      setText('leg-p1-schematic-supplied', data.page1SchematicSupplied)
+      setText('leg-p1-occupied', data.page1Occupied)
+      setText('leg-p1-cover-note', data.page1CoverNote)
+      setHtml('leg-p1-location', String(data.page1Location || '').replace(/\n/g, '<br>'))
+      setText('leg-p1-inspected-on', data.page1InspectedOn)
+      setText('leg-p1-our-ref', data.page1OurRef)
+      setText('leg-p1-footer-company', data.page1FooterCompany)
+
+      setText('leg-p5-scope', data.page5Scope)
+      setText('leg-p5-limitations', data.page5Limitations)
+      setText('leg-p5-system-type', data.page5SystemType)
+      setText('leg-p5-wholesome-supply', data.page5WholesomeSupply)
+      setText('leg-p5-fittings-suitable', data.page5FittingsSuitable)
+      setText('leg-p5-overview', data.page5Overview)
+      setText('leg-p5-control-strategy', data.page5ControlStrategy)
+
+      setText('leg-p8-note', data.page8Note)
+      setText('leg-p9-note', data.page9Note)
+      setText('leg-p17-note', data.page17Note)
+
+      setText('leg-p25-summary', data.page25Summary)
+      setText('leg-p25-risk-level', data.page25RiskLevel)
+      setText('leg-p25-risk-text', data.page25RiskText)
+      setText('leg-p25-review-date', data.page25ReviewDate)
+
+      setHtml('leg-p26-subtitle', String(data.page26Subtitle || '').replace(/\n/g, '<br>'))
+      setText('leg-p26-assessor-name', data.page26AssessorName)
+      setText('leg-p26-email', data.page26Email)
+      setText('leg-p26-assessment-date', data.page26AssessmentDate)
+      setText('leg-p26-copy', data.page26Copy)
+
+      setBgImage('leg-p7-photo', data.page7PhotoUrl)
+      setBgImage('leg-p14-photo', data.page14PhotoUrl)
+      setBgImage('leg-p15-photo', data.page15PhotoUrl)
+      setBgImage('leg-p16-photo', data.page16PhotoUrl)
+      setBgImage('leg-p17-photo', data.page17PhotoUrl)
+      setBgImage('leg-p23-photo-1', data.page23Photo1Url)
+      setBgImage('leg-p23-photo-2', data.page23Photo2Url)
+      setBgImage('leg-p23-photo-3', data.page23Photo3Url)
+      setBgImage('leg-p23-photo-4', data.page23Photo4Url)
+      setBgImage('leg-p27-schematic', data.page27SchematicUrl)
+      return data
+    }
+
+    async function downloadExactPdf(button) {
+      const status = document.getElementById('download-status')
+      const pages = Array.from(document.querySelectorAll('.page'))
+      if (!pages.length) return
+      button.disabled = true
+      const originalText = button.textContent
+      button.textContent = 'Generating...'
+      if (status) status.textContent = 'Preparing exact PDF layout...'
+      try {
+        const { jsPDF } = window.jspdf
+        let pdf = null
+        for (let idx = 0; idx < pages.length; idx += 1) {
+          if (status) status.textContent = `Rendering page ${idx + 1} of ${pages.length}...`
+          const canvas = await html2canvas(pages[idx], {
+            // Scale 2 avoids memory crashes on 27-page documents.
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            imageTimeout: 0,
+          })
+          const image = canvas.toDataURL('image/jpeg', 0.92)
+          const widthPx = canvas.width
+          const heightPx = canvas.height
+          if (!pdf) {
+            pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [widthPx, heightPx] })
+          } else {
+            pdf.addPage([widthPx, heightPx], 'portrait')
+          }
+          pdf.addImage(image, 'JPEG', 0, 0, widthPx, heightPx)
+
+          // Release memory between pages to reduce browser crashes.
+          canvas.width = 1
+          canvas.height = 1
+          await new Promise((resolve) => requestAnimationFrame(() => resolve(null)))
+        }
+        if (!pdf) throw new Error('No pages captured')
+        if (status) status.textContent = 'Finalizing PDF...'
+        pdf.save('safety-spectrum-london-legionella.pdf')
+        if (status) status.textContent = 'PDF downloaded successfully.'
+      } catch (_error) {
+        if (status) status.textContent = 'Download failed. Please try again.'
+      } finally {
+        button.disabled = false
+        button.textContent = originalText
+      }
+    }
+
+    const params = new URLSearchParams(window.location.search)
+    applyLegionellaData()
+    if (params.get('autodownload') === '1') {
+      window.addEventListener('load', () => {
+        const button = document.getElementById('download-btn')
+        if (button instanceof HTMLButtonElement) window.setTimeout(() => downloadExactPdf(button), 350)
+      })
+    }
+  </script>
+</body>
+</html>
