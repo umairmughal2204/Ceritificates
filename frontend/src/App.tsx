@@ -1988,6 +1988,21 @@ function App() {
 
   return (
     <main className="page-shell">
+      <section className="home-intro-panel" aria-labelledby="home-title">
+        <div>
+          <p className="eyebrow">Safety Spectrum London</p>
+          <h1 id="home-title">Certificate Management</h1>
+          <p className="home-intro-copy">
+            Choose a certificate template, complete the form, and export a PDF matching the approved layout.
+          </p>
+        </div>
+        <div className="home-intro-meta">
+          <span>{pdfOptions.length} templates available</span>
+          <span>Standardized output</span>
+          <span>Ready for download</span>
+        </div>
+      </section>
+
       <section className="picker-panel" aria-labelledby="pdf-picker-title">
         <div className="picker-header">
           <div>
