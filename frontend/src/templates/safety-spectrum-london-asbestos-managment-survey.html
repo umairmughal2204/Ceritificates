@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Asbestos - A4 Pages</title>
+	<link rel="stylesheet" href="./safety-spectrum-london-asbestos-managment-survey.css">
+</head>
+<body>
+	<div id="asbestos-toolbar" style="position: fixed; top: 16px; right: 16px; z-index: 9999; display: flex; gap: 10px; align-items: center; font-family: Arial, Helvetica, sans-serif;">
+		<span id="download-status" style="color: #444; font-size: 12px;">Downloads the same visible layout.</span>
+		<button type="button" id="download-btn" onclick="downloadExactPdf(this)" style="border: 0; border-radius: 999px; padding: 10px 16px; background: #1f3b82; color: #fff; font-weight: 700; cursor: pointer;">Download PDF</button>
+	</div>
+	<div class="book">
+		<!-- Page 1 (static) -->
+		<section class="page static" id="page-1">
+			<img class="full" src="/src/assets/a_1.png" alt="Page 1">
+			<div class="page1-box">
+				<div class="box-grid">
+					<div class="box-item">
+						<div class="box-head">
+							<span class="box-label">LOCATION:</span>
+						</div>
+						<span class="box-value" data-field="page1Location">London, UK</span>
+					</div>
+					<div class="box-item">
+						<div class="box-head">
+							<span class="box-label">INSPECTED ON:</span>
+						</div>
+						<span class="box-value" data-field="page1InspectedOn">12 Dec 2025</span>
+					</div>
+					<div class="box-item">
+						<div class="box-head">
+							<span class="box-label">OUR REF:</span>
+						</div>
+						<span class="box-value" data-field="page1Ref">P.2724</span>
+					</div>
+					<div class="box-item box-brand-row">
+						<span class="box-value" data-field="page1Company">Safety Spectrum London</span>
+						<img class="box-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Page 2 (recreate) -->
+		<section class="page created report-page" id="page-2">
+			<div class="report-top">
+				<span>Asbestos managment survey</span>
+				<span>Report Details</span>
+			</div>
+			<div class="report-top-line"></div>
+
+			<h1 class="report-title">Report Details</h1>
+
+			<table class="report-table details-table">
+				<tr><th>Report By</th><td data-field="page2ReportBy">Safety Spectrum London</td></tr>
+				<tr><th>Client</th><td data-field="page2Client">Timothy Denman and Lucy Haigh</td></tr>
+				<tr><th>Project</th><td data-field="page2Project">P.2724</td></tr>
+				<tr><th>Site Address</th><td data-field="page2SiteAddress">4A Hainault Rd E11 1EE</td></tr>
+				<tr>
+					<th>Site Coordinates</th>
+					<td class="coords" data-field="page2Coordinates">51.56768953733295, -0.008614870475309063</td>
+				</tr>
+				<tr>
+					<th>Site Location</th>
+					<td class="map-cell">
+						<div class="map-frame">
+							<div class="map-image" data-field-bg="page2MapImageUrl"></div>
+						</div>
+					</td>
+				</tr>
+				<tr><th>Site Description</th><td data-field="page2SiteDescription">Its a Residential property built on solid brick wall</td></tr>
+				<tr><th>Surveyors</th><td data-field="page2Surveyors">Muhammad Khokhar</td></tr>
+				<tr><th>Survey Dates</th><td data-field="page2SurveyDates">12th December 2025</td></tr>
+				<tr><th>QC Date</th><td data-field="page2QcDate">18th December 2025</td></tr>
+			</table>
+
+			<h2 class="section-title">Totals</h2>
+			<p class="section-text">An overview of the data collected on site, during the survey</p>
+
+			<table class="report-table totals-table">
+				<tr>
+					<th class="bg-low">Very Low</th>
+					<th class="bg-low2">Low</th>
+					<th class="bg-med">Medium</th>
+					<th class="bg-high">High</th>
+				</tr>
+				<tr>
+					<td data-field="page2TotalVeryLow">0</td>
+					<td data-field="page2TotalLow">0</td>
+					<td data-field="page2TotalMedium">0</td>
+					<td data-field="page2TotalHigh">0</td>
+				</tr>
+			</table>
+
+			<div class="report-footer-line"></div>
+			<div class="report-footer">
+				<span data-field="page2FooterProject">Safety Spectrum London &gt; Project: P2724</span>
+				<span>Page 2 of 13</span>
+			</div>
+		</section>
+
+		<!-- Page 3 (static) -->
+		<section class="page static" id="page-3">
+			<img class="full" src="/src/assets/a_3.png" alt="Page 3">
+		</section>
+
+		<!-- Page 4 (recreate) -->
+		<section class="page created report-page" id="page-4">
+			<div class="report-top">
+				<span>Asbestos managment survey</span>
+				<span>Table of Contents</span>
+			</div>
+			<div class="report-top-line"></div>
+
+			<h1 class="report-title">Sign Off</h1>
+			<p class="section-text no-gap">Quality Control</p>
+			<p class="bold-line" data-field="page4QualityControlDate">18th December 2025</p>
+
+			<p class="paragraph-block" data-field="page4SignoffParagraph">
+				This survey was conducted in accordance with HSG 264 (Asbestos: The Survey Guide). Landlord Certify cannot
+				accept any liability for loss, injury, damage or penalty issues that arise for reasons of survey scope limitations. Landlord
+				Certify cannot be held responsible for asbestos potentially present in areas of the building not explicitly specified within
+				the client instruction, not indicated on provided site plans or not physically possible to access. Landlord Certify cannot
+				be held responsible for any damage caused as part of this survey carried out on your behalf. Due to the nature and
+				necessity of sampling for asbestos some damage is unavoidable and will be limited to that necessary for taking of the
+				samples.
+			</p>
+
+			<h3 class="sub-heading">Executive Summary</h3>
+			<h3 class="sub-heading">Variations to Scope</h3>
+			<p class="section-text" data-field="page4VariationsToScope">All areas within scope were accessed during the survey</p>
+
+			<h3 class="sub-heading">Summary of Asbestos-Containing Materials</h3>
+			<p class="section-text" data-field="page4SummaryAcm">These suspected materials were assessed as asbestos-containing.</p>
+
+			<table class="report-table summary-table six-col">
+				<tr>
+					<th>Building / Level / Location</th>
+					<th>Item</th>
+					<th>Material</th>
+					<th>Material Score</th>
+					<th>Recommendation</th>
+					<th>Page</th>
+				</tr>
+				<tr><td colspan="6" class="center" data-field="page4AcmTableNote">nothing to show</td></tr>
+			</table>
+
+			<h3 class="sub-heading">Summary of Non-Asbestos-Containing Materials</h3>
+			<p class="section-text" data-field="page4SummaryNonAcm">These suspected materials were assessed as non-asbestos-containing.</p>
+
+			<table class="report-table summary-table four-col">
+				<tr>
+					<th>Building / Level / Location</th>
+					<th>Item</th>
+					<th>Material</th>
+					<th>Page</th>
+				</tr>
+				<tr><td colspan="4" class="center" data-field="page4NonAcmTableNote">nothing to show</td></tr>
+			</table>
+
+			<div class="report-footer-line"></div>
+			<div class="report-footer">
+				<span data-field="page4FooterProject">Safety Spectrum London &gt; Project: P2724</span>
+				<span>Page 4 of 13</span>
+			</div>
+		</section>
+
+		<!-- Page 5 (recreate) -->
+		<section class="page created report-page" id="page-5">
+			<div class="report-top">
+				<span>Asbestos managment survey</span>
+				<span>Summary of Locations or Items of Limited Access</span>
+			</div>
+			<div class="report-top-line"></div>
+
+			<h2 class="section-title limited-title">Summary of Locations or Items of Limited Access</h2>
+			<p class="paragraph-block limited-copy" data-field="page5LimitedAccessCopy">
+				These locations or items could not be fully accessed during survey. Asbestos should be presumed to be present until a
+				further assessment can be undertaken. Note that the survey scope may exclude other areas - see Report Details (p. 2)
+				and Variations to Scope (p. 4).
+			</p>
+
+			<table class="report-table limited-table">
+				<tr>
+					<th>Building / Level / Location</th>
+					<th>Inspect</th>
+					<th>Access / Notes</th>
+					<th>Photo 1</th>
+					<th>Photo 2</th>
+					<th>Page</th>
+				</tr>
+				<tr><td colspan="6" class="center" data-field="page5LimitedAccessTableNote">all locations and items were fully accessed</td></tr>
+			</table>
+
+			<div class="report-footer-line"></div>
+			<div class="report-footer">
+				<span data-field="page5FooterProject">Safety Spectrum London &gt; Project: P2724</span>
+				<span>Page 5 of 13</span>
+			</div>
+		</section>
+
+		<!-- Page 6 (recreate) -->
+		<section class="page created report-page" id="page-6">
+			<div class="report-top">
+				<span>Asbestos managment survey</span>
+				<span>Register</span>
+			</div>
+			<div class="report-top-line"></div>
+
+			<h1 class="report-title">Register</h1>
+
+			<table class="report-table register-table">
+				<tr>
+					<th>Building / Level / Location</th>
+					<th>Item</th>
+					<th>Material</th>
+					<th>Strategy / Sample Id</th>
+					<th>Extent</th>
+					<th>Fibre Type</th>
+					<th>Product Type</th>
+					<th>Extent of Damage</th>
+					<th>Surface Treatment</th>
+					<th>Material Score</th>
+					<th>Recommendation</th>
+					<th>Page</th>
+				</tr>
+				<tr>
+					<td colspan="12" class="center muted" data-field="page6RegisterNote">n/a</td>
+				</tr>
+			</table>
+
+			<div class="report-footer-line"></div>
+			<div class="report-footer">
+				<span data-field="page6FooterProject">Safety Spectrum London &gt; Project: P2724</span>
+				<span>Page 6 of 13</span>
+			</div>
+		</section>
+
+		<!-- Page 7 (recreate) -->
+		<section class="page created report-page" id="page-7">
+			<div class="report-top">
+				<span>Asbestos managment survey</span>
+				<span>Inspected Locations and Items</span>
+			</div>
+			<div class="report-top-line"></div>
+
+			<h1 class="report-title">Inspected Locations and Items</h1>
+			<p class="section-text" data-field="page7SummaryLine1">A summary of all locations and items inspected during the survey, including ACMs,</p>
+			<p class="section-text" data-field="page7SummaryLine2">non ACMs and items &amp; locations that could not be fully accessed.</p>
+
+			<div class="copy-btn">Copy Table Data</div>
+
+			<table class="report-table inspected-table">
+				<tr>
+					<th>Building / Level / Location</th>
+					<th>Item</th>
+					<th>Material</th>
+					<th>Access / Notes</th>
+					<th>Material Score</th>
+					<th>Recommendation</th>
+					<th>Page</th>
+				</tr>
+				<tr>
+					<td data-field="page7Row1Location">Main Building / 0 / Communal Hallway</td>
+					<td data-field="page7Row1Item">Solid Painted Cement Wall</td>
+					<td data-field="page7Row1Material"></td>
+					<td data-field="page7Row1AccessNotes"></td>
+					<td data-field="page7Row1MaterialScore"></td>
+					<td data-field="page7Row1Recommendation"></td>
+					<td data-field="page7Row1Page">9</td>
+				</tr>
+				<tr>
+					<td data-field="page7Row2Location">Main Building / 0 / Hallway</td>
+					<td data-field="page7Row2Item">Textured Coating</td>
+					<td data-field="page7Row2Material"></td>
+					<td data-field="page7Row2AccessNotes"></td>
+					<td data-field="page7Row2MaterialScore"></td>
+					<td data-field="page7Row2Recommendation"></td>
+					<td data-field="page7Row2Page">9</td>
+				</tr>
+			</table>
+
+			<div class="report-footer-line"></div>
+			<div class="report-footer">
+				<span data-field="page7FooterProject">Safety Spectrum London &gt; Project: P2724</span>
+				<span>Page 7 of 13</span>
+			</div>
+		</section>
+
+		<!-- Page 8 (static) -->
+		<section class="page static" id="page-8">
+			<img class="full" src="/src/assets/8.png" alt="Page 8">
+		</section>
+
+		<!-- Page 9 (recreate) -->
+		<section class="page created report-page" id="page-9">
+			<div class="report-top">
+				<span>Asbestos managment survey</span>
+				<span>Survey Inspection Detail</span>
+			</div>
+			<div class="report-top-line"></div>
+
+			<table class="report-table detail-table">
+				<tr>
+					<th>Building</th>
+					<td data-field="page9Building">Main Building</td>
+					<th>Level</th>
+					<td data-field="page9Level">0</td>
+				</tr>
+				<tr>
+					<th>Location</th>
+					<td data-field="page9Location">Communal Hallway</td>
+					<th>Item</th>
+					<td data-field="page9Item"></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="photo-cell">
+						<div class="photo-crop">
+							<img src="/src/assets/9.png" alt="Location photo" class="photo-source" data-field-src="page9PhotoUrl">
+						</div>
+					</td>
+					<td colspan="2" data-field="page9SecondPhotoNote"></td>
+				</tr>
+				<tr>
+					<th>Location Notes</th>
+					<td colspan="3" data-field="page9LocationNotes">Solid Painted Cement Wall</td>
+				</tr>
+			</table>
+
+			<div class="report-footer-line"></div>
+			<div class="report-footer">
+				<span data-field="page9FooterProject">Safety Spectrum London &gt; Project: P2724</span>
+				<span>Page 9 of 13</span>
+			</div>
+		</section>
+
+		<!-- Page 10 (static) -->
+		<section class="page static" id="page-10">
+			<img class="full" src="/src/assets/10.png" alt="Page 10">
+		</section>
+
+		<!-- Page 11 (static) -->
+		<section class="page static" id="page-11">
+			<img class="full" src="/src/assets/11.png" alt="Page 11">
+		</section>
+
+		<!-- Page 12 (recreate) -->
+		<section class="page created report-page" id="page-12">
+			<div class="report-top">
+				<span>Asbestos managment survey</span>
+				<span>Material Assessment Scores</span>
+			</div>
+			<div class="report-top-line"></div>
+
+			<h1 class="report-title">Material Assessment Scores</h1>
+			<p class="paragraph-block" data-field="page12IntroCopy">
+				Where ACMs have been identified or presumed, a material score is calculated in accordance with HSG 264
+				(Asbestos: The Survey Guide). The value assigned to each of the four sample variables is added together to give a
+				total material score between 2 and 12.
+			</p>
+
+			<table class="report-table material-table">
+				<tr>
+					<th>Sample Variable</th>
+					<th>Score</th>
+					<th>Examples of Score</th>
+				</tr>
+				<tr>
+					<td rowspan="4">Product Type (or Debris from Product)</td>
+					<td>1</td>
+					<td>Asbestos reinforced composites (plastics, resins, mastics, roofing felts, vinyl floor tiles, semi-rigid paints or decorative finishes, asbestos cement etc)</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>Asbestos insulating board, mill boards, other low density insulation boards, asbestos textiles, gaskets, ropes and woven textiles, asbestos paper and felt</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>Thermal insulation (eg pipe and boiler lagging), sprayed asbestos, loose asbestos, asbestos mattresses and packing</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td rowspan="4">Extent of Damage / Deterioration</td>
+					<td>0</td>
+					<td>Good condition: no visible damage</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>Low damage: a few scratches or surface marks; broken edges on board, tiles etc.</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>Medium damage: significant breakage of materials or several small areas where material has been damaged revealing loose asbestos fibres</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>High damage or delamination of materials, sprays and thermal insulation</td>
+				</tr>
+				<tr>
+					<td rowspan="3">Surface Treatment</td>
+					<td>0</td>
+					<td>Composite materials containing asbestos: reinforced plastics, resins, vinyl tiles</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>Asbestos insulating board (with exposed face painted or encapsulated). Asbestos</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>Unsealed asbestos insulating board, or encapsulated lagging and sprays</td>
+				</tr>
+				<tr>
+					<td rowspan="4">Asbestos Type</td>
+					<td>1</td>
+					<td>Unsealed laggings and sprays</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>Chrysotile</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>Amphibole asbestos excluding crocidolite</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td>Crocidolite</td>
+				</tr>
+			</table>
+
+			<p class="paragraph-block" data-field="page12OutroCopy">
+				The material score determines the potential for a material to release asbestos fibres when disturbed. This score is then categorised to describe the potential:
+			</p>
+
+			<table class="report-table score-scale">
+				<tr>
+					<th>Material Score</th>
+					<td class="score-box score-blue">2</td>
+					<td class="score-box score-blue">3</td>
+					<td class="score-box score-blue">4</td>
+					<td class="score-box score-yellow">5</td>
+					<td class="score-box score-yellow">6</td>
+					<td class="score-box score-orange">7</td>
+					<td class="score-box score-orange">8</td>
+					<td class="score-box score-orange">9</td>
+					<td class="score-box score-red">10</td>
+					<td class="score-box score-red">11</td>
+					<td class="score-box score-red">12</td>
+				</tr>
+				<tr>
+					<th>Category</th>
+					<td colspan="3" class="score-cat score-blue">Very Low</td>
+					<td colspan="2" class="score-cat score-yellow">Low</td>
+					<td colspan="3" class="score-cat score-orange">Medium</td>
+					<td colspan="3" class="score-cat score-red">Medium</td>
+				</tr>
+			</table>
+
+			<div class="report-footer-line"></div>
+			<div class="report-footer">
+				<span data-field="page12FooterProject">Safety Spectrum London &gt; Project: P2724</span>
+				<span>Page 12 of 13</span>
+			</div>
+		</section>
+
+		<!-- Page 13 (static) -->
+		<section class="page static" id="page-13">
+			<img class="full" src="/src/assets/13.png" alt="Page 13">
+		</section>
+
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+	<script>
+		function applyAsbestosData() {
+			const raw = localStorage.getItem('asbestos_form_data')
+			if (!raw) return
+			let data = null
+			try { data = JSON.parse(raw) } catch (_error) { return }
+
+			document.querySelectorAll('[data-field]').forEach((el) => {
+				const key = el.getAttribute('data-field')
+				if (!key) return
+				const value = data[key]
+				if (value === undefined || value === null || value === '') return
+				el.textContent = String(value)
+			})
+
+			document.querySelectorAll('img[data-field-src]').forEach((el) => {
+				const key = el.getAttribute('data-field-src')
+				if (!key) return
+				const value = data[key]
+				if (!value) return
+				el.src = String(value)
+			})
+
+			document.querySelectorAll('[data-field-bg]').forEach((el) => {
+				const key = el.getAttribute('data-field-bg')
+				if (!key) return
+				const value = data[key]
+				if (!value) return
+				el.style.backgroundImage = `url("${String(value)}")`
+			})
+		}
+
+		async function downloadExactPdf(button) {
+			const status = document.getElementById('download-status')
+			const pages = Array.from(document.querySelectorAll('.page'))
+			if (!pages.length) return
+			const originalText = button.textContent
+			button.disabled = true
+			button.textContent = 'Generating...'
+			if (status) status.textContent = 'Preparing exact PDF layout...'
+			try {
+				const { jsPDF } = window.jspdf
+				let pdf = null
+				for (let i = 0; i < pages.length; i += 1) {
+					const canvas = await html2canvas(pages[i], { scale: 2, useCORS: true, backgroundColor: '#ffffff', imageTimeout: 0 })
+					const image = canvas.toDataURL('image/jpeg', 0.92)
+					const widthPx = canvas.width
+					const heightPx = canvas.height
+					if (!pdf) pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [widthPx, heightPx] })
+					else pdf.addPage([widthPx, heightPx], 'portrait')
+					pdf.addImage(image, 'JPEG', 0, 0, widthPx, heightPx)
+					canvas.width = 1
+					canvas.height = 1
+				}
+				if (!pdf) throw new Error('No pages captured')
+				pdf.save('safety-spectrum-london-asbestos-managment-survey.pdf')
+				if (status) status.textContent = 'PDF downloaded successfully.'
+			} catch (_error) {
+				if (status) status.textContent = 'Download failed. Please try again.'
+			} finally {
+				button.disabled = false
+				button.textContent = originalText
+			}
+		}
+
+		const params = new URLSearchParams(window.location.search)
+		applyAsbestosData()
+		if (params.get('autodownload') === '1') {
+			window.addEventListener('load', () => {
+				const button = document.getElementById('download-btn')
+				if (button instanceof HTMLButtonElement) window.setTimeout(() => downloadExactPdf(button), 350)
+			})
+		}
+	</script>
+</body>
+</html>

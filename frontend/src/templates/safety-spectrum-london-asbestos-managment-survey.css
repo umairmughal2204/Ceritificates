@@ -1,0 +1,497 @@
+/* A4 multi-page layout styles */
+@page { size: A4; margin: 0; }
+html, body { height: 100%; }
+body {
+  background: #ddd;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 20px 0;
+}
+.book {
+  width: 210mm;
+  margin: 0 auto;
+}
+.page {
+  width: 210mm;
+  height: 297mm;
+  background: #fff;
+  margin: 8mm auto;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.25);
+  position: relative;
+  overflow: hidden;
+}
+.page img.full {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+#page-1 { position: relative; }
+.page1-box {
+  position: absolute;
+  top: 170mm;
+  left: 50%;
+  transform: translateX(-85%);
+  width: 107mm;
+  height: 50mm;
+  background: linear-gradient(180deg, #c7d7ee 0%, #e3ecd3 100%);
+  border-radius: 3mm;
+  box-shadow: 0 0 6mm rgba(0,0,0,0.18);
+  display: grid;
+  padding: 6mm 8mm;
+  font-size: 10pt;
+  font-weight: 700;
+  color: #111;
+  box-sizing: border-box;
+  z-index: 2;
+}
+.page1-box .box-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 10mm;
+  row-gap: 6mm;
+  height: 100%;
+}
+.page1-box .box-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2mm;
+}
+.page1-box .box-head {
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+}
+.page1-box .box-value {
+  font-size: 9pt;
+  font-weight: 600;
+}
+.page1-box .box-brand-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4mm;
+}
+.page1-box .box-icon {
+  width: 9mm;
+  height: 9mm;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #6dbf6d 0%, #2e7d32 65%, #1b5e20 100%);
+  box-shadow: 0 1mm 2mm rgba(0,0,0,0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.page1-box .box-icon-svg {
+  width: 6mm;
+  height: 6mm;
+  fill: #f4f8f1;
+}
+.page1-box .box-label { letter-spacing: 0.2px; }
+.page1-box .box-brand {
+  max-width: 35mm;
+  line-height: 1.1;
+}
+.page1-box .box-logo {
+  margin-left: auto;
+  width: 18mm;
+  height: 18mm;
+  object-fit: contain;
+}
+.page.created {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.created-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* prevents accidental selection */
+}
+.created-overlay .field {
+  position: absolute;
+  background: transparent;
+  color: #111;
+  font-size: 12px;
+  line-height: 1.1;
+  pointer-events: auto; /* allow interactions if needed */
+}
+
+/* Inputs styled to blend with the reference: borderless, transparent */
+.overlay-input {
+  position: absolute;
+  border: none;
+  background: transparent;
+  color: #000;
+  font-family: inherit;
+  outline: none;
+}
+.overlay-input.small { font-size: 11px; }
+.overlay-input.medium { font-size: 13px; }
+.overlay-input.large { font-size: 16px; }
+
+/* Page-specific helpers for recreated pages */
+.overlay-label {
+  position: absolute;
+  pointer-events: none;
+  color: #222;
+  font-size: 12px;
+}
+.overlay-value {
+  position: absolute;
+  border: none;
+  background: transparent;
+  color: #111;
+  font-size: 12px;
+}
+.two-column { display: flex; gap: 8mm; }
+.field-border { border-bottom: 1px solid rgba(0,0,0,0.3); }
+
+/* Recreated report pages (2, 4, 5) */
+.report-page {
+  --fit-scale: 0.62;
+  padding: 10mm 12mm 8mm;
+  color: #111;
+  background: #fff;
+  box-sizing: border-box;
+  transform: scale(var(--fit-scale));
+  transform-origin: top left;
+  width: calc(210mm / var(--fit-scale));
+  height: calc(297mm / var(--fit-scale));
+}
+.report-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 600;
+}
+.report-top-line,
+.report-footer-line {
+  border-top: 1.4px solid #111;
+  margin-top: 1.5mm;
+}
+.report-title {
+  font-size: 14px;
+  margin: 7mm 0 4mm;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.section-title {
+  font-size: 10px;
+  font-weight: 700;
+  margin: 2.5mm 0 2mm;
+  line-height: 1.2;
+}
+.limited-title {
+  margin-top: 4mm;
+  margin-bottom: 2.5mm;
+}
+.section-text {
+  margin: 0 0 2.2mm;
+  font-size: 6px;
+  line-height: 1.35;
+}
+.no-gap {
+  margin-bottom: 1.5mm;
+}
+.bold-line {
+  margin: 0 0 2.4mm;
+  font-weight: 700;
+  font-size: 7px;
+}
+.paragraph-block {
+  margin: 0 0 2.5mm;
+  font-size: 6px;
+  line-height: 1.35;
+}
+.limited-copy {
+  max-width: 100%;
+}
+.sub-heading {
+  margin: 0 0 1.6mm;
+  font-size: 8px;
+  line-height: 1.2;
+}
+
+.report-table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  margin: 0;
+}
+.report-table th,
+.report-table td {
+  border: 1px solid #111;
+  padding: 1.3mm 2mm;
+  vertical-align: middle;
+  font-size: 6px;
+  line-height: 1.25;
+  text-align: left;
+  font-weight: 400;
+}
+
+.details-table {
+  margin-bottom: 4mm;
+}
+.details-table th {
+  width: 28%;
+  font-weight: 700;
+}
+.details-table .coords {
+  font-size: 5px;
+}
+.details-table .map-cell {
+  height: 45mm;
+}
+.map-frame {
+  width: 100%;
+  height: 41mm;
+  border: 0.25mm solid #767676;
+  background: #f4f4f4;
+  overflow: hidden;
+}
+.map-image {
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/2.png");
+  background-repeat: no-repeat;
+  background-size: 185mm auto;
+  background-position: center -56mm;
+}
+
+.totals-table {
+  width: 93%;
+  margin-top: 1mm;
+}
+.totals-table th,
+.totals-table td {
+  text-align: center;
+  padding: 1.2mm 1mm;
+}
+.totals-table th {
+  font-weight: 700;
+}
+.bg-low { background: #5fa2ea; }
+.bg-low2 { background: #ebdf22; }
+.bg-med { background: #e99a3a; }
+.bg-high { background: #ff5c62; }
+
+.summary-table {
+  margin-top: 1.5mm;
+  margin-bottom: 3mm;
+}
+.summary-table .center,
+.limited-table .center {
+  text-align: center;
+}
+.summary-table.six-col th:nth-child(1) { width: 23%; }
+.summary-table.six-col th:nth-child(2) { width: 20%; }
+.summary-table.six-col th:nth-child(3) { width: 19%; }
+.summary-table.six-col th:nth-child(4) { width: 8%; }
+.summary-table.six-col th:nth-child(5) { width: 21%; }
+.summary-table.six-col th:nth-child(6) { width: 9%; }
+
+.summary-table.four-col th:nth-child(1) { width: 32%; }
+.summary-table.four-col th:nth-child(2) { width: 31%; }
+.summary-table.four-col th:nth-child(3) { width: 31%; }
+.summary-table.four-col th:nth-child(4) { width: 6%; }
+
+.limited-table {
+  margin-top: 2mm;
+}
+.limited-table th {
+  background: #ff5b63;
+}
+.limited-table th:nth-child(1) { width: 22%; }
+.limited-table th:nth-child(2) { width: 21%; }
+.limited-table th:nth-child(3) { width: 21%; }
+.limited-table th:nth-child(4) { width: 17%; }
+.limited-table th:nth-child(5) { width: 17%; }
+.limited-table th:nth-child(6) { width: 2%; }
+
+.report-footer {
+  position: absolute;
+  left: 12mm;
+  right: 12mm;
+  bottom: 2.2mm;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 600;
+}
+.report-page .report-footer-line {
+  position: absolute;
+  left: 12mm;
+  right: 12mm;
+  bottom: 6.8mm;
+  margin-top: 0;
+}
+
+/* Page 2 exact sizing overrides */
+#page-2 { --fit-scale: 1; }
+#page-2 .report-top { font-size: 9pt; }
+#page-2 .report-top-line,
+#page-2 .report-footer-line { border-top-width: 3px; }
+#page-2 .report-title {
+  font-size: 24pt;
+  margin: 7mm 0 4mm;
+}
+#page-2 .section-title {
+  font-size: 16pt;
+  margin: 3mm 0 2mm;
+}
+#page-2 .section-text {
+  font-size: 9pt;
+  margin-bottom: 3mm;
+}
+#page-2 .report-table th,
+#page-2 .report-table td {
+  font-size: 9pt;
+  padding: 2mm 2.5mm;
+}
+#page-2 .details-table th { width: 30%; }
+#page-2 .details-table .coords { font-size: 7pt; }
+#page-2 .details-table .map-cell { height: 60mm; }
+#page-2 .map-frame { height: 56mm; }
+#page-2 .totals-table th,
+#page-2 .totals-table td {
+  font-size: 9pt;
+  padding: 2mm 2mm;
+}
+#page-2 .report-footer { font-size: 9pt; bottom: 3mm; }
+#page-2 .report-page .report-footer-line { bottom: 7mm; }
+
+/* Page 4 exact sizing overrides */
+#page-4 { --fit-scale: 1; }
+#page-4 .report-top { font-size: 9pt; }
+#page-4 .report-top-line,
+#page-4 .report-footer-line { border-top-width: 3px; }
+#page-4 .report-title {
+  font-size: 22pt;
+  margin: 7mm 0 3mm;
+}
+#page-4 .section-text { font-size: 8pt; margin-bottom: 3mm; }
+#page-4 .bold-line { font-size: 8.5pt; margin-bottom: 3mm; }
+#page-4 .paragraph-block { font-size: 7.5pt; line-height: 1.35; }
+#page-4 .sub-heading { font-size: 9.5pt; margin-bottom: 1.5mm; }
+#page-4 .report-table th,
+#page-4 .report-table td { font-size: 7.5pt; padding: 2mm 2mm; }
+#page-4 .summary-table { margin-top: 1.5mm; margin-bottom: 4mm; }
+#page-4 .report-footer { font-size: 9pt; bottom: 3mm; }
+#page-4 .report-page .report-footer-line { bottom: 7mm; }
+
+/* Page 5 exact sizing overrides */
+#page-5 { --fit-scale: 1; }
+#page-5 .report-top { font-size: 9pt; }
+#page-5 .report-top-line,
+#page-5 .report-footer-line { border-top-width: 3px; }
+#page-5 .section-title { font-size: 16pt; margin: 3mm 0 2mm; }
+#page-5 .paragraph-block { font-size: 8pt; line-height: 1.35; margin-bottom: 4mm; }
+#page-5 .report-table th,
+#page-5 .report-table td { font-size: 8pt; padding: 2mm 2mm; }
+#page-5 .limited-table th { background: #ff5b63; }
+#page-5 .report-footer { font-size: 9pt; bottom: 3mm; }
+#page-5 .report-page .report-footer-line { bottom: 7mm; }
+
+/* Page 6 exact sizing overrides */
+#page-6 { --fit-scale: 1; }
+#page-6 .report-top { font-size: 9pt; }
+#page-6 .report-top-line,
+#page-6 .report-footer-line { border-top-width: 3px; }
+#page-6 .report-title { font-size: 20pt; margin: 8mm 0 4mm; }
+#page-6 .report-table th,
+#page-6 .report-table td { font-size: 8pt; padding: 2mm 2mm; }
+#page-6 .register-table th { text-align: left; }
+#page-6 .register-table { margin-top: 6mm; }
+#page-6 .report-footer { font-size: 9pt; bottom: 3mm; }
+#page-6 .report-page .report-footer-line { bottom: 7mm; }
+
+/* Page 7 exact sizing overrides */
+#page-7 { --fit-scale: 1; }
+#page-7 .report-top { font-size: 9pt; }
+#page-7 .report-top-line,
+#page-7 .report-footer-line { border-top-width: 3px; }
+#page-7 .report-title { font-size: 20pt; margin: 8mm 0 2mm; }
+#page-7 .section-text { font-size: 8pt; margin-bottom: 1mm; }
+#page-7 .copy-btn {
+  display: inline-block;
+  margin: 2mm 0 10mm;
+  background: #d9d9d9;
+  padding: 2mm 6mm;
+  font-size: 8pt;
+  font-weight: 600;
+}
+#page-7 .report-table th,
+#page-7 .report-table td { font-size: 8pt; padding: 2mm 2mm; }
+#page-7 .inspected-table { margin-top: 10mm; }
+#page-7 .report-footer { font-size: 9pt; bottom: 3mm; }
+#page-7 .report-page .report-footer-line { bottom: 7mm; }
+
+/* Page 9 exact sizing overrides */
+#page-9 { --fit-scale: 1; }
+#page-9 .report-top { font-size: 9pt; }
+#page-9 .report-top-line,
+#page-9 .report-footer-line { border-top-width: 3px; }
+#page-9 .detail-table {
+  margin-top: 12mm;
+  width: 70%;
+}
+#page-9 .detail-table th,
+#page-9 .detail-table td { font-size: 8pt; padding: 2mm 2mm; }
+#page-9 .photo-cell { width: 50%; }
+#page-9 .photo-crop {
+  height: 52mm;
+  border: 1px solid #111;
+  overflow: hidden;
+}
+#page-9 .photo-source {
+  width: 210mm;
+  height: 297mm;
+  position: relative;
+  left: -30mm;
+  top: -105mm;
+}
+#page-9 .report-footer { font-size: 9pt; bottom: 3mm; }
+#page-9 .report-page .report-footer-line { bottom: 7mm; }
+
+/* Page 12 exact sizing overrides */
+#page-12 { --fit-scale: 1; }
+#page-12 .report-top { font-size: 9pt; }
+#page-12 .report-top-line,
+#page-12 .report-footer-line { border-top-width: 3px; }
+#page-12 .report-title { font-size: 20pt; margin: 6mm 0 3mm; }
+#page-12 .paragraph-block { font-size: 8pt; line-height: 1.35; }
+#page-12 .material-table th,
+#page-12 .material-table td { font-size: 7.5pt; padding: 1.6mm 2mm; }
+#page-12 .score-scale th,
+#page-12 .score-scale td { font-size: 8pt; padding: 2mm 2mm; text-align: center; }
+#page-12 .score-box { text-align: center; }
+#page-12 .score-cat { text-align: left; font-weight: 600; }
+#page-12 .report-footer { font-size: 9pt; bottom: 3mm; }
+#page-12 .report-page .report-footer-line { bottom: 7mm; }
+
+.register-table th { font-weight: 400; }
+.inspected-table th { font-weight: 400; }
+.detail-table th { font-weight: 700; }
+.detail-table td { font-weight: 600; }
+.muted { color: #666; }
+
+.score-box { font-weight: 600; }
+.score-blue { background: #6aaaf2; }
+.score-yellow { background: #f2e22f; }
+.score-orange { background: #ed9735; }
+.score-red { background: #ff5b63; }
+
+/* Example positions for recreated pages - fine-tune later */
+.field.title { top: 18mm; left: 18mm; font-size: 14px; font-weight: 600; }
+.field.small { font-size: 11px; }
+
+/* Ensure print looks like A4 */
+@media print {
+  body { background: none; padding: 0; }
+  .page { box-shadow: none; margin: 0; page-break-after: always; }
+}

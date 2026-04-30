@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
 import './App.css'
 
 const pdfOptions = [
@@ -17,6 +16,8 @@ const fscPdfName = 'Safety Spectrum London fsc'
 const patPdfName = 'pat Safety spectrum london'
 const fetPdfName = 'fet safety spectrum london'
 const legionellaPdfName = 'Legionella'
+const fdiPdfName = 'fdi safety spectrum london'
+const asbestosPdfName = 'Asbestos managment survey'
 
 type ElcFormData = {
   inspectionDate: string
@@ -180,6 +181,157 @@ type LegionellaFormData = {
   page26AssessmentDate: string
   page26Copy: string
   page27SchematicUrl: string
+}
+
+type FdiFormData = {
+  page1ImageUrl: string
+  page2ReportBy: string
+  page2Client: string
+  page2ProjectSite: string
+  page2Address: string
+  page2MapUrl: string
+  page2SiteDescription: string
+  page2Technicians: string
+  page2InspectionDatesQc: string
+  page2Date: string
+  page2TotalInspected: string
+  page2TotalPassed: string
+  page2TotalFailed: string
+  page2FooterProject: string
+  page4QcName: string
+  page4QcDate: string
+  page4QcSignature: string
+  page4Introduction: string
+  page4ExecutiveSummary: string
+  page4Variations: string
+  page4LimitedAccessNote: string
+  page4AccessDoorRef: string
+  page4AccessNotes: string
+  page4AccessPage: string
+  page4FooterProject: string
+  page5InspectionRef: string
+  page5DoorRef: string
+  page5Location: string
+  page5RemedialActions: string
+  page5NeedsReplacing: string
+  page5Page: string
+  page5FooterProject: string
+  page6RouteTitle: string
+  page6DoorRef: string
+  page6OverallStatus: string
+  page6RatingSufficient: string
+  page6DoorFrame: string
+  page6Hinges: string
+  page6Gaps: string
+  page6Seals: string
+  page6Closer: string
+  page6Lockset: string
+  page6Glazing: string
+  page6Signage: string
+  page6GeneralComments: string
+  page6Page: string
+  page6FooterProject: string
+  page8OverallResult: string
+  page8DoorReference: string
+  page8DoorType: string
+  page8Dimensions: string
+  page8Material: string
+  page8WallType: string
+  page8GapTop: string
+  page8GapLeft: string
+  page8GapRight: string
+  page8GapBottom: string
+  page8GapMeeting: string
+  page8RatingRequirement: string
+  page8RatingCertified: string
+  page8RatingSufficient: string
+  page8Cat1Result: string
+  page8Cat1Details: string
+  page8Cat2Result: string
+  page8Cat2Details: string
+  page8Cat3Result: string
+  page8Cat3Details: string
+  page8Cat4Result: string
+  page8Cat4Details: string
+  page8Cat5Result: string
+  page8Cat5Details: string
+  page8Cat6Result: string
+  page8Cat6Details: string
+  page8Cat7Result: string
+  page8Cat7Details: string
+  page8Cat8Result: string
+  page8Cat8Details: string
+  page8HeroDoorUrl: string
+  page8Photo1Url: string
+  page8Photo2Url: string
+  page8Photo3Url: string
+  page8Photo4Url: string
+  page8FooterProject: string
+}
+
+type AsbestosFieldDef = {
+  key: string
+  label: string
+  page: 1 | 2 | 4 | 5 | 6 | 7 | 9 | 12
+  wide?: boolean
+}
+
+type AsbestosFormData = Record<string, string>
+
+const asbestosFieldDefs: AsbestosFieldDef[] = [
+  { key: 'page1Location', label: 'Location', page: 1 }, { key: 'page1InspectedOn', label: 'Inspected On', page: 1 }, { key: 'page1Ref', label: 'Our Ref', page: 1 }, { key: 'page1Company', label: 'Company', page: 1 },
+  { key: 'page2ReportBy', label: 'Report By', page: 2 }, { key: 'page2Client', label: 'Client', page: 2 }, { key: 'page2Project', label: 'Project', page: 2 }, { key: 'page2SiteAddress', label: 'Site Address', page: 2, wide: true }, { key: 'page2Coordinates', label: 'Site Coordinates', page: 2, wide: true }, { key: 'page2MapImageUrl', label: 'Map Image URL', page: 2, wide: true }, { key: 'page2SiteDescription', label: 'Site Description', page: 2, wide: true }, { key: 'page2Surveyors', label: 'Surveyors', page: 2 }, { key: 'page2SurveyDates', label: 'Survey Dates', page: 2 }, { key: 'page2QcDate', label: 'QC Date', page: 2 }, { key: 'page2TotalVeryLow', label: 'Total Very Low', page: 2 }, { key: 'page2TotalLow', label: 'Total Low', page: 2 }, { key: 'page2TotalMedium', label: 'Total Medium', page: 2 }, { key: 'page2TotalHigh', label: 'Total High', page: 2 }, { key: 'page2FooterProject', label: 'Footer Project Text', page: 2, wide: true },
+  { key: 'page4QualityControlDate', label: 'Quality Control Date', page: 4 }, { key: 'page4SignoffParagraph', label: 'Sign Off Paragraph', page: 4, wide: true }, { key: 'page4VariationsToScope', label: 'Variations To Scope', page: 4, wide: true }, { key: 'page4SummaryAcm', label: 'Summary ACM', page: 4, wide: true }, { key: 'page4AcmTableNote', label: 'ACM Table Note', page: 4, wide: true }, { key: 'page4SummaryNonAcm', label: 'Summary Non-ACM', page: 4, wide: true }, { key: 'page4NonAcmTableNote', label: 'Non-ACM Table Note', page: 4, wide: true }, { key: 'page4FooterProject', label: 'Footer Project Text', page: 4, wide: true },
+  { key: 'page5LimitedAccessCopy', label: 'Limited Access Copy', page: 5, wide: true }, { key: 'page5LimitedAccessTableNote', label: 'Limited Access Table Note', page: 5, wide: true }, { key: 'page5FooterProject', label: 'Footer Project Text', page: 5, wide: true },
+  { key: 'page6RegisterNote', label: 'Register Note', page: 6, wide: true }, { key: 'page6FooterProject', label: 'Footer Project Text', page: 6, wide: true },
+  { key: 'page7SummaryLine1', label: 'Summary Line 1', page: 7, wide: true }, { key: 'page7SummaryLine2', label: 'Summary Line 2', page: 7, wide: true }, { key: 'page7Row1Location', label: 'Row 1 Location', page: 7, wide: true }, { key: 'page7Row1Item', label: 'Row 1 Item', page: 7 }, { key: 'page7Row1Material', label: 'Row 1 Material', page: 7 }, { key: 'page7Row1AccessNotes', label: 'Row 1 Access/Notes', page: 7 }, { key: 'page7Row1MaterialScore', label: 'Row 1 Material Score', page: 7 }, { key: 'page7Row1Recommendation', label: 'Row 1 Recommendation', page: 7 }, { key: 'page7Row1Page', label: 'Row 1 Page', page: 7 }, { key: 'page7Row2Location', label: 'Row 2 Location', page: 7, wide: true }, { key: 'page7Row2Item', label: 'Row 2 Item', page: 7 }, { key: 'page7Row2Material', label: 'Row 2 Material', page: 7 }, { key: 'page7Row2AccessNotes', label: 'Row 2 Access/Notes', page: 7 }, { key: 'page7Row2MaterialScore', label: 'Row 2 Material Score', page: 7 }, { key: 'page7Row2Recommendation', label: 'Row 2 Recommendation', page: 7 }, { key: 'page7Row2Page', label: 'Row 2 Page', page: 7 }, { key: 'page7FooterProject', label: 'Footer Project Text', page: 7, wide: true },
+  { key: 'page9Building', label: 'Building', page: 9 }, { key: 'page9Level', label: 'Level', page: 9 }, { key: 'page9Location', label: 'Location', page: 9 }, { key: 'page9Item', label: 'Item', page: 9 }, { key: 'page9PhotoUrl', label: 'Photo URL', page: 9, wide: true }, { key: 'page9SecondPhotoNote', label: 'Second Photo Note', page: 9, wide: true }, { key: 'page9LocationNotes', label: 'Location Notes', page: 9, wide: true }, { key: 'page9FooterProject', label: 'Footer Project Text', page: 9, wide: true },
+  { key: 'page12IntroCopy', label: 'Intro Copy', page: 12, wide: true }, { key: 'page12OutroCopy', label: 'Outro Copy', page: 12, wide: true }, { key: 'page12FooterProject', label: 'Footer Project Text', page: 12, wide: true },
+]
+
+const asbestosDateKeys = new Set([
+  'page1InspectedOn',
+  'page2SurveyDates',
+  'page2QcDate',
+  'page4QualityControlDate',
+])
+
+const monthMap: Record<string, string> = {
+  january: '01',
+  february: '02',
+  march: '03',
+  april: '04',
+  may: '05',
+  june: '06',
+  july: '07',
+  august: '08',
+  september: '09',
+  october: '10',
+  november: '11',
+  december: '12',
+}
+
+const toCalendarValue = (value: string) => {
+  if (!value) return ''
+  const isoMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  if (isoMatch) return value
+  const longMatch = value.match(/^(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+)\s+(\d{4})$/)
+  if (longMatch) {
+    const [, d, monthName, y] = longMatch
+    const mm = monthMap[monthName.toLowerCase()]
+    if (!mm) return ''
+    return `${y}-${mm}-${String(d).padStart(2, '0')}`
+  }
+  return ''
+}
+
+const fromCalendarValue = (value: string) => {
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  if (!match) return value
+  const [, y, m, d] = match
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  const month = monthNames[Number(m) - 1] ?? m
+  return `${Number(d)} ${month} ${y}`
 }
 
 const toPdfDate = (value: string) => {
@@ -489,6 +641,150 @@ const defaultLegionellaForm: LegionellaFormData = {
   page27SchematicUrl: '',
 }
 
+const defaultFdiForm: FdiFormData = {
+  page1ImageUrl: '/src/assets/1.png',
+  page2ReportBy: 'Safety Spectrum London',
+  page2Client: 'Christianah',
+  page2ProjectSite: 'P.5657668529',
+  page2Address: '7 Gurney close  E15 1SJ',
+  page2MapUrl: '',
+  page2SiteDescription: 'Inspection carried out for main flat door.',
+  page2Technicians: 'Muhammad Khokhar',
+  page2InspectionDatesQc: '13 March 2026',
+  page2Date: '13 March 2026',
+  page2TotalInspected: '1',
+  page2TotalPassed: '1',
+  page2TotalFailed: '0',
+  page2FooterProject: 'Safety Spectrum London > Project: P.5657668529',
+  page4QcName: 'Muhammad Khokhar',
+  page4QcDate: '13 March 2026',
+  page4QcSignature: 'M. Khokhar',
+  page4Introduction: 'Safety Spectrum London was instructed to undertake a fire door condition inspection of the selected doors within the property. The inspection reviewed the visible condition of each door assembly and recorded whether the observed elements appeared suitable based on the inspection criteria used during the survey.',
+  page4ExecutiveSummary: '',
+  page4Variations: 'All areas within scope were accessed during the survey',
+  page4LimitedAccessNote: 'These areas could not be fully accessed during survey.',
+  page4AccessDoorRef: '',
+  page4AccessNotes: 'all locations and doors were fully accessed',
+  page4AccessPage: '',
+  page4FooterProject: 'Safety Spectrum London > Project: P.5657668529',
+  page5InspectionRef: 'inspection details (p. 0)',
+  page5DoorRef: 'Door 1',
+  page5Location: 'Main Flat / 0 / Main Flat door',
+  page5RemedialActions: '<em>please see inspection details</em>',
+  page5NeedsReplacing: 'No',
+  page5Page: '8',
+  page5FooterProject: 'Safety Spectrum London > Project: P.5657668529',
+  page6RouteTitle: 'Main Flat > Main Flat Door',
+  page6DoorRef: 'Door 1',
+  page6OverallStatus: 'PASS',
+  page6RatingSufficient: 'YES✓',
+  page6DoorFrame: 'PASS',
+  page6Hinges: 'PASS',
+  page6Gaps: 'PASS',
+  page6Seals: 'PASS',
+  page6Closer: 'PASS',
+  page6Lockset: 'PASS',
+  page6Glazing: 'N/A',
+  page6Signage: 'N/A',
+  page6GeneralComments: '',
+  page6Page: '8',
+  page6FooterProject: 'Safety Spectrum London > Project: P.5657668529',
+  page8OverallResult: 'Pass',
+  page8DoorReference: 'Door 1',
+  page8DoorType: 'FD30',
+  page8Dimensions: 'Door 1: 838mm x 1975mm x 47mm',
+  page8Material: 'Door:Timber /Frame:Timber',
+  page8WallType: 'Solid brickwork',
+  page8GapTop: '2mm',
+  page8GapLeft: '1mm',
+  page8GapRight: '2mm',
+  page8GapBottom: '2mm',
+  page8GapMeeting: '0mm',
+  page8RatingRequirement: 'FD30',
+  page8RatingCertified: 'Yes',
+  page8RatingSufficient: 'Yes',
+  page8Cat1Result: 'Pass',
+  page8Cat1Details: 'Satisfactory condition of Frame. Door is of 47mm in thickness.',
+  page8Cat2Result: 'Pass',
+  page8Cat2Details: 'Satisfactory. 3 fire rated hinges present.',
+  page8Cat3Result: 'Pass',
+  page8Cat3Details: 'Gap around the door is acceptable. Each side not more than 4mm.',
+  page8Cat4Result: 'Pass',
+  page8Cat4Details: 'Intumescent strips and smoke seals in satisfactory condition installed.',
+  page8Cat5Result: 'Pass',
+  page8Cat5Details: 'Inner chain door closer present.',
+  page8Cat6Result: 'Pass',
+  page8Cat6Details: 'Latch/Handle is fitted in the correct location.',
+  page8Cat7Result: 'N/A',
+  page8Cat7Details: '',
+  page8Cat8Result: 'N/A',
+  page8Cat8Details: '',
+  page8HeroDoorUrl: '',
+  page8Photo1Url: '',
+  page8Photo2Url: '',
+  page8Photo3Url: '',
+  page8Photo4Url: '',
+  page8FooterProject: 'Safety Spectrum London > Project: P.5657668529',
+}
+
+const defaultAsbestosForm: AsbestosFormData = {
+  ...Object.fromEntries(asbestosFieldDefs.map((field) => [field.key, ''])),
+  page1Location: 'London, UK',
+  page1InspectedOn: '12 Dec 2025',
+  page1Ref: 'P.2724',
+  page1Company: 'Safety Spectrum London',
+  page2ReportBy: 'Safety Spectrum London',
+  page2Client: 'Timothy Denman and Lucy Haigh',
+  page2Project: 'P.2724',
+  page2SiteAddress: '4A Hainault Rd E11 1EE',
+  page2Coordinates: '51.56768953733295, -0.008614870475309063',
+  page2MapImageUrl: '/src/assets/2.png',
+  page2SiteDescription: 'Its a Residential property built on solid brick wall',
+  page2Surveyors: 'Muhammad Khokhar',
+  page2SurveyDates: '12th December 2025',
+  page2QcDate: '18th December 2025',
+  page2TotalVeryLow: '0',
+  page2TotalLow: '0',
+  page2TotalMedium: '0',
+  page2TotalHigh: '0',
+  page2FooterProject: 'Safety Spectrum London > Project: P2724',
+  page4QualityControlDate: '18th December 2025',
+  page4SignoffParagraph:
+    'This survey was conducted in accordance with HSG 264 (Asbestos: The Survey Guide). Landlord Certify cannot accept any liability for loss, injury, damage or penalty issues that arise for reasons of survey scope limitations. Landlord Certify cannot be held responsible for asbestos potentially present in areas of the building not explicitly specified within the client instruction, not indicated on provided site plans or not physically possible to access. Landlord Certify cannot be held responsible for any damage caused as part of this survey carried out on your behalf. Due to the nature and necessity of sampling for asbestos some damage is unavoidable and will be limited to that necessary for taking of the samples.',
+  page4VariationsToScope: 'All areas within scope were accessed during the survey',
+  page4SummaryAcm: 'These suspected materials were assessed as asbestos-containing.',
+  page4AcmTableNote: 'nothing to show',
+  page4SummaryNonAcm: 'These suspected materials were assessed as non-asbestos-containing.',
+  page4NonAcmTableNote: 'nothing to show',
+  page4FooterProject: 'Safety Spectrum London > Project: P2724',
+  page5LimitedAccessCopy:
+    'These locations or items could not be fully accessed during survey. Asbestos should be presumed to be present until a further assessment can be undertaken. Note that the survey scope may exclude other areas - see Report Details (p. 2) and Variations to Scope (p. 4).',
+  page5LimitedAccessTableNote: 'all locations and items were fully accessed',
+  page5FooterProject: 'Safety Spectrum London > Project: P2724',
+  page6RegisterNote: 'n/a',
+  page6FooterProject: 'Safety Spectrum London > Project: P2724',
+  page7SummaryLine1: 'A summary of all locations and items inspected during the survey, including ACMs,',
+  page7SummaryLine2: 'non ACMs and items & locations that could not be fully accessed.',
+  page7Row1Location: 'Main Building / 0 / Communal Hallway',
+  page7Row1Item: 'Solid Painted Cement Wall',
+  page7Row1Page: '9',
+  page7Row2Location: 'Main Building / 0 / Hallway',
+  page7Row2Item: 'Textured Coating',
+  page7Row2Page: '9',
+  page7FooterProject: 'Safety Spectrum London > Project: P2724',
+  page9Building: 'Main Building',
+  page9Level: '0',
+  page9Location: 'Communal Hallway',
+  page9PhotoUrl: '/src/assets/9.png',
+  page9LocationNotes: 'Solid Painted Cement Wall',
+  page9FooterProject: 'Safety Spectrum London > Project: P2724',
+  page12IntroCopy:
+    'Where ACMs have been identified or presumed, a material score is calculated in accordance with HSG 264 (Asbestos: The Survey Guide). The value assigned to each of the four sample variables is added together to give a total material score between 2 and 12.',
+  page12OutroCopy:
+    'The material score determines the potential for a material to release asbestos fibres when disturbed. This score is then categorised to describe the potential:',
+  page12FooterProject: 'Safety Spectrum London > Project: P2724',
+}
+
 function MarkSelect({
   label,
   value,
@@ -511,7 +807,7 @@ function MarkSelect({
 }
 
 function App() {
-  const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form' | 'pat-form' | 'fet-form' | 'legionella-form'>('home')
+  const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form' | 'pat-form' | 'fet-form' | 'legionella-form' | 'fdi-form' | 'asbestos-form'>('home')
   const [selectedPdf, setSelectedPdf] = useState(pdfOptions[0])
   const [activeSection, setActiveSection] = useState(0)
   const [isGenerating, setIsGenerating] = useState(false)
@@ -520,6 +816,8 @@ function App() {
   const [patForm, setPatForm] = useState<PatFormData>(defaultPatForm)
   const [fetForm, setFetForm] = useState<FetFormData>(defaultFetForm)
   const [legionellaForm, setLegionellaForm] = useState<LegionellaFormData>(defaultLegionellaForm)
+  const [fdiForm, setFdiForm] = useState<FdiFormData>(defaultFdiForm)
+  const [asbestosForm, setAsbestosForm] = useState<AsbestosFormData>(defaultAsbestosForm)
 
   const openSelectedLayout = () => {
     if (selectedPdf === elcPdfName) {
@@ -547,7 +845,17 @@ function App() {
       setActiveView('legionella-form')
       return
     }
-    window.alert('Layout is currently available only for FSC, PAT, FET, Legionella and ELC certificates.')
+    if (selectedPdf === fdiPdfName) {
+      setActiveSection(0)
+      setActiveView('fdi-form')
+      return
+    }
+    if (selectedPdf === asbestosPdfName) {
+      setActiveSection(0)
+      setActiveView('asbestos-form')
+      return
+    }
+    window.alert('Layout is currently available only for FSC, PAT, FET, Legionella, FDI, Asbestos and ELC certificates.')
   }
 
   const updateField = (field: keyof ElcFormData, value: string) => {
@@ -733,6 +1041,30 @@ function App() {
     setIsGenerating(true)
     localStorage.setItem('legionella_form_data', JSON.stringify(payload))
     window.open('/src/templates/safety-spectrum-london-legionella.html?autodownload=1', '_blank', 'noopener,noreferrer')
+    window.setTimeout(() => setIsGenerating(false), 800)
+  }
+
+  const updateFdiField = <K extends keyof FdiFormData>(field: K, value: FdiFormData[K]) => {
+    setFdiForm((current) => ({ ...current, [field]: value }))
+  }
+
+  const downloadFdiPdf = () => {
+    const payload = { ...fdiForm }
+    setIsGenerating(true)
+    localStorage.setItem('fdi_form_data', JSON.stringify(payload))
+    window.open('/src/templates/safety-spectrum-london-fdi.html?autodownload=1', '_blank', 'noopener,noreferrer')
+    window.setTimeout(() => setIsGenerating(false), 800)
+  }
+
+  const updateAsbestosField = (field: string, value: string) => {
+    setAsbestosForm((current) => ({ ...current, [field]: value }))
+  }
+
+  const downloadAsbestosPdf = () => {
+    const payload = { ...asbestosForm }
+    setIsGenerating(true)
+    localStorage.setItem('asbestos_form_data', JSON.stringify(payload))
+    window.open('/src/templates/safety-spectrum-london-asbestos-managment-survey.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
 
@@ -1478,23 +1810,184 @@ function App() {
     )
   }
 
+  if (activeView === 'fdi-form') {
+    const sections = [
+      { title: 'Page 1 fields', prefixes: ['page1'] },
+      { title: 'Page 2 fields', prefixes: ['page2'] },
+      { title: 'Page 4 fields', prefixes: ['page4'] },
+      { title: 'Page 5 fields', prefixes: ['page5'] },
+      { title: 'Page 6 fields', prefixes: ['page6'] },
+      { title: 'Page 8 fields', prefixes: ['page8'] },
+      { title: 'Review', prefixes: [] },
+    ]
+    const isLast = activeSection === sections.length - 1
+    const activePrefixes = sections[activeSection]?.prefixes ?? []
+    const sectionKeys = (Object.keys(fdiForm) as Array<keyof FdiFormData>).filter((key) =>
+      activePrefixes.some((prefix) => String(key).startsWith(prefix)),
+    )
+    const formatFieldLabel = (key: string) =>
+      key
+        .replace(/^page\d+/, (m) => m.toUpperCase())
+        .replace(/([A-Z])/g, ' $1')
+        .trim()
+
+    return (
+      <main className="page-shell wizard-page">
+        <section className="wizard-header-panel">
+          <button type="button" className="text-action" onClick={() => setActiveView('home')}>Back to templates</button>
+          <p className="eyebrow">FDI 10-page form</p>
+          <h1>{sections[activeSection]?.title}</h1>
+          <p className="lede">All requested fields are editable; other pages remain static.</p>
+        </section>
+        <section className="wizard-progress" aria-label="Form sections">
+          {sections.map((section, idx) => (
+            <button
+              key={section.title}
+              type="button"
+              className={`wizard-step${idx === activeSection ? ' active' : ''}`}
+              onClick={() => setActiveSection(idx)}
+            >
+              <span>{idx + 1}</span>
+              <small>{section.title}</small>
+            </button>
+          ))}
+        </section>
+        <section className="form-panel">
+          {activeSection !== sections.length - 1 && (
+            <div className="form-grid">
+              {sectionKeys.map((key) => {
+                const name = String(key)
+                const isWide = name.includes('Details') || name.includes('Footer') || name.includes('Address') || name.includes('Summary') || name.includes('Introduction') || name.includes('Notes')
+                return (
+                  <label key={name} className={isWide ? 'wide' : ''}>
+                    {formatFieldLabel(name)}
+                    <input value={fdiForm[key]} onChange={(e) => updateFdiField(key, e.target.value)} />
+                  </label>
+                )
+              })}
+            </div>
+          )}
+          {activeSection === sections.length - 1 && (
+            <div className="review-card">
+              <p>Project: <strong>{fdiForm.page2ProjectSite}</strong></p>
+              <p>Client: <strong>{fdiForm.page2Client}</strong></p>
+              <p>Door Ref: <strong>{fdiForm.page8DoorReference}</strong></p>
+              <button type="button" className="primary-action" onClick={downloadFdiPdf} disabled={isGenerating}>
+                {isGenerating ? 'Generating...' : 'Download Filled FDI'}
+              </button>
+            </div>
+          )}
+          <div className="wizard-footer">
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={() => (activeSection === 0 ? setActiveView('home') : setActiveSection((s) => Math.max(0, s - 1)))}
+            >
+              {activeSection === 0 ? 'Back' : 'Previous'}
+            </button>
+            <button
+              type="button"
+              className="primary-action"
+              onClick={() => (isLast ? downloadFdiPdf() : setActiveSection((s) => s + 1))}
+              disabled={isGenerating}
+            >
+              {isLast ? (isGenerating ? 'Generating...' : 'Download Filled FDI') : 'Next'}
+            </button>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  if (activeView === 'asbestos-form') {
+    const sectionPages: Array<1 | 2 | 4 | 5 | 6 | 7 | 9 | 12> = [1, 2, 4, 5, 6, 7, 9, 12]
+    const sections = [...sectionPages.map((page) => `Page ${page} fields`), 'Review']
+    const isLast = activeSection === sections.length - 1
+    const activePage = sectionPages[activeSection]
+    const sectionFields = activePage
+      ? asbestosFieldDefs.filter((field) => field.page === activePage)
+      : []
+
+    return (
+      <main className="page-shell wizard-page">
+        <section className="wizard-header-panel">
+          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+            Back to templates
+          </button>
+          <p className="eyebrow">Asbestos 13-page form</p>
+          <h1>{sections[activeSection]}</h1>
+          <p className="lede">Only requested pages are editable; all other pages remain static.</p>
+        </section>
+        <section className="wizard-progress" aria-label="Form sections">
+          {sections.map((title, idx) => (
+            <button
+              key={title}
+              type="button"
+              className={`wizard-step${idx === activeSection ? ' active' : ''}`}
+              onClick={() => setActiveSection(idx)}
+            >
+              <span>{idx + 1}</span>
+              <small>{title}</small>
+            </button>
+          ))}
+        </section>
+        <section className="form-panel">
+          {!isLast && (
+            <div className="form-grid">
+              {sectionFields.map((field) => (
+                <label key={field.key} className={field.wide ? 'wide' : ''}>
+                  {field.label}
+                  {asbestosDateKeys.has(field.key) ? (
+                    <input
+                      type="date"
+                      value={toCalendarValue(asbestosForm[field.key] ?? '')}
+                      onChange={(e) => updateAsbestosField(field.key, fromCalendarValue(e.target.value))}
+                    />
+                  ) : (
+                    <input
+                      value={asbestosForm[field.key] ?? ''}
+                      onChange={(e) => updateAsbestosField(field.key, e.target.value)}
+                    />
+                  )}
+                </label>
+              ))}
+            </div>
+          )}
+          {isLast && (
+            <div className="review-card">
+              <p>Reference: <strong>{asbestosForm.page1Ref || '-'}</strong></p>
+              <p>Client: <strong>{asbestosForm.page2Client || '-'}</strong></p>
+              <p>Site: <strong>{asbestosForm.page2SiteAddress || '-'}</strong></p>
+              <button type="button" className="primary-action" onClick={downloadAsbestosPdf} disabled={isGenerating}>
+                {isGenerating ? 'Generating...' : 'Download Filled Asbestos'}
+              </button>
+            </div>
+          )}
+          <div className="wizard-footer">
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={() => setActiveSection((s) => Math.max(0, s - 1))}
+              disabled={activeSection === 0}
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              className="primary-action"
+              onClick={() => (isLast ? downloadAsbestosPdf() : setActiveSection((s) => s + 1))}
+              disabled={isGenerating}
+            >
+              {isLast ? (isGenerating ? 'Generating...' : 'Download Filled Asbestos') : 'Next'}
+            </button>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
   return (
     <main className="page-shell">
-      <section className="hero-panel">
-        <div className="hero-copy">
-          <p className="eyebrow">Certificates</p>
-          <h1>Create the PDF</h1>
-          <p className="lede">
-            Pick the certificate template you want to create from the options
-            below.
-          </p>
-        </div>
-
-        <div className="hero-art">
-          <img src={heroImg} alt="Certificate preview" />
-        </div>
-      </section>
-
       <section className="picker-panel" aria-labelledby="pdf-picker-title">
         <div className="picker-header">
           <div>
