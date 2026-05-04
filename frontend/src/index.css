@@ -1,22 +1,31 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: radial-gradient(circle at top, #fff8ef 0%, #f5f1ea 45%, #ebe7f0 100%);
-  --border: #e5e4e7;
+  --text: #475467;
+  --text-muted: #667085;
+  --text-h: #101828;
+  --surface: #ffffff;
+  --surface-elevated: #f9fafb;
+  --bg: #f2f4f7;
+  --border: #eaecf0;
+  --border-strong: #d0d5dd;
   --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --accent: #42307d;
+  --accent-hover: #352663;
+  --accent-soft: #f4f0fc;
+  --accent-ring: rgba(66, 48, 125, 0.28);
+  --accent-bg: rgba(66, 48, 125, 0.08);
+  --accent-border: rgba(66, 48, 125, 0.35);
+  --success: #027a48;
+  --success-soft: #ecfdf3;
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 4px 6px -2px rgba(16, 24, 40, 0.03), 0 12px 16px -4px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 12px 20px -4px rgba(16, 24, 40, 0.08), 0 24px 48px -12px rgba(16, 24, 40, 0.12);
 
-  --sans: Inter, 'Segoe UI', Roboto, sans-serif;
-  --heading: Georgia, 'Times New Roman', serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --sans: Inter, system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: var(--sans);
+  --mono: ui-monospace, 'Cascadia Code', Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
+  font: 16px/150% var(--sans);
+  letter-spacing: 0.01em;
   color-scheme: light;
   color: var(--text);
   background: var(--bg);
@@ -26,7 +35,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   @media (max-width: 1024px) {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 
@@ -37,44 +46,49 @@
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(circle at top, rgba(170, 59, 255, 0.12), transparent 34%),
-    linear-gradient(180deg, #ffffff 0%, #faf8ff 100%);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(66, 48, 125, 0.09), transparent 55%),
+    linear-gradient(180deg, #fafbfc 0%, var(--bg) 42%);
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--heading);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-h);
+  letter-spacing: -0.02em;
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
+  font-size: clamp(1.75rem, 4vw, 2.375rem);
+  line-height: 1.2;
   margin: 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-  }
 }
 
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  line-height: 1.25;
   margin: 0;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+}
+
+h3 {
+  font-size: 1rem;
+  line-height: 1.35;
+  margin: 0;
 }
 
 p {
   margin: 0;
 }
 
-code,
-button {
+code {
   font-family: var(--mono);
+}
+
+button {
+  font-family: var(--sans);
 }
 
 code {

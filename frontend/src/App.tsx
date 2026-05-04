@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import './App.css'
 
 const pdfOptions = [
   'Safety Spectrum London fsc',
@@ -18,6 +17,18 @@ const fetPdfName = 'fet safety spectrum london'
 const legionellaPdfName = 'Legionella'
 const fdiPdfName = 'fdi safety spectrum london'
 const asbestosPdfName = 'Asbestos managment survey'
+
+function templateShortCode(name: string): string {
+  const n = name.toLowerCase()
+  if (n.includes('elc')) return 'ELC'
+  if (n.includes('fsc')) return 'FSC'
+  if (n.includes('pat')) return 'PAT'
+  if (n.includes('fet')) return 'FET'
+  if (n.includes('legionella')) return 'LRA'
+  if (n.includes('fdi')) return 'FDI'
+  if (n.includes('asbestos')) return 'ACM'
+  return 'TMPL'
+}
 
 type ElcFormData = {
   inspectionDate: string
@@ -1490,7 +1501,7 @@ function App() {
             <div className="appliance-table">
               <h3>Appliance details and test results ({patForm.rows.length} rows)</h3>
               <button type="button" className="secondary-action" onClick={addPatRow}>
-                Add More Row
+                Add row
               </button>
               {patForm.rows.map((row, idx) => (
                 <div key={`pat-row-${idx}`} className="appliance-row">
@@ -1604,7 +1615,7 @@ function App() {
             <div className="appliance-table">
               <h3>Portable Fire Extinguishers ({fetForm.rows.length} rows)</h3>
               <button type="button" className="secondary-action" onClick={addFetRow}>
-                Add More Row
+                Add row
               </button>
               {fetForm.rows.map((row, idx) => (
                 <div key={`fet-row-${idx}`} className="appliance-row">
@@ -2009,7 +2020,7 @@ function App() {
             <p className="eyebrow">Step 1</p>
             <h2 id="pdf-picker-title">Choose a PDF template</h2>
           </div>
-          <p className="picker-note">7 templates available</p>
+          <p className="picker-note">{pdfOptions.length} templates</p>
         </div>
 
         <div className="pdf-grid" role="list" aria-label="PDF templates">
@@ -2024,7 +2035,7 @@ function App() {
                 onClick={() => setSelectedPdf(pdfName)}
                 aria-pressed={isSelected}
               >
-                <span className="pdf-index">PDF</span>
+                <span className="pdf-index">{templateShortCode(pdfName)}</span>
                 <span className="pdf-name">{pdfName}</span>
                 <span className="pdf-action">
                   {isSelected ? 'Selected' : 'Select'}
