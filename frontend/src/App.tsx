@@ -805,18 +805,42 @@ function MarkSelect({
 }
 
 function App() {
-  const { companies, companiesLoading, selected: brandingSelected } = useCompanyBranding()
+  const { companies, companiesLoading, selected: brandingSelected, setSelected: setBrandingSelected } = useCompanyBranding()
   const { issuerCompany, setIssuerCompany, useDefaultBranding, setUseDefaultBranding } = useCertificateSession()
   const issuerForExport = useDefaultBranding ? null : issuerCompany
-  const issuerSynced = useRef(false)
+  const defaultBrandingAppliedRef = useRef(false)
 
   useEffect(() => {
-    if (issuerSynced.current) return
-    if (brandingSelected && companies.some((c) => c.id === brandingSelected.id)) {
-      setIssuerCompany(brandingSelected)
-      issuerSynced.current = true
+    // Always start in default template mode once companies finish loading.
+    // This ensures any stored/auto-selected company is cleared on initial load.
+    if (defaultBrandingAppliedRef.current) return
+    if (companiesLoading) return
+    setUseDefaultBranding(true)
+    setBrandingSelected(null)
+    defaultBrandingAppliedRef.current = true
+  }, [companiesLoading, setUseDefaultBranding, setBrandingSelected])
+
+  useEffect(() => {
+    // Keep certificate step-1 company in sync with the header company selection.
+    // This ensures the selected header company is auto-selected for PDF generation.
+    if (!brandingSelected) return
+    if (!companies.some((c) => c.id === brandingSelected.id)) return
+    if (issuerCompany?.id === brandingSelected.id) return
+    setIssuerCompany(brandingSelected)
+  }, [brandingSelected, companies, issuerCompany?.id, setIssuerCompany])
+
+  const setIssuerCompanyFromWizard = useCallback((company: typeof issuerCompany) => {
+    setIssuerCompany(company)
+    if (company) setBrandingSelected(company)
+  }, [setIssuerCompany, setBrandingSelected])
+
+  const setUseDefaultBrandingFromWizard = useCallback((value: boolean) => {
+    setUseDefaultBranding(value)
+    if (value) {
+      // When "Default" is selected in step-1, restore the initial app header branding.
+      setBrandingSelected(null)
     }
-  }, [brandingSelected, companies, setIssuerCompany])
+  }, [setUseDefaultBranding, setBrandingSelected])
 
   const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form' | 'pat-form' | 'fet-form' | 'legionella-form' | 'fdi-form' | 'asbestos-form'>('home')
   const [selectedPdf, setSelectedPdf] = useState(pdfOptions[0])
@@ -2054,9 +2078,9 @@ function App() {
       companies={companies}
       companiesLoading={companiesLoading}
       useDefaultBranding={useDefaultBranding}
-      setUseDefaultBranding={setUseDefaultBranding}
+      setUseDefaultBranding={setUseDefaultBrandingFromWizard}
       issuerCompany={issuerCompany}
-      setIssuerCompany={setIssuerCompany}
+      setIssuerCompany={setIssuerCompanyFromWizard}
       selectedPdf={selectedPdf}
       setSelectedPdf={setSelectedPdf}
       onOpenForm={openSelectedLayout}

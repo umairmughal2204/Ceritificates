@@ -3,6 +3,8 @@ import { mediaUrl } from '../api/config'
 import { useCompanyBranding } from '../context/CompanyBrandingContext'
 import { CompaniesDialog } from './CompaniesDialog'
 
+const DEFAULT_HEADER_LOGO_SRC = '/src/assets/safety-spectrum-logo.png'
+
 export function BrandBar() {
   const { selected, companies, setSelected } = useCompanyBranding()
   const [manageOpen, setManageOpen] = useState(false)
@@ -11,19 +13,13 @@ export function BrandBar() {
     <>
       <header className="app-brand-bar">
         <div className="app-brand-left">
-          {selected?.logoUrl ? (
-            <img
-              className="app-brand-logo"
-              src={mediaUrl(selected.logoUrl)}
-              alt=""
-              width={36}
-              height={36}
-            />
-          ) : (
-            <span className="app-brand-mark" aria-hidden="true">
-              SSL
-            </span>
-          )}
+          <img
+            className="app-brand-logo"
+            src={mediaUrl(selected?.logoUrl ?? DEFAULT_HEADER_LOGO_SRC)}
+            alt=""
+            width={36}
+            height={36}
+          />
           <div className="app-brand-text">
             <span className="app-brand-name">{selected?.name ?? 'Safety Spectrum London'}</span>
             <span className="app-brand-tag">Certificate workspace</span>
