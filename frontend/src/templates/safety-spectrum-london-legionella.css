@@ -104,6 +104,8 @@ body {
   width: 56mm;
   height: auto;
   margin: 0 0 28mm -2mm;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .page-label {
@@ -125,6 +127,8 @@ body {
   width: 55mm;
   height: auto;
   margin-bottom: 4mm;
+  object-fit: contain;
+  object-position: left top;
 }
 
 .cover-title {
@@ -264,6 +268,66 @@ body {
 
 .cover-footer-logo-top {
   width: 30mm;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* ─── Static-page logo overlay ─────────────────────────────────────────────
+   Covers the original Safety Spectrum branding baked into every static PNG.
+   Works with any custom logo: no padding so the logo fills the whole cell;
+   object-fit:contain keeps aspect ratio; overflow:hidden clips oversized art.
+   ─────────────────────────────────────────────────────────────────────────── */
+.static-logo-wrap {
+  display: none;
+  position: absolute;
+  top: 3mm;
+  left: 5mm;
+  width: 64mm;
+  height: 22mm;
+  background: #ffffff;   /* matches the white background of Legionella pages */
+  z-index: 20;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+html.issuer-export-brand .static-logo-wrap {
+  display: block;
+}
+
+.static-logo-overlay {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* Custom issuer: uniform footprint so logos never spill over text or other marks */
+html.issuer-export-brand img.brand-logo,
+html.issuer-export-brand img.cover-logo {
+  width: auto;
+  max-width: 50mm;
+  height: 16mm;
+  max-height: 18mm;
+  margin: 0 0 10mm 0;
+  object-fit: contain;
+  object-position: left center;
+}
+
+html.issuer-export-brand .cover-content img.cover-logo {
+  max-height: 15mm;
+  margin-bottom: 3mm;
+}
+
+html.issuer-export-brand .cover-footer-logo-top {
+  width: 28mm !important;
+  height: 11mm;
+  max-height: 12mm;
+  object-fit: contain;
+}
+
+html.issuer-export-brand .page-25 .brand-logo {
+  margin-bottom: 12mm;
 }
 
 .cover-footer-logo-bottom {

@@ -14,6 +14,12 @@
 	<div class="book">
 		<section class="page static" id="page-1">
 			<img class="full" id="fdi-p1-image" src="/src/assets/1.png" alt="Page 1">
+			<div class="cover-brand" id="fdi-p1-logo-wrap">
+				<div class="cover-brand__logo-shell">
+					<img class="cover-brand__logo static-logo-overlay" id="fdi-p1-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London logo">
+				</div>
+				<div class="cover-brand__name">Safety Spectrum London</div>
+			</div>
 		</section>
 
 		<section class="page created report-page page-report-details" id="page-2">
@@ -463,10 +469,11 @@
 			let data = null
 			try { data = JSON.parse(raw) } catch (_error) { return null }
 
-			if (data.page1ImageUrl) {
-				const img = document.getElementById('fdi-p1-image')
-				if (img) img.src = data.page1ImageUrl
+			const p1 = document.getElementById('fdi-p1-image')
+			if (data.page1ImageUrl && p1) {
+				p1.src = data.page1ImageUrl
 			}
+			// Issuer logo overlay is applied below via applyIssuerBranding
 
 			setText('fdi-p2-report-by', data.page2ReportBy)
 			setText('fdi-p2-client', data.page2Client)
@@ -554,7 +561,24 @@
 			setBgImage('fdi-p8-photo-2', data.page8Photo2Url)
 			setBgImage('fdi-p8-photo-3', data.page8Photo3Url)
 			setBgImage('fdi-p8-photo-4', data.page8Photo4Url)
+			applyIssuerBranding(data)
 			return data
+		}
+
+		function applyIssuerBranding(data) {
+			if (!data || !data.issuerLogoUrl) return
+			document.documentElement.classList.add('issuer-export-brand')
+			document.querySelectorAll('.static-logo-overlay').forEach((img) => {
+				if (!(img instanceof HTMLImageElement)) return
+				img.removeAttribute('width')
+				img.removeAttribute('height')
+				img.style.removeProperty('width')
+				img.style.removeProperty('height')
+				img.src = data.issuerLogoUrl
+				if (data.issuerName) img.alt = data.issuerName
+			})
+			const coverBrandName = document.querySelector('.cover-brand__name')
+			if (coverBrandName && data.issuerName) coverBrandName.textContent = data.issuerName
 		}
 
 		async function downloadExactPdf(button) {

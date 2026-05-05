@@ -1,14 +1,13 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { CertificateHomeWizard } from './components/CertificateHomeWizard'
+import { CertificateStepper } from './components/CertificateStepper'
+import './App.css'
+import { CERTIFICATE_LABELS } from './config/certificateCatalog'
+import { useCertificateSession } from './context/CertificateSessionContext'
+import { useCompanyBranding } from './context/CompanyBrandingContext'
+import { mergeIssuerIntoPayload } from './lib/mergeIssuerIntoPayload'
 
-const pdfOptions = [
-  'Safety Spectrum London fsc',
-  'Legionella',
-  'Asbestos managment survey',
-  'Safety Spectrum London elc',
-  'fet safety spectrum london',
-  'pat Safety spectrum london',
-  'fdi safety spectrum london',
-]
+const pdfOptions = CERTIFICATE_LABELS
 
 const elcPdfName = 'Safety Spectrum London elc'
 const fscPdfName = 'Safety Spectrum London fsc'
@@ -17,18 +16,6 @@ const fetPdfName = 'fet safety spectrum london'
 const legionellaPdfName = 'Legionella'
 const fdiPdfName = 'fdi safety spectrum london'
 const asbestosPdfName = 'Asbestos managment survey'
-
-function templateShortCode(name: string): string {
-  const n = name.toLowerCase()
-  if (n.includes('elc')) return 'ELC'
-  if (n.includes('fsc')) return 'FSC'
-  if (n.includes('pat')) return 'PAT'
-  if (n.includes('fet')) return 'FET'
-  if (n.includes('legionella')) return 'LRA'
-  if (n.includes('fdi')) return 'FDI'
-  if (n.includes('asbestos')) return 'ACM'
-  return 'TMPL'
-}
 
 type ElcFormData = {
   inspectionDate: string
@@ -818,8 +805,22 @@ function MarkSelect({
 }
 
 function App() {
+  const { companies, companiesLoading, selected: brandingSelected } = useCompanyBranding()
+  const { issuerCompany, setIssuerCompany, useDefaultBranding, setUseDefaultBranding } = useCertificateSession()
+  const issuerForExport = useDefaultBranding ? null : issuerCompany
+  const issuerSynced = useRef(false)
+
+  useEffect(() => {
+    if (issuerSynced.current) return
+    if (brandingSelected && companies.some((c) => c.id === brandingSelected.id)) {
+      setIssuerCompany(brandingSelected)
+      issuerSynced.current = true
+    }
+  }, [brandingSelected, companies, setIssuerCompany])
+
   const [activeView, setActiveView] = useState<'home' | 'elc-form' | 'fsc-form' | 'pat-form' | 'fet-form' | 'legionella-form' | 'fdi-form' | 'asbestos-form'>('home')
   const [selectedPdf, setSelectedPdf] = useState(pdfOptions[0])
+  const [homeWizardStep, setHomeWizardStep] = useState<1 | 2 | 3>(1)
   const [activeSection, setActiveSection] = useState(0)
   const [isGenerating, setIsGenerating] = useState(false)
   const [form, setForm] = useState<ElcFormData>(defaultElcForm)
@@ -830,7 +831,35 @@ function App() {
   const [fdiForm, setFdiForm] = useState<FdiFormData>(defaultFdiForm)
   const [asbestosForm, setAsbestosForm] = useState<AsbestosFormData>(defaultAsbestosForm)
 
+  const goHome = useCallback(() => {
+    setHomeWizardStep(1)
+    setActiveView('home')
+  }, [])
+
+  const applyIssuerToAllForms = useCallback(() => {
+    if (!issuerCompany) return
+    const name = issuerCompany.name
+    setForm((f) => ({ ...f, tradingTitle: name }))
+    setFscForm((f) => ({ ...f, tradingTitle: name }))
+    setPatForm((f) => ({ ...f, tradingTitle: name }))
+    setFetForm((f) => ({ ...f, tradingTitle: name }))
+    setLegionellaForm((f) => ({ ...f, page1FooterCompany: name }))
+    setFdiForm((f) => ({ ...f, page2ReportBy: name }))
+    setAsbestosForm((f) => ({ ...f, page1Company: name }))
+  }, [issuerCompany])
+
   const openSelectedLayout = () => {
+    if (useDefaultBranding) {
+      setForm({ ...defaultElcForm })
+      setFscForm({ ...defaultFscForm })
+      setPatForm({ ...defaultPatForm })
+      setFetForm({ ...defaultFetForm })
+      setLegionellaForm({ ...defaultLegionellaForm })
+      setFdiForm({ ...defaultFdiForm })
+      setAsbestosForm({ ...defaultAsbestosForm })
+    } else {
+      applyIssuerToAllForms()
+    }
     if (selectedPdf === elcPdfName) {
       setActiveSection(0)
       setActiveView('elc-form')
@@ -901,7 +930,7 @@ function App() {
     }
 
     setIsGenerating(true)
-    localStorage.setItem('elc_form_data', JSON.stringify(payload))
+    localStorage.setItem('elc_form_data', JSON.stringify(mergeIssuerIntoPayload(payload, issuerForExport)))
     window.open('/src/templates/safety-spectrum-london-elc.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
@@ -939,7 +968,7 @@ function App() {
       nextDate: toPdfDate(fscForm.nextDate),
     }
     setIsGenerating(true)
-    localStorage.setItem('fsc_form_data', JSON.stringify(payload))
+    localStorage.setItem('fsc_form_data', JSON.stringify(mergeIssuerIntoPayload(payload, issuerForExport)))
     window.open('/src/templates/safety-spectrum-london-fsc.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
@@ -989,7 +1018,7 @@ function App() {
       totalAppliances: `Total Appliances for Report: ${rowsCount}`,
     }
     setIsGenerating(true)
-    localStorage.setItem('pat_form_data', JSON.stringify(payload))
+    localStorage.setItem('pat_form_data', JSON.stringify(mergeIssuerIntoPayload(payload, issuerForExport)))
     window.open('/src/templates/safety-spectrum-london-pat.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
@@ -1035,7 +1064,7 @@ function App() {
       })),
     }
     setIsGenerating(true)
-    localStorage.setItem('fet_form_data', JSON.stringify(payload))
+    localStorage.setItem('fet_form_data', JSON.stringify(mergeIssuerIntoPayload(payload, issuerForExport)))
     window.open('/src/templates/safety-spectrum-london-fet.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
@@ -1050,7 +1079,7 @@ function App() {
       page1AssessmentDate: toPdfDate(legionellaForm.page1AssessmentDate),
     }
     setIsGenerating(true)
-    localStorage.setItem('legionella_form_data', JSON.stringify(payload))
+    localStorage.setItem('legionella_form_data', JSON.stringify(mergeIssuerIntoPayload(payload, issuerForExport)))
     window.open('/src/templates/safety-spectrum-london-legionella.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
@@ -1062,7 +1091,7 @@ function App() {
   const downloadFdiPdf = () => {
     const payload = { ...fdiForm }
     setIsGenerating(true)
-    localStorage.setItem('fdi_form_data', JSON.stringify(payload))
+    localStorage.setItem('fdi_form_data', JSON.stringify(mergeIssuerIntoPayload(payload, issuerForExport)))
     window.open('/src/templates/safety-spectrum-london-fdi.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
@@ -1074,7 +1103,7 @@ function App() {
   const downloadAsbestosPdf = () => {
     const payload = { ...asbestosForm }
     setIsGenerating(true)
-    localStorage.setItem('asbestos_form_data', JSON.stringify(payload))
+    localStorage.setItem('asbestos_form_data', JSON.stringify(mergeIssuerIntoPayload(payload, issuerForExport)))
     window.open('/src/templates/safety-spectrum-london-asbestos-managment-survey.html?autodownload=1', '_blank', 'noopener,noreferrer')
     window.setTimeout(() => setIsGenerating(false), 800)
   }
@@ -1084,9 +1113,11 @@ function App() {
     const isLast = activeSection === sections.length - 1
 
     return (
-      <main className="page-shell wizard-page">
+      <>
+        <CertificateStepper activeIndex={isLast ? 3 : 2} />
+        <main className="page-shell wizard-page">
         <section className="wizard-header-panel">
-          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+          <button type="button" className="text-action" onClick={() => goHome()}>
             Back to templates
           </button>
           <p className="eyebrow">ELC 4-page form</p>
@@ -1176,6 +1207,7 @@ function App() {
           </div>
         </section>
       </main>
+      </>
     )
   }
 
@@ -1194,9 +1226,11 @@ function App() {
     const isLast = activeSection === sections.length - 1
 
     return (
-      <main className="page-shell wizard-page">
+      <>
+        <CertificateStepper activeIndex={isLast ? 3 : 2} />
+        <main className="page-shell wizard-page">
         <section className="wizard-header-panel">
-          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+          <button type="button" className="text-action" onClick={() => goHome()}>
             Back to templates
           </button>
           <p className="eyebrow">FSC 5-page form</p>
@@ -1432,6 +1466,7 @@ function App() {
           </div>
         </section>
       </main>
+      </>
     )
   }
 
@@ -1445,9 +1480,11 @@ function App() {
     const isLast = activeSection === sections.length - 1
 
     return (
-      <main className="page-shell wizard-page">
+      <>
+        <CertificateStepper activeIndex={isLast ? 3 : 2} />
+        <main className="page-shell wizard-page">
         <section className="wizard-header-panel">
-          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+          <button type="button" className="text-action" onClick={() => goHome()}>
             Back to templates
           </button>
           <p className="eyebrow">PAT 1-page form</p>
@@ -1501,7 +1538,7 @@ function App() {
             <div className="appliance-table">
               <h3>Appliance details and test results ({patForm.rows.length} rows)</h3>
               <button type="button" className="secondary-action" onClick={addPatRow}>
-                Add row
+                Add More Row
               </button>
               {patForm.rows.map((row, idx) => (
                 <div key={`pat-row-${idx}`} className="appliance-row">
@@ -1550,6 +1587,7 @@ function App() {
           </div>
         </section>
       </main>
+      </>
     )
   }
 
@@ -1563,9 +1601,11 @@ function App() {
     const isLast = activeSection === sections.length - 1
 
     return (
-      <main className="page-shell wizard-page">
+      <>
+        <CertificateStepper activeIndex={isLast ? 3 : 2} />
+        <main className="page-shell wizard-page">
         <section className="wizard-header-panel">
-          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+          <button type="button" className="text-action" onClick={() => goHome()}>
             Back to templates
           </button>
           <p className="eyebrow">FET 3-page form</p>
@@ -1615,7 +1655,7 @@ function App() {
             <div className="appliance-table">
               <h3>Portable Fire Extinguishers ({fetForm.rows.length} rows)</h3>
               <button type="button" className="secondary-action" onClick={addFetRow}>
-                Add row
+                Add More Row
               </button>
               {fetForm.rows.map((row, idx) => (
                 <div key={`fet-row-${idx}`} className="appliance-row">
@@ -1664,6 +1704,7 @@ function App() {
           </div>
         </section>
       </main>
+      </>
     )
   }
 
@@ -1680,9 +1721,11 @@ function App() {
     const isLast = activeSection === sections.length - 1
 
     return (
-      <main className="page-shell wizard-page">
+      <>
+        <CertificateStepper activeIndex={isLast ? 3 : 2} />
+        <main className="page-shell wizard-page">
         <section className="wizard-header-panel">
-          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+          <button type="button" className="text-action" onClick={() => goHome()}>
             Back to templates
           </button>
           <p className="eyebrow">Legionella 27-page form</p>
@@ -1818,6 +1861,7 @@ function App() {
           </div>
         </section>
       </main>
+      </>
     )
   }
 
@@ -1843,9 +1887,11 @@ function App() {
         .trim()
 
     return (
-      <main className="page-shell wizard-page">
+      <>
+        <CertificateStepper activeIndex={isLast ? 3 : 2} />
+        <main className="page-shell wizard-page">
         <section className="wizard-header-panel">
-          <button type="button" className="text-action" onClick={() => setActiveView('home')}>Back to templates</button>
+          <button type="button" className="text-action" onClick={() => goHome()}>Back to templates</button>
           <p className="eyebrow">FDI 10-page form</p>
           <h1>{sections[activeSection]?.title}</h1>
           <p className="lede">All requested fields are editable; other pages remain static.</p>
@@ -1892,7 +1938,7 @@ function App() {
             <button
               type="button"
               className="secondary-action"
-              onClick={() => (activeSection === 0 ? setActiveView('home') : setActiveSection((s) => Math.max(0, s - 1)))}
+              onClick={() => (activeSection === 0 ? goHome() : setActiveSection((s) => Math.max(0, s - 1)))}
             >
               {activeSection === 0 ? 'Back' : 'Previous'}
             </button>
@@ -1907,6 +1953,7 @@ function App() {
           </div>
         </section>
       </main>
+      </>
     )
   }
 
@@ -1920,9 +1967,11 @@ function App() {
       : []
 
     return (
-      <main className="page-shell wizard-page">
+      <>
+        <CertificateStepper activeIndex={isLast ? 3 : 2} />
+        <main className="page-shell wizard-page">
         <section className="wizard-header-panel">
-          <button type="button" className="text-action" onClick={() => setActiveView('home')}>
+          <button type="button" className="text-action" onClick={() => goHome()}>
             Back to templates
           </button>
           <p className="eyebrow">Asbestos 13-page form</p>
@@ -1994,71 +2043,24 @@ function App() {
           </div>
         </section>
       </main>
+      </>
     )
   }
 
   return (
-    <main className="page-shell">
-      <section className="home-intro-panel" aria-labelledby="home-title">
-        <div>
-          <p className="eyebrow">Safety Spectrum London</p>
-          <h1 id="home-title">Certificate Management</h1>
-          <p className="home-intro-copy">
-            Choose a certificate template, complete the form, and export a PDF matching the approved layout.
-          </p>
-        </div>
-        <div className="home-intro-meta">
-          <span>{pdfOptions.length} templates available</span>
-          <span>Standardized output</span>
-          <span>Ready for download</span>
-        </div>
-      </section>
-
-      <section className="picker-panel" aria-labelledby="pdf-picker-title">
-        <div className="picker-header">
-          <div>
-            <p className="eyebrow">Step 1</p>
-            <h2 id="pdf-picker-title">Choose a PDF template</h2>
-          </div>
-          <p className="picker-note">{pdfOptions.length} templates</p>
-        </div>
-
-        <div className="pdf-grid" role="list" aria-label="PDF templates">
-          {pdfOptions.map((pdfName) => {
-            const isSelected = pdfName === selectedPdf
-
-            return (
-              <button
-                key={pdfName}
-                type="button"
-                className={`pdf-card${isSelected ? ' selected' : ''}`}
-                onClick={() => setSelectedPdf(pdfName)}
-                aria-pressed={isSelected}
-              >
-                <span className="pdf-index">{templateShortCode(pdfName)}</span>
-                <span className="pdf-name">{pdfName}</span>
-                <span className="pdf-action">
-                  {isSelected ? 'Selected' : 'Select'}
-                </span>
-              </button>
-            )
-          })}
-        </div>
-      </section>
-
-      <section className="selection-panel">
-        <div>
-          <p className="eyebrow">Current selection</p>
-          <h2>{selectedPdf}</h2>
-          <p className="selection-copy">
-            Click the button to open the form and download the filled certificate.
-          </p>
-        </div>
-        <button type="button" className="primary-action" onClick={openSelectedLayout}>
-          Open Form
-        </button>
-      </section>
-    </main>
+    <CertificateHomeWizard
+      homeStep={homeWizardStep}
+      setHomeStep={setHomeWizardStep}
+      companies={companies}
+      companiesLoading={companiesLoading}
+      useDefaultBranding={useDefaultBranding}
+      setUseDefaultBranding={setUseDefaultBranding}
+      issuerCompany={issuerCompany}
+      setIssuerCompany={setIssuerCompany}
+      selectedPdf={selectedPdf}
+      setSelectedPdf={setSelectedPdf}
+      onOpenForm={openSelectedLayout}
+    />
   )
 }
 

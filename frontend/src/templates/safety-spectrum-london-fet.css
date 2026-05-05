@@ -78,6 +78,54 @@ body {
 	object-fit: cover;
 }
 
+/* ─── Cover-page brand (logo + name) ───────────────────────────────────────
+   page-1.png no longer has a baked logo. Render a real brand block at the
+   original top-left location, with a fixed logo box so any issuer logo fits.
+   ─────────────────────────────────────────────────────────────────────────── */
+.cover-brand {
+	position: absolute;
+	top: 5mm;
+	left: 8mm;
+	width: 38mm;
+	height: 34mm;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 1.2mm;
+	z-index: 20;
+	box-sizing: border-box;
+}
+
+.cover-brand__logo-shell {
+	width: 30mm;
+	height: 18mm;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.cover-brand__logo {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+}
+
+.cover-brand__name {
+	width: 100%;
+	color: #111;
+	font-size: 3.1mm;
+	line-height: 1.05;
+	text-align: center;
+	font-weight: 700;
+	white-space: normal;
+	word-break: break-word;
+}
+
 /* Pages 2 and 3 */
 .detail-page,
 .table-page {
@@ -229,7 +277,7 @@ body {
 
 .report-head {
 	display: grid;
-	grid-template-columns: 27mm 1fr 24mm;
+	grid-template-columns: minmax(0, 27mm) minmax(0, 1fr) minmax(0, 24mm);
 	align-items: center;
 	column-gap: 5mm;
 	padding: 8mm 1mm 3mm 4mm;
@@ -237,17 +285,44 @@ body {
 
 .report-head__brand {
 	text-align: center;
+	width: 100%;
+	height: 22mm;
+	max-width: 100%;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
 }
 
 .report-head__logo {
-	width: 30mm;
 	display: block;
-	margin: 0 auto;
+	width: auto;
+	height: auto;
+	max-width: 27mm;
+	max-height: 22mm;
+	object-fit: contain;
+	object-position: center;
+}
+
+/* When a custom issuer is selected, the company logo is already shown on page 1
+   via the static-logo-overlay. Hide it on all inner-page headers so only the
+   first page carries the logo. */
+html.issuer-export-brand .report-head__logo {
+	display: none;
+}
+
+/* Also collapse the empty brand cell so it doesn't leave dead space */
+html.issuer-export-brand .report-head__brand {
+	display: none;
 }
 
 .report-head__fire-logo {
-	width: 28mm;
+	width: auto;
+	max-width: 100%;
 	height: auto;
+	max-height: 24mm;
+	object-fit: contain;
 	justify-self: end;
 	display: block;
 }
@@ -258,6 +333,7 @@ body {
 	font-weight: 700;
 	line-height: 1.03;
 	text-align: left;
+	min-width: 0;
 }
 
 .slab {

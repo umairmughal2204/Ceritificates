@@ -237,6 +237,25 @@
 				}
 			}
 
+			function prepareIssuerLogo(img) {
+				if (!(img instanceof HTMLImageElement)) return
+				img.removeAttribute('width')
+				img.removeAttribute('height')
+				img.style.removeProperty('width')
+				img.style.removeProperty('height')
+			}
+
+			function applyIssuerBranding(data) {
+				if (!data || !data.issuerLogoUrl) return
+				document.documentElement.classList.add('issuer-export-brand')
+				const logo = document.querySelector('.brand__logo')
+				if (logo instanceof HTMLImageElement) {
+					prepareIssuerLogo(logo)
+					logo.src = data.issuerLogoUrl
+					if (data.issuerName) logo.alt = data.issuerName
+				}
+			}
+
 			function applyPatData() {
 				const raw = localStorage.getItem('pat_form_data')
 				if (!raw) return null
@@ -268,6 +287,7 @@
 				renderPatRows(rows)
 				const total = data.totalAppliances || `Total Appliances for Report: ${rows.length}`
 				setText('pat-total-appliances', total)
+				applyIssuerBranding(data)
 				return data
 			}
 

@@ -46,7 +46,7 @@ body {
 
 .hero {
 	display: grid;
-	grid-template-columns: 52mm minmax(0, 1fr);
+	grid-template-columns: minmax(0, 52mm) minmax(0, 1fr);
 	align-items: end;
 	column-gap: 6mm;
 	margin-bottom: 2mm;
@@ -54,13 +54,42 @@ body {
 
 .brand {
 	display: flex;
-	align-items: end;
+	align-items: center;
+	min-width: 0;
+	max-width: 100%;
+	height: 28mm;
+	max-height: 28mm;
+	overflow: hidden;
 }
 
 .brand__logo {
-	width: 48mm;
-	height: auto;
 	display: block;
+	width: auto;
+	height: auto;
+	max-width: 48mm;
+	max-height: 28mm;
+	object-fit: contain;
+	object-position: left center;
+}
+
+html.issuer-export-brand .hero {
+	align-items: center;
+}
+
+html.issuer-export-brand .brand {
+	align-items: center;
+	justify-content: flex-end;
+	max-height: 28mm;
+	overflow: hidden;
+}
+
+html.issuer-export-brand .brand__logo {
+	width: 48mm;
+	height: 24mm;
+	max-width: 48mm;
+	max-height: 26mm;
+	object-fit: contain;
+	object-position: center;
 }
 
 .hero__content {

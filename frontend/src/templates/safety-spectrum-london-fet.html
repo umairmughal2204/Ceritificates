@@ -14,6 +14,12 @@
 		<main class="document" aria-label="Portable Fire Extinguisher Report">
 			<section class="page cover-page">
 				<img class="cover-page__image" src="/src/assets/page-1.png" alt="Portable Fire Extinguisher Report cover page" />
+				<div class="cover-brand">
+					<div class="cover-brand__logo-shell">
+						<img class="cover-brand__logo static-logo-overlay" src="/src/assets/logo.png" alt="Safety Spectrum London logo" />
+					</div>
+					<div class="cover-brand__name">Safety Spectrum London</div>
+				</div>
 			</section>
 
 			<section class="page detail-page">
@@ -202,6 +208,29 @@
 				}
 			}
 
+			function prepareIssuerLogo(img) {
+				if (!(img instanceof HTMLImageElement)) return
+				img.removeAttribute('width')
+				img.removeAttribute('height')
+				img.style.removeProperty('width')
+				img.style.removeProperty('height')
+			}
+
+			function applyIssuerBranding(data) {
+				if (!data || !data.issuerLogoUrl) return
+				document.documentElement.classList.add('issuer-export-brand')
+				// Only update the cover-page logo; inner-page .report-head__logo
+				// is hidden via CSS so only page 1 carries the issuer branding.
+				document.querySelectorAll('.static-logo-overlay').forEach((img) => {
+					if (!(img instanceof HTMLImageElement)) return
+					prepareIssuerLogo(img)
+					img.src = data.issuerLogoUrl
+					if (data.issuerName) img.alt = data.issuerName
+				})
+				const coverBrandName = document.querySelector('.cover-brand__name')
+				if (coverBrandName && data.issuerName) coverBrandName.textContent = data.issuerName
+			}
+
 			function applyFetData() {
 				const raw = localStorage.getItem('fet_form_data')
 				if (!raw) return null
@@ -214,12 +243,15 @@
 				setText('fet-premises-address', data.premisesAddress)
 				setText('fet-comments', data.comments)
 				setText('fet-trading-title', data.tradingTitle)
+				const brandTitle = document.querySelector('.report-head__title > div:first-child')
+				if (brandTitle) brandTitle.textContent = data.tradingTitle || brandTitle.textContent
 				setHtml('fet-contractor-address', String(data.contractorAddress || '').replace(/\n/g, '<br />'))
 				setText('fet-contractor-name', data.contractorName)
 				setText('fet-signature', data.signature)
 				setText('fet-contractor-position', data.contractorPosition)
 				setText('fet-contractor-date', data.contractorDate)
 				renderRows(data.rows)
+				applyIssuerBranding(data)
 				return data
 			}
 

@@ -15,6 +15,13 @@
 		<!-- Page 1 (static) -->
 		<section class="page static" id="page-1">
 			<img class="full" src="/src/assets/a_1.png" alt="Page 1">
+			<!-- Page-1 header brand (logo + name) shown in the same top-left area -->
+			<div class="cover-brand" id="page1-top-logo-wrap">
+				<div class="cover-brand__logo-shell">
+					<img class="cover-brand__logo static-logo-overlay" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+				</div>
+				<div class="cover-brand__name">Safety Spectrum London</div>
+			</div>
 			<div class="page1-box">
 				<div class="box-grid">
 					<div class="box-item">
@@ -477,6 +484,27 @@
 	<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 	<script>
+		function prepareIssuerLogo(img) {
+			if (!(img instanceof HTMLImageElement)) return
+			img.removeAttribute('width')
+			img.removeAttribute('height')
+			img.style.removeProperty('width')
+			img.style.removeProperty('height')
+		}
+
+		function applyIssuerBranding(data) {
+			if (!data || !data.issuerLogoUrl) return
+			document.documentElement.classList.add('issuer-export-brand')
+			document.querySelectorAll('.box-logo, .static-logo-overlay').forEach((img) => {
+				if (!(img instanceof HTMLImageElement)) return
+				prepareIssuerLogo(img)
+				img.src = data.issuerLogoUrl
+				if (data.issuerName) img.alt = data.issuerName
+			})
+			const coverBrandName = document.querySelector('.cover-brand__name')
+			if (coverBrandName && data.issuerName) coverBrandName.textContent = data.issuerName
+		}
+
 		function applyAsbestosData() {
 			const raw = localStorage.getItem('asbestos_form_data')
 			if (!raw) return
@@ -506,6 +534,8 @@
 				if (!value) return
 				el.style.backgroundImage = `url("${String(value)}")`
 			})
+
+			applyIssuerBranding(data)
 		}
 
 		async function downloadExactPdf(button) {

@@ -401,6 +401,27 @@
       el.innerHTML = String(value)
     }
 
+    function prepareIssuerLogo(img) {
+      if (!(img instanceof HTMLImageElement)) return
+      img.removeAttribute('width')
+      img.removeAttribute('height')
+      img.style.removeProperty('width')
+      img.style.removeProperty('height')
+      img.style.removeProperty('max-width')
+      img.style.removeProperty('max-height')
+    }
+
+    function applyIssuerBranding(data) {
+      if (!data || !data.issuerLogoUrl) return
+      document.documentElement.classList.add('issuer-export-brand')
+      const logo = document.querySelector('.logo-img')
+      if (logo instanceof HTMLImageElement) {
+        prepareIssuerLogo(logo)
+        logo.src = data.issuerLogoUrl
+        if (data.issuerName) logo.alt = data.issuerName + ' logo'
+      }
+    }
+
     function applyFormData() {
       const raw = localStorage.getItem('elc_form_data')
       if (!raw) {
@@ -434,6 +455,7 @@
         setText(`elc-note-${idx + 1}`, notes[idx] || '')
       }
 
+      applyIssuerBranding(data)
       return data
     }
 

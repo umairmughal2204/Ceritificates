@@ -101,22 +101,65 @@ body {
 
 .p1-head {
 	display: grid;
-	grid-template-columns: 43mm 1fr 20mm;
+	grid-template-columns: minmax(0, 43mm) minmax(0, 1fr) minmax(0, 20mm);
 	align-items: center;
 	column-gap: 4mm;
 	margin-bottom: 3.8mm;
 }
 
-.p1-head__logo {
-	width: 41mm;
-	height: auto;
-	display: block;
+/* Fixed cells — explicit height so max-height:100% on the img resolves correctly
+   and the logo never grows past the designated area no matter its natural size. */
+.p1-head__logo-wrap,
+.p1-head__badge-wrap {
+	width: 100%;
+	height: 22mm;        /* explicit height → img max-height:100% works reliably */
+	max-height: 22mm;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	flex-shrink: 0;
 }
 
-.p1-head__badge {
+.p1-head__badge-wrap {
+	justify-content: flex-end;
 	width: 20mm;
-	height: auto;
+	height: 20mm;
+	max-height: 20mm;
+}
+
+.p1-head__logo,
+.p1-head__badge {
 	display: block;
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+	object-position: center;
+}
+
+html.issuer-export-brand .p1-head {
+	align-items: center;
+}
+
+/* Custom issuer: keep the logo inside its fixed cell */
+html.issuer-export-brand .p1-head__logo-wrap {
+	height: 20mm;
+	max-height: 20mm;
+}
+
+html.issuer-export-brand .p1-head__logo {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: left center;
+}
+
+html.issuer-export-brand .p1-head__badge-wrap {
+	height: 20mm;
+	max-height: 20mm;
 }
 
 .p1-head__title {

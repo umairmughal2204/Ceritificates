@@ -111,7 +111,7 @@ body {
 /* --- Hero --- */
 .hero {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: minmax(0, var(--logo-size)) minmax(0, 1fr) auto;
   align-items: center;
   margin-bottom: 3mm;
 }
@@ -137,6 +137,9 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
+  max-width: var(--logo-size);
+  overflow: hidden;
 }
 
 .logo-img {
@@ -145,7 +148,30 @@ body {
   max-width: 35mm;
   max-height: 35mm;
   object-fit: contain;
+  object-position: center;
   display: block;
+}
+
+/* Custom issuer logo: fixed cell so aspect ratio never overlaps hero/title */
+html.issuer-export-brand .hero-left {
+  width: var(--logo-size);
+  height: var(--logo-size);
+  max-width: 35mm;
+  max-height: 35mm;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+html.issuer-export-brand .logo-img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 .brand-name {
   font-size: 11px;

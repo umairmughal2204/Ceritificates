@@ -25,13 +25,17 @@
 					</div>
 
 					<header class="p1-head">
-						<img class="p1-head__logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London" />
+						<div class="p1-head__logo-wrap">
+							<img class="p1-head__logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London" />
+						</div>
 						<div class="p1-head__title">
 							<div class="p1-head__h1">FIRE DETECTION AND ALARM SYSTEM</div>
 							<div class="p1-head__h2">INSPECTION AND SERVICING REPORT</div>
 							<div class="p1-head__sub">Carried out in accordance with the recommendations of BS 5839</div>
 						</div>
-						<img class="p1-head__badge" src="/src/assets/fire-logo.png" alt="Fire" />
+						<div class="p1-head__badge-wrap">
+							<img class="p1-head__badge" src="/src/assets/fire-logo.png" alt="Fire" />
+						</div>
 					</header>
 
 					<section class="panel">
@@ -545,6 +549,25 @@
 				}
 			}
 
+			function prepareIssuerLogo(img) {
+				if (!(img instanceof HTMLImageElement)) return
+				img.removeAttribute('width')
+				img.removeAttribute('height')
+				img.style.removeProperty('width')
+				img.style.removeProperty('height')
+			}
+
+			function applyIssuerBranding(data) {
+				if (!data || !data.issuerLogoUrl) return
+				document.documentElement.classList.add('issuer-export-brand')
+				const img = document.querySelector('.p1-head__logo')
+				if (img instanceof HTMLImageElement) {
+					prepareIssuerLogo(img)
+					img.src = data.issuerLogoUrl
+					if (data.issuerName) img.alt = data.issuerName
+				}
+			}
+
 			function applyFscData() {
 				const raw = localStorage.getItem('fsc_form_data')
 				if (!raw) return null
@@ -635,6 +658,7 @@
 					if (additionalMarks[i]) setMark('fsc-add-' + (i + 1), additionalMarks[i])
 				}
 
+				applyIssuerBranding(data)
 				return data
 			}
 
@@ -674,7 +698,7 @@
 				img.style.height = `${fitH}px`
 				img.style.maxWidth = `${fitW}px`
 				img.style.maxHeight = `${fitH}px`
-				img.style.objectFit = 'fill'
+				img.style.objectFit = 'contain'
 
 				return { img, previous }
 			}
