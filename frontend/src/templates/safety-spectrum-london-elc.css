@@ -71,8 +71,11 @@ body {
 }
 
 @media screen {
-  html, body { background: #111; }
-  .page { border: 1px solid #2b2b2b; }
+  html, body { background: #efefef; }
+  .page {
+    border: 1px solid #d6d6d6;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.18);
+  }
 }
 
 .page:last-child {

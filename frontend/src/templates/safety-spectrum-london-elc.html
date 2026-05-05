@@ -550,12 +550,12 @@
         for (let idx = 0; idx < pages.length; idx += 1) {
           const page = pages[idx]
           const canvas = await html2canvas(page, {
-            scale: 3,
+            scale: 2,
             useCORS: true,
             backgroundColor: '#ffffff',
             imageTimeout: 0,
           })
-          const image = canvas.toDataURL('image/png')
+          const image = canvas.toDataURL('image/jpeg', 0.92)
           const widthPx = canvas.width
           const heightPx = canvas.height
 
@@ -569,7 +569,7 @@
             pdf.addPage([widthPx, heightPx], widthPx > heightPx ? 'landscape' : 'portrait')
           }
 
-          pdf.addImage(image, 'PNG', 0, 0, widthPx, heightPx)
+          pdf.addImage(image, 'JPEG', 0, 0, widthPx, heightPx)
         }
 
         if (!pdf) {

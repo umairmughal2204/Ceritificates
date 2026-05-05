@@ -323,12 +323,12 @@
 					}
 
 					const canvas = await html2canvas(page, {
-						scale: 3,
+						scale: 2,
 						useCORS: true,
 						backgroundColor: '#ffffff',
 						imageTimeout: 0,
 					})
-					const image = canvas.toDataURL('image/png')
+					const image = canvas.toDataURL('image/jpeg', 0.92)
 					const widthPx = canvas.width
 					const heightPx = canvas.height
 
@@ -338,7 +338,7 @@
 						unit: 'px',
 						format: [widthPx, heightPx],
 					})
-					pdf.addImage(image, 'PNG', 0, 0, widthPx, heightPx)
+					pdf.addImage(image, 'JPEG', 0, 0, widthPx, heightPx)
 					pdf.save('safety-spectrum-london-pat.pdf')
 					if (status) status.textContent = 'PDF downloaded successfully.'
 				} catch (_error) {
