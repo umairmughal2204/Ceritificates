@@ -32,10 +32,15 @@ export function BrandBar() {
               <select
                 value={selected?.id ?? ''}
                 onChange={(e) => {
+                  if (!e.target.value) {
+                    setSelected(null)
+                    return
+                  }
                   const next = companies.find((c) => c.id === e.target.value)
                   if (next) setSelected(next)
                 }}
               >
+                <option value="">Template default</option>
                 {companies.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name}

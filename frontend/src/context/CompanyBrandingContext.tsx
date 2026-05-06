@@ -72,9 +72,11 @@ export function CompanyBrandingProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setSelectedState((sel) => {
-      if (!sel) return companies[0] ?? null
+      // `null` means "template default" and is a valid state.
+      if (!sel) return null
       if (companies.some((c) => c.id === sel.id)) return sel
-      return companies[0] ?? null
+      // Previously-selected company no longer exists.
+      return null
     })
   }, [companies])
 

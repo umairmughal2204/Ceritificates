@@ -50,7 +50,8 @@ export function writeSelectedToStorage(company: Company | null): void {
 export function pickSelectedAfterLoad(companies: Company[]): Company | null {
   const saved = readSelectedFromStorage()
   if (saved && companies.some((c) => c.id === saved.id)) return saved
-  return companies[0] ?? null
+  // No saved selection → stay on template default (null).
+  return null
 }
 
 export async function readLogoFileAsDataUrl(file: File): Promise<string> {

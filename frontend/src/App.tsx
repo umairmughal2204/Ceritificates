@@ -821,13 +821,24 @@ function App() {
   }, [companiesLoading, setUseDefaultBranding, setBrandingSelected])
 
   useEffect(() => {
-    // Keep certificate step-1 company in sync with the header company selection.
-    // This ensures the selected header company is auto-selected for PDF generation.
-    if (!brandingSelected) return
+    // Keep certificate step-1 company selection in sync with header branding selection.
+    // Header "Template default" is represented by `null`.
+    if (!brandingSelected) {
+      if (useDefaultBranding && !issuerCompany) return
+      setUseDefaultBranding(true)
+      return
+    }
     if (!companies.some((c) => c.id === brandingSelected.id)) return
-    if (issuerCompany?.id === brandingSelected.id) return
+    if (!useDefaultBranding && issuerCompany?.id === brandingSelected.id) return
     setIssuerCompany(brandingSelected)
-  }, [brandingSelected, companies, issuerCompany?.id, setIssuerCompany])
+  }, [
+    brandingSelected,
+    companies,
+    useDefaultBranding,
+    issuerCompany,
+    setUseDefaultBranding,
+    setIssuerCompany,
+  ])
 
   const setIssuerCompanyFromWizard = useCallback((company: typeof issuerCompany) => {
     setIssuerCompany(company)
