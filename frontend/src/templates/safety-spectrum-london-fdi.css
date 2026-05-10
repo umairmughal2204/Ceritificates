@@ -55,13 +55,16 @@ body {
   top: 5.5mm;
   left: 8mm;
   right: 8mm;
-  width: auto;
+  width: calc(210mm - 16mm);
+  max-width: calc(210mm - 16mm);
   min-height: 24mm;
-  display: flex;
+  display: grid;
+  grid-template-columns: 26mm minmax(0, 1fr);
   align-items: center;
   gap: 3.5mm;
   z-index: 20;
   box-sizing: border-box;
+  overflow: visible;
 }
 
 .cover-brand__logo-shell {
@@ -85,19 +88,22 @@ body {
 }
 
 .cover-brand__name {
-  flex: 1;
+  margin: 0;
   min-width: 0;
   color: #ffffff;
-  font-size: 4mm;
-  line-height: 1.2;
+  font-size: 3.55mm;
+  line-height: 1.25;
   font-weight: 700;
   letter-spacing: 0.01em;
   text-shadow: 0 0.08mm 0.5mm rgba(0, 0, 0, 0.45);
+  overflow: visible;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
 }
 
 html.issuer-export-brand .cover-brand__name {
-  font-size: 3.65mm;
-  line-height: 1.22;
+  font-size: 3.15mm;
+  line-height: 1.25;
 }
 
 /* Only page-1 has the cover brand — body pages 3,7,9,10 have no logo image */
