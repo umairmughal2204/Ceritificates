@@ -312,11 +312,15 @@
       el.innerHTML = String(value)
     }
 
+    function cssBackgroundUrl(u) {
+      return 'url(' + JSON.stringify(u) + ')'
+    }
+
     function setBgImage(id, url) {
       if (!url) return
       const el = document.getElementById(id)
       if (!el) return
-      el.style.backgroundImage = `url("${url}")`
+      el.style.backgroundImage = cssBackgroundUrl(url)
     }
 
     function prepareIssuerLogo(img) {
@@ -416,13 +420,13 @@
         for (let idx = 0; idx < pages.length; idx += 1) {
           if (status) status.textContent = `Rendering page ${idx + 1} of ${pages.length}...`
           const canvas = await html2canvas(pages[idx], {
-            // Scale 2 avoids memory crashes on 27-page documents.
-            scale: 2,
+            // Scale 3 improves cover + text sharpness; uses more RAM on long reports.
+            scale: 3,
             useCORS: true,
             backgroundColor: '#ffffff',
             imageTimeout: 0,
           })
-          const image = canvas.toDataURL('image/jpeg', 0.92)
+          const image = canvas.toDataURL('image/jpeg', 0.95)
           const widthPx = canvas.width
           const heightPx = canvas.height
           if (!pdf) {

@@ -269,12 +269,12 @@
 					let pdf = null
 					for (let idx = 0; idx < pages.length; idx += 1) {
 						const canvas = await html2canvas(pages[idx], {
-							scale: 2,
+							scale: 3,
 							useCORS: true,
 							backgroundColor: '#ffffff',
 							imageTimeout: 0,
 						})
-						const image = canvas.toDataURL('image/jpeg', 0.92)
+						const image = canvas.toDataURL('image/jpeg', 0.95)
 						const widthPx = canvas.width
 						const heightPx = canvas.height
 						if (!pdf) {

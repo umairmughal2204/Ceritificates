@@ -246,6 +246,7 @@
   gap: 8px;
   text-align: left;
   font-size: 14px;
+  font-weight: 700;
   color: var(--text-h);
 }
 
@@ -269,6 +270,7 @@
   min-height: 42px;
   padding: 10px 12px;
   font: inherit;
+  font-weight: 400;
   color: var(--text-h);
   background: #fff;
 
@@ -301,6 +303,7 @@
   gap: 8px;
   text-align: left;
   font-size: 14px;
+  font-weight: 700;
   color: var(--text-h);
 }
 
@@ -313,6 +316,7 @@
   min-height: 42px;
   padding: 10px 12px;
   font: inherit;
+  font-weight: 400;
   color: var(--text-h);
   background: rgba(255, 255, 255, 0.95);
 }
@@ -787,7 +791,7 @@
 }
 
 .form-image-upload__label {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
   color: var(--text-h);
 }

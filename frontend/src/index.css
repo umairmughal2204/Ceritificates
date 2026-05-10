@@ -436,13 +436,14 @@ button {
   display: grid;
   gap: 6px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-h);
 }
 
 .dialog-field input[type='text'],
 .dialog-field input:not([type]) {
   font: inherit;
+  font-weight: 400;
   padding: 10px 12px;
   border-radius: 10px;
   border: 1px solid #d0d5dd;

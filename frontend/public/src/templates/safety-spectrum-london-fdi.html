@@ -446,18 +446,22 @@
 			el.innerHTML = String(value)
 		}
 
+		function cssBackgroundUrl(u) {
+			return 'url(' + JSON.stringify(u) + ')'
+		}
+
 		function setBgImage(id, url) {
 			if (!url) return
 			const el = document.getElementById(id)
 			if (!el) return
-			el.style.backgroundImage = `url("${url}")`
+			el.style.backgroundImage = cssBackgroundUrl(url)
 		}
 
 		function setMapImage(id, url) {
 			if (!url) return
 			const el = document.getElementById(id)
 			if (!el) return
-			el.style.backgroundImage = `url("${url}")`
+			el.style.backgroundImage = cssBackgroundUrl(url)
 			el.style.backgroundRepeat = 'no-repeat'
 			el.style.backgroundSize = 'cover'
 			el.style.backgroundPosition = 'center center'
@@ -593,8 +597,8 @@
 				const { jsPDF } = window.jspdf
 				let pdf = null
 				for (let i = 0; i < pages.length; i += 1) {
-					const canvas = await html2canvas(pages[i], { scale: 2, useCORS: true, backgroundColor: '#ffffff', imageTimeout: 0 })
-					const image = canvas.toDataURL('image/jpeg', 0.92)
+					const canvas = await html2canvas(pages[i], { scale: 3, useCORS: true, backgroundColor: '#ffffff', imageTimeout: 0 })
+					const image = canvas.toDataURL('image/jpeg', 0.95)
 					const widthPx = canvas.width
 					const heightPx = canvas.height
 					if (!pdf) pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [widthPx, heightPx] })

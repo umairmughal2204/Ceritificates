@@ -532,7 +532,7 @@
 				if (!key) return
 				const value = data[key]
 				if (!value) return
-				el.style.backgroundImage = `url("${String(value)}")`
+				el.style.backgroundImage = 'url(' + JSON.stringify(String(value)) + ')'
 			})
 
 			applyIssuerBranding(data)
@@ -550,8 +550,8 @@
 				const { jsPDF } = window.jspdf
 				let pdf = null
 				for (let i = 0; i < pages.length; i += 1) {
-					const canvas = await html2canvas(pages[i], { scale: 2, useCORS: true, backgroundColor: '#ffffff', imageTimeout: 0 })
-					const image = canvas.toDataURL('image/jpeg', 0.92)
+					const canvas = await html2canvas(pages[i], { scale: 3, useCORS: true, backgroundColor: '#ffffff', imageTimeout: 0 })
+					const image = canvas.toDataURL('image/jpeg', 0.95)
 					const widthPx = canvas.width
 					const heightPx = canvas.height
 					if (!pdf) pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [widthPx, heightPx] })
