@@ -532,7 +532,7 @@
 				if (!key) return
 				const value = data[key]
 				if (!value) return
-				el.style.backgroundImage = `url("${String(value)}")`
+				el.style.backgroundImage = 'url(' + JSON.stringify(String(value)) + ')'
 			})
 
 			applyIssuerBranding(data)

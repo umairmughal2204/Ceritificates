@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { CertificateHomeWizard } from './components/CertificateHomeWizard'
 import { CertificateStepper } from './components/CertificateStepper'
+import { FormImageUpload } from './components/FormImageUpload'
 import './App.css'
 import { CERTIFICATE_LABELS } from './config/certificateCatalog'
 import { useCertificateSession } from './context/CertificateSessionContext'
@@ -278,12 +279,12 @@ type AsbestosFormData = Record<string, string>
 
 const asbestosFieldDefs: AsbestosFieldDef[] = [
   { key: 'page1Location', label: 'Location', page: 1 }, { key: 'page1InspectedOn', label: 'Inspected On', page: 1 }, { key: 'page1Ref', label: 'Our Ref', page: 1 }, { key: 'page1Company', label: 'Company', page: 1 },
-  { key: 'page2ReportBy', label: 'Report By', page: 2 }, { key: 'page2Client', label: 'Client', page: 2 }, { key: 'page2Project', label: 'Project', page: 2 }, { key: 'page2SiteAddress', label: 'Site Address', page: 2, wide: true }, { key: 'page2Coordinates', label: 'Site Coordinates', page: 2, wide: true }, { key: 'page2MapImageUrl', label: 'Map Image URL', page: 2, wide: true }, { key: 'page2SiteDescription', label: 'Site Description', page: 2, wide: true }, { key: 'page2Surveyors', label: 'Surveyors', page: 2 }, { key: 'page2SurveyDates', label: 'Survey Dates', page: 2 }, { key: 'page2QcDate', label: 'QC Date', page: 2 }, { key: 'page2TotalVeryLow', label: 'Total Very Low', page: 2 }, { key: 'page2TotalLow', label: 'Total Low', page: 2 }, { key: 'page2TotalMedium', label: 'Total Medium', page: 2 }, { key: 'page2TotalHigh', label: 'Total High', page: 2 }, { key: 'page2FooterProject', label: 'Footer Project Text', page: 2, wide: true },
+  { key: 'page2ReportBy', label: 'Report By', page: 2 }, { key: 'page2Client', label: 'Client', page: 2 }, { key: 'page2Project', label: 'Project', page: 2 }, { key: 'page2SiteAddress', label: 'Site Address', page: 2, wide: true }, { key: 'page2Coordinates', label: 'Site Coordinates', page: 2, wide: true }, { key: 'page2MapImageUrl', label: 'Site map image', page: 2, wide: true }, { key: 'page2SiteDescription', label: 'Site Description', page: 2, wide: true }, { key: 'page2Surveyors', label: 'Surveyors', page: 2 }, { key: 'page2SurveyDates', label: 'Survey Dates', page: 2 }, { key: 'page2QcDate', label: 'QC Date', page: 2 }, { key: 'page2TotalVeryLow', label: 'Total Very Low', page: 2 }, { key: 'page2TotalLow', label: 'Total Low', page: 2 }, { key: 'page2TotalMedium', label: 'Total Medium', page: 2 }, { key: 'page2TotalHigh', label: 'Total High', page: 2 }, { key: 'page2FooterProject', label: 'Footer Project Text', page: 2, wide: true },
   { key: 'page4QualityControlDate', label: 'Quality Control Date', page: 4 }, { key: 'page4SignoffParagraph', label: 'Sign Off Paragraph', page: 4, wide: true }, { key: 'page4VariationsToScope', label: 'Variations To Scope', page: 4, wide: true }, { key: 'page4SummaryAcm', label: 'Summary ACM', page: 4, wide: true }, { key: 'page4AcmTableNote', label: 'ACM Table Note', page: 4, wide: true }, { key: 'page4SummaryNonAcm', label: 'Summary Non-ACM', page: 4, wide: true }, { key: 'page4NonAcmTableNote', label: 'Non-ACM Table Note', page: 4, wide: true }, { key: 'page4FooterProject', label: 'Footer Project Text', page: 4, wide: true },
   { key: 'page5LimitedAccessCopy', label: 'Limited Access Copy', page: 5, wide: true }, { key: 'page5LimitedAccessTableNote', label: 'Limited Access Table Note', page: 5, wide: true }, { key: 'page5FooterProject', label: 'Footer Project Text', page: 5, wide: true },
   { key: 'page6RegisterNote', label: 'Register Note', page: 6, wide: true }, { key: 'page6FooterProject', label: 'Footer Project Text', page: 6, wide: true },
   { key: 'page7SummaryLine1', label: 'Summary Line 1', page: 7, wide: true }, { key: 'page7SummaryLine2', label: 'Summary Line 2', page: 7, wide: true }, { key: 'page7Row1Location', label: 'Row 1 Location', page: 7, wide: true }, { key: 'page7Row1Item', label: 'Row 1 Item', page: 7 }, { key: 'page7Row1Material', label: 'Row 1 Material', page: 7 }, { key: 'page7Row1AccessNotes', label: 'Row 1 Access/Notes', page: 7 }, { key: 'page7Row1MaterialScore', label: 'Row 1 Material Score', page: 7 }, { key: 'page7Row1Recommendation', label: 'Row 1 Recommendation', page: 7 }, { key: 'page7Row1Page', label: 'Row 1 Page', page: 7 }, { key: 'page7Row2Location', label: 'Row 2 Location', page: 7, wide: true }, { key: 'page7Row2Item', label: 'Row 2 Item', page: 7 }, { key: 'page7Row2Material', label: 'Row 2 Material', page: 7 }, { key: 'page7Row2AccessNotes', label: 'Row 2 Access/Notes', page: 7 }, { key: 'page7Row2MaterialScore', label: 'Row 2 Material Score', page: 7 }, { key: 'page7Row2Recommendation', label: 'Row 2 Recommendation', page: 7 }, { key: 'page7Row2Page', label: 'Row 2 Page', page: 7 }, { key: 'page7FooterProject', label: 'Footer Project Text', page: 7, wide: true },
-  { key: 'page9Building', label: 'Building', page: 9 }, { key: 'page9Level', label: 'Level', page: 9 }, { key: 'page9Location', label: 'Location', page: 9 }, { key: 'page9Item', label: 'Item', page: 9 }, { key: 'page9PhotoUrl', label: 'Photo URL', page: 9, wide: true }, { key: 'page9SecondPhotoNote', label: 'Second Photo Note', page: 9, wide: true }, { key: 'page9LocationNotes', label: 'Location Notes', page: 9, wide: true }, { key: 'page9FooterProject', label: 'Footer Project Text', page: 9, wide: true },
+  { key: 'page9Building', label: 'Building', page: 9 }, { key: 'page9Level', label: 'Level', page: 9 }, { key: 'page9Location', label: 'Location', page: 9 }, { key: 'page9Item', label: 'Item', page: 9 }, { key: 'page9PhotoUrl', label: 'Location photo', page: 9, wide: true }, { key: 'page9SecondPhotoNote', label: 'Second Photo Note', page: 9, wide: true }, { key: 'page9LocationNotes', label: 'Location Notes', page: 9, wide: true }, { key: 'page9FooterProject', label: 'Footer Project Text', page: 9, wide: true },
   { key: 'page12IntroCopy', label: 'Intro Copy', page: 12, wide: true }, { key: 'page12OutroCopy', label: 'Outro Copy', page: 12, wide: true }, { key: 'page12FooterProject', label: 'Footer Project Text', page: 12, wide: true },
 ]
 
@@ -782,6 +783,28 @@ const defaultAsbestosForm: AsbestosFormData = {
     'The material score determines the potential for a material to release asbestos fibres when disturbed. This score is then categorised to describe the potential:',
   page12FooterProject: 'Safety Spectrum London > Project: P2724',
 }
+
+const FDI_IMAGE_UPLOAD_KEYS = new Set<string>([
+  'page1ImageUrl',
+  'page2MapUrl',
+  'page8HeroDoorUrl',
+  'page8Photo1Url',
+  'page8Photo2Url',
+  'page8Photo3Url',
+  'page8Photo4Url',
+])
+
+const FDI_IMAGE_LABELS: Record<string, string> = {
+  page1ImageUrl: 'Page 1 — cover image',
+  page2MapUrl: 'Page 2 — site map image',
+  page8HeroDoorUrl: 'Page 8 — main door photo',
+  page8Photo1Url: 'Page 8 — detail photo 1',
+  page8Photo2Url: 'Page 8 — detail photo 2',
+  page8Photo3Url: 'Page 8 — detail photo 3',
+  page8Photo4Url: 'Page 8 — detail photo 4',
+}
+
+const ASBESTOS_IMAGE_UPLOAD_KEYS = new Set<string>(['page2MapImageUrl', 'page9PhotoUrl'])
 
 function MarkSelect({
   label,
@@ -1823,7 +1846,12 @@ function App() {
 
           {activeSection === 2 && (
             <div className="form-grid">
-              <label className="wide">Page 7 Photo URL<input value={legionellaForm.page7PhotoUrl} onChange={(e) => updateLegionellaField('page7PhotoUrl', e.target.value)} /></label>
+              <FormImageUpload
+                wide
+                label="Page 7 photo"
+                value={legionellaForm.page7PhotoUrl}
+                onChange={(next) => updateLegionellaField('page7PhotoUrl', next)}
+              />
               <label className="wide">Page 8 Note<input value={legionellaForm.page8Note} onChange={(e) => updateLegionellaField('page8Note', e.target.value)} /></label>
               <label className="wide">Page 9 Note<input value={legionellaForm.page9Note} onChange={(e) => updateLegionellaField('page9Note', e.target.value)} /></label>
             </div>
@@ -1831,20 +1859,60 @@ function App() {
 
           {activeSection === 3 && (
             <div className="form-grid">
-              <label className="wide">Page 14 Photo URL<input value={legionellaForm.page14PhotoUrl} onChange={(e) => updateLegionellaField('page14PhotoUrl', e.target.value)} /></label>
-              <label className="wide">Page 15 Photo URL<input value={legionellaForm.page15PhotoUrl} onChange={(e) => updateLegionellaField('page15PhotoUrl', e.target.value)} /></label>
-              <label className="wide">Page 16 Photo URL<input value={legionellaForm.page16PhotoUrl} onChange={(e) => updateLegionellaField('page16PhotoUrl', e.target.value)} /></label>
-              <label className="wide">Page 17 Photo URL<input value={legionellaForm.page17PhotoUrl} onChange={(e) => updateLegionellaField('page17PhotoUrl', e.target.value)} /></label>
+              <FormImageUpload
+                wide
+                label="Page 14 photo"
+                value={legionellaForm.page14PhotoUrl}
+                onChange={(next) => updateLegionellaField('page14PhotoUrl', next)}
+              />
+              <FormImageUpload
+                wide
+                label="Page 15 photo"
+                value={legionellaForm.page15PhotoUrl}
+                onChange={(next) => updateLegionellaField('page15PhotoUrl', next)}
+              />
+              <FormImageUpload
+                wide
+                label="Page 16 photo"
+                value={legionellaForm.page16PhotoUrl}
+                onChange={(next) => updateLegionellaField('page16PhotoUrl', next)}
+              />
+              <FormImageUpload
+                wide
+                label="Page 17 photo"
+                value={legionellaForm.page17PhotoUrl}
+                onChange={(next) => updateLegionellaField('page17PhotoUrl', next)}
+              />
               <label className="wide">Page 17 Note<input value={legionellaForm.page17Note} onChange={(e) => updateLegionellaField('page17Note', e.target.value)} /></label>
             </div>
           )}
 
           {activeSection === 4 && (
             <div className="form-grid">
-              <label className="wide">Page 23 Photo 1 URL<input value={legionellaForm.page23Photo1Url} onChange={(e) => updateLegionellaField('page23Photo1Url', e.target.value)} /></label>
-              <label className="wide">Page 23 Photo 2 URL<input value={legionellaForm.page23Photo2Url} onChange={(e) => updateLegionellaField('page23Photo2Url', e.target.value)} /></label>
-              <label className="wide">Page 23 Photo 3 URL<input value={legionellaForm.page23Photo3Url} onChange={(e) => updateLegionellaField('page23Photo3Url', e.target.value)} /></label>
-              <label className="wide">Page 23 Photo 4 URL<input value={legionellaForm.page23Photo4Url} onChange={(e) => updateLegionellaField('page23Photo4Url', e.target.value)} /></label>
+              <FormImageUpload
+                wide
+                label="Page 23 photo 1"
+                value={legionellaForm.page23Photo1Url}
+                onChange={(next) => updateLegionellaField('page23Photo1Url', next)}
+              />
+              <FormImageUpload
+                wide
+                label="Page 23 photo 2"
+                value={legionellaForm.page23Photo2Url}
+                onChange={(next) => updateLegionellaField('page23Photo2Url', next)}
+              />
+              <FormImageUpload
+                wide
+                label="Page 23 photo 3"
+                value={legionellaForm.page23Photo3Url}
+                onChange={(next) => updateLegionellaField('page23Photo3Url', next)}
+              />
+              <FormImageUpload
+                wide
+                label="Page 23 photo 4"
+                value={legionellaForm.page23Photo4Url}
+                onChange={(next) => updateLegionellaField('page23Photo4Url', next)}
+              />
             </div>
           )}
 
@@ -1861,7 +1929,12 @@ function App() {
               <label>Page 26 Email<input value={legionellaForm.page26Email} onChange={(e) => updateLegionellaField('page26Email', e.target.value)} /></label>
               <label>Page 26 Assessment Date<input value={legionellaForm.page26AssessmentDate} onChange={(e) => updateLegionellaField('page26AssessmentDate', e.target.value)} /></label>
               <label className="wide">Page 26 Certificate Copy<input value={legionellaForm.page26Copy} onChange={(e) => updateLegionellaField('page26Copy', e.target.value)} /></label>
-              <label className="wide">Page 27 Schematic URL<input value={legionellaForm.page27SchematicUrl} onChange={(e) => updateLegionellaField('page27SchematicUrl', e.target.value)} /></label>
+              <FormImageUpload
+                wide
+                label="Page 27 schematic (image)"
+                value={legionellaForm.page27SchematicUrl}
+                onChange={(next) => updateLegionellaField('page27SchematicUrl', next)}
+              />
             </div>
           )}
 
@@ -1949,6 +2022,17 @@ function App() {
             <div className="form-grid">
               {sectionKeys.map((key) => {
                 const name = String(key)
+                if (FDI_IMAGE_UPLOAD_KEYS.has(name)) {
+                  return (
+                    <FormImageUpload
+                      key={name}
+                      wide
+                      label={FDI_IMAGE_LABELS[name] ?? formatFieldLabel(name)}
+                      value={fdiForm[key]}
+                      onChange={(next) => updateFdiField(key, next)}
+                    />
+                  )
+                }
                 const isWide = name.includes('Details') || name.includes('Footer') || name.includes('Address') || name.includes('Summary') || name.includes('Introduction') || name.includes('Notes')
                 return (
                   <label key={name} className={isWide ? 'wide' : ''}>
@@ -2029,23 +2113,33 @@ function App() {
         <section className="form-panel">
           {!isLast && (
             <div className="form-grid">
-              {sectionFields.map((field) => (
-                <label key={field.key} className={field.wide ? 'wide' : ''}>
-                  {field.label}
-                  {asbestosDateKeys.has(field.key) ? (
-                    <input
-                      type="date"
-                      value={toCalendarValue(asbestosForm[field.key] ?? '')}
-                      onChange={(e) => updateAsbestosField(field.key, fromCalendarValue(e.target.value))}
-                    />
-                  ) : (
-                    <input
-                      value={asbestosForm[field.key] ?? ''}
-                      onChange={(e) => updateAsbestosField(field.key, e.target.value)}
-                    />
-                  )}
-                </label>
-              ))}
+              {sectionFields.map((field) =>
+                ASBESTOS_IMAGE_UPLOAD_KEYS.has(field.key) ? (
+                  <FormImageUpload
+                    key={field.key}
+                    wide={field.wide}
+                    label={field.label}
+                    value={asbestosForm[field.key] ?? ''}
+                    onChange={(next) => updateAsbestosField(field.key, next)}
+                  />
+                ) : (
+                  <label key={field.key} className={field.wide ? 'wide' : ''}>
+                    {field.label}
+                    {asbestosDateKeys.has(field.key) ? (
+                      <input
+                        type="date"
+                        value={toCalendarValue(asbestosForm[field.key] ?? '')}
+                        onChange={(e) => updateAsbestosField(field.key, fromCalendarValue(e.target.value))}
+                      />
+                    ) : (
+                      <input
+                        value={asbestosForm[field.key] ?? ''}
+                        onChange={(e) => updateAsbestosField(field.key, e.target.value)}
+                      />
+                    )}
+                  </label>
+                ),
+              )}
             </div>
           )}
           {isLast && (

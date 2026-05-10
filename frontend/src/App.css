@@ -767,3 +767,66 @@
   gap: 12px;
   padding-top: 4px;
 }
+
+/* Certificate forms: image upload (stores data URL or keeps template path) */
+.form-image-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.form-image-upload--wide {
+  grid-column: 1 / -1;
+
+  @media (max-width: 900px) {
+    grid-column: auto;
+  }
+}
+
+.form-image-upload__label {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-h);
+}
+
+.form-image-upload__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-image-upload__file {
+  max-width: 100%;
+  font-size: 14px;
+}
+
+.form-image-upload__clear {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.form-image-upload__preview {
+  max-width: min(320px, 100%);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.form-image-upload__preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
+}
+
+.form-image-upload__error {
+  margin: 0;
+  font-size: 13px;
+  color: #b42318;
+}

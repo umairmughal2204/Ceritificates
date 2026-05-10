@@ -312,11 +312,15 @@
       el.innerHTML = String(value)
     }
 
+    function cssBackgroundUrl(u) {
+      return 'url(' + JSON.stringify(u) + ')'
+    }
+
     function setBgImage(id, url) {
       if (!url) return
       const el = document.getElementById(id)
       if (!el) return
-      el.style.backgroundImage = `url("${url}")`
+      el.style.backgroundImage = cssBackgroundUrl(url)
     }
 
     function prepareIssuerLogo(img) {
