@@ -1,0 +1,501 @@
+@page {
+  size: A4;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #dcdcdc;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111;
+  padding: 20px 0 28px;
+}
+
+.book {
+  width: 210mm;
+  margin: 0 auto;
+}
+
+.page {
+  position: relative;
+  width: 210mm;
+  min-width: 210mm;
+  max-width: 210mm;
+  height: 297mm;
+  min-height: 297mm;
+  max-height: 297mm;
+  margin: 0 auto 10mm;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 14px rgba(0, 0, 0, 0.18);
+}
+
+.page img.full {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ─── Cover-page brand (logo + name) ───────────────────────────────────────
+   1.png now has no baked logo at top-left. Render a real brand block there.
+   Keep fixed logo box so any issuer logo scales safely.
+   ─────────────────────────────────────────────────────────────────────────── */
+.cover-brand {
+  position: absolute;
+  top: 4mm;
+  left: 8mm;
+  width: 72mm;
+  height: 26mm;
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  z-index: 20;
+  box-sizing: border-box;
+}
+
+.cover-brand__logo-shell {
+  width: 24mm;
+  height: 20mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.cover-brand__logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.cover-brand__name {
+  min-width: 0;
+  color: #ffffff;
+  font-size: 4.2mm;
+  line-height: 1.1;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+/* Only page-1 has the cover brand — body pages 3,7,9,10 have no logo image */
+
+.report-page {
+  padding: 11mm 9mm 9mm;
+}
+
+.page-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(152deg, transparent 0 23%, rgba(209, 209, 209, 0.22) 23.2% 23.8%, transparent 24%),
+    linear-gradient(28deg, transparent 0 54%, rgba(208, 208, 208, 0.18) 54.2% 54.7%, transparent 55%),
+    linear-gradient(116deg, transparent 0 66%, rgba(212, 212, 212, 0.16) 66.1% 66.6%, transparent 66.8%),
+    linear-gradient(white, white);
+  pointer-events: none;
+}
+
+.report-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.fd-header-meta,
+.fd-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.fd-header-meta {
+  font-size: 3.1mm;
+  line-height: 1.2;
+}
+
+.fd-header-line,
+.fd-footer-line {
+  border-top: 0.35mm solid #1b1b1b;
+}
+
+.fd-header-line {
+  margin-top: 1.2mm;
+}
+
+.fd-page-title {
+  margin: 6.4mm 0 5.5mm;
+  font-size: 8.6mm;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.fd-section-title,
+.copy-heading {
+  margin: 0 0 1.8mm;
+  font-size: 5mm;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.fd-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: #fff;
+}
+
+.fd-table th,
+.fd-table td {
+  border: 0.28mm solid #1d1d1d;
+  padding: 1.8mm 2.1mm;
+  font-size: 3.45mm;
+  line-height: 1.25;
+  font-weight: 400;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.details-grid th {
+  width: 28%;
+  font-weight: 700;
+}
+
+.map-row th,
+.map-row td {
+  height: 43mm;
+  vertical-align: top;
+}
+
+.map-frame {
+  width: 100%;
+  height: 38mm;
+  border: 0.25mm solid #767676;
+  background: #f4f4f4;
+  overflow: hidden;
+}
+
+.map-image {
+  width: 100%;
+  height: 100%;
+  background-image: url("../assets/2.png");
+  background-repeat: no-repeat;
+  background-size: 185mm auto;
+  background-position: center -56mm;
+}
+
+.fd-summary {
+  margin-top: 8mm;
+}
+
+.fd-summary-copy,
+.lead-copy {
+  margin: 0 0 3mm;
+  font-size: 3.55mm;
+  line-height: 1.3;
+}
+
+.totals-grid {
+  width: 61%;
+}
+
+.totals-grid th,
+.totals-grid td {
+  text-align: center;
+  padding: 2mm 1.5mm;
+  font-size: 3.6mm;
+}
+
+.total-inspected {
+  background: #e6c27a;
+}
+
+.total-passed {
+  background: #cfe7b1;
+}
+
+.total-failed {
+  background: #ef9b86;
+}
+
+.fd-footer {
+  position: absolute;
+  left: 9mm;
+  right: 9mm;
+  bottom: 8mm;
+}
+
+.fd-footer-row {
+  margin-top: 2.1mm;
+  font-size: 3.15mm;
+  line-height: 1.2;
+}
+
+.qc-strip {
+  display: grid;
+  grid-template-columns: 29mm 51mm 31mm 1fr;
+  align-items: end;
+  gap: 4mm;
+  margin-bottom: 8.5mm;
+  font-size: 3.65mm;
+}
+
+.qc-label {
+  font-weight: 700;
+}
+
+.qc-name,
+.qc-date {
+  padding-bottom: 0.6mm;
+  border-bottom: 0.28mm solid #111;
+}
+
+.qc-signature {
+  justify-self: end;
+  font-size: 5.2mm;
+  font-style: italic;
+  transform: rotate(-8deg);
+  transform-origin: right center;
+}
+
+.copy-block {
+  margin-bottom: 6.2mm;
+}
+
+.copy-block p {
+  margin: 0;
+  font-size: 3.55mm;
+  line-height: 1.45;
+}
+
+.italic-note {
+  font-style: italic;
+}
+
+.limited-access {
+  margin-bottom: 4.4mm;
+}
+
+.access-table th,
+.access-table td {
+  font-size: 3.25mm;
+  text-align: center;
+}
+
+.access-table th:nth-child(1) { width: 14%; }
+.access-table th:nth-child(2) { width: 34%; }
+.access-table th:nth-child(3) { width: 28%; }
+.access-table th:nth-child(4) { width: 12%; }
+.access-table th:nth-child(5) { width: 12%; }
+
+.access-table tr:nth-child(2) td {
+  height: 21mm;
+}
+
+.center-copy {
+  text-align: center;
+}
+
+.actions-panel {
+  min-height: 233mm;
+}
+
+.actions-table th,
+.actions-table td {
+  font-size: 3.25mm;
+}
+
+.actions-table th:nth-child(1) { width: 11%; }
+.actions-table th:nth-child(2) { width: 26%; }
+.actions-table th:nth-child(3) { width: 39%; }
+.actions-table th:nth-child(4) { width: 15%; }
+.actions-table th:nth-child(5) { width: 9%; }
+
+.blank-area-row td {
+  height: 207mm;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.small-gap {
+  margin-bottom: 2.2mm;
+}
+
+.route-title {
+  margin: 0 0 4.1mm;
+  font-size: 4.15mm;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.health-table th,
+.health-table td {
+  text-align: center;
+  font-size: 2.35mm;
+  line-height: 1.15;
+  padding: 1.5mm 0.9mm;
+}
+
+.health-table th:nth-child(1) { width: 8%; }
+.health-table th:nth-child(2) { width: 8%; }
+.health-table th:nth-child(3) { width: 10%; }
+.health-table th:nth-child(4),
+.health-table th:nth-child(5),
+.health-table th:nth-child(6),
+.health-table th:nth-child(7),
+.health-table th:nth-child(8),
+.health-table th:nth-child(9),
+.health-table th:nth-child(10),
+.health-table th:nth-child(11) { width: 6.3%; }
+.health-table th:nth-child(12) { width: 18%; }
+.health-table th:nth-child(13) { width: 5.6%; }
+
+.status-pass {
+  background: #dbeec4;
+  font-weight: 700;
+}
+
+.status-na {
+  background: #e8ccd3;
+  font-weight: 700;
+}
+
+.crumb-title {
+  font-size: 5.3mm;
+  margin-bottom: 4.4mm;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: 74mm 1fr;
+  gap: 4.2mm;
+  align-items: start;
+}
+
+.door-photo {
+  border: 0.28mm solid #222;
+  background-color: #ececec;
+  background-image: url("../assets/8.png");
+  background-repeat: no-repeat;
+}
+
+.hero-door {
+  height: 70mm;
+  background-size: 210mm auto;
+  background-position: -9mm -41mm;
+}
+
+.overview-table th {
+  width: 40%;
+  font-weight: 700;
+}
+
+.gap-strip {
+  display: grid;
+  grid-template-columns: 27mm repeat(5, 1fr);
+  align-items: stretch;
+  margin-top: 4.2mm;
+  border: 0.28mm solid #1d1d1d;
+  background: #f0e388;
+}
+
+.gap-strip-title,
+.gap-item {
+  padding: 1.6mm 1.8mm;
+  border-right: 0.28mm solid #1d1d1d;
+  font-size: 3.2mm;
+}
+
+.gap-strip-title {
+  font-weight: 700;
+}
+
+.gap-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2mm;
+}
+
+.gap-item:last-child {
+  border-right: 0;
+}
+
+.detail-section {
+  margin-top: 5mm;
+}
+
+.rating-table th,
+.rating-table td,
+.findings-table th,
+.findings-table td {
+  font-size: 3.05mm;
+  line-height: 1.25;
+}
+
+.rating-table th:nth-child(1) { width: 33%; }
+.rating-table th:nth-child(2) { width: 33%; }
+.rating-table th:nth-child(3) { width: 34%; }
+
+.rating-table th {
+  font-weight: 700;
+}
+
+.findings-table th {
+  font-weight: 700;
+}
+
+.findings-table th:nth-child(1) { width: 24%; }
+.findings-table th:nth-child(2) { width: 13%; }
+.findings-table th:nth-child(3) { width: 63%; }
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.8mm;
+  margin-top: 5mm;
+}
+
+.detail-photo {
+  height: 31mm;
+  border: 0.28mm solid #1d1d1d;
+  background-color: #e8e8e8;
+  background-image: url("../assets/8.png");
+  background-repeat: no-repeat;
+  background-size: 210mm auto;
+}
+
+.photo-one { background-position: -8mm -218mm; }
+.photo-two { background-position: -57mm -218mm; }
+.photo-three { background-position: -106mm -218mm; }
+.photo-four { background-position: -154mm -218mm; }
+
+.page-signoff .fd-page-title,
+.page-actions .fd-page-title,
+.page-health-check .fd-page-title,
+.page-report-details .fd-page-title {
+  margin-bottom: 4.5mm;
+}
+
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+  }
+
+  .page {
+    margin: 0;
+    box-shadow: none;
+    break-after: page;
+  }
+}

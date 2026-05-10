@@ -1,0 +1,605 @@
+@page {
+	size: A4;
+	margin: 0;
+}
+
+:root {
+	--page-w: 210mm;
+	--page-h: 297mm;
+	--page-pad-x: 9mm;
+	--page-pad-top: 9mm;
+	--page-pad-bottom: 14mm;
+	--slab: #dfdfdf;
+	--field: #ffffff;
+	--red: #d91d12;
+	--text: #131313;
+	--gridline: #ededed;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background: #ececec;
+	color: var(--text);
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+	padding: 16px 0;
+}
+
+.document {
+	display: grid;
+	gap: 16px;
+	justify-content: center;
+}
+
+.page {
+	position: relative;
+	width: var(--page-w);
+	height: var(--page-h);
+	min-height: var(--page-h);
+	max-height: var(--page-h);
+	background: #fff;
+	box-shadow: 0 0 14px rgba(0, 0, 0, 0.16);
+	overflow: hidden;
+}
+
+.page-footer {
+	position: absolute;
+	left: 10mm;
+	right: 10mm;
+	bottom: 6mm;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 4mm;
+	font-weight: 700;
+}
+
+.page-footer__right {
+	font-size: 5.1mm;
+}
+
+/* Page 1 */
+.cover-page {
+	background: #fff;
+}
+
+.cover-page__image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* ─── Cover-page brand (logo + name) ───────────────────────────────────────
+   page-1.png no longer has a baked logo. Render a real brand block at the
+   original top-left location, with a fixed logo box so any issuer logo fits.
+   ─────────────────────────────────────────────────────────────────────────── */
+.cover-brand {
+	position: absolute;
+	top: 5mm;
+	left: 8mm;
+	width: 38mm;
+	height: 34mm;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 1.2mm;
+	z-index: 20;
+	box-sizing: border-box;
+}
+
+.cover-brand__logo-shell {
+	width: 30mm;
+	height: 18mm;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.cover-brand__logo {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+}
+
+.cover-brand__name {
+	width: 100%;
+	color: #111;
+	font-size: 3.1mm;
+	line-height: 1.05;
+	text-align: center;
+	font-weight: 700;
+	white-space: normal;
+	word-break: break-word;
+}
+
+/* Pages 2 and 3 */
+.detail-page,
+.table-page {
+	padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
+}
+
+.detail-page {
+	padding-top: 8mm;
+	padding-left: 10mm;
+	padding-right: 10mm;
+	padding-bottom: 7mm;
+}
+
+.detail-page .report-head {
+	padding-top: 3mm;
+	padding-bottom: 0.5mm;
+}
+
+.detail-page .meta-strip {
+	grid-template-columns: 1fr 1fr;
+	column-gap: 6mm;
+	width: calc(100% - 16mm);
+	margin: 0 auto;
+	padding: 1.1mm 3mm;
+}
+
+.detail-page .meta-strip__group--date {
+	grid-template-columns: auto 31mm;
+	padding-left: 0;
+	column-gap: 2.2mm;
+	justify-content: start;
+}
+
+.detail-page .meta-strip__group--ref {
+	grid-template-columns: auto 44mm;
+	padding-right: 0;
+	column-gap: 2.2mm;
+	justify-content: end;
+}
+
+.detail-page .meta-strip__label {
+	font-size: 3.9mm;
+}
+
+.detail-page .meta-strip__label--wide {
+	text-align: right;
+}
+
+.detail-page .meta-strip__value {
+	padding: 1.9mm 2.6mm;
+	font-size: 3.5mm;
+	text-align: center;
+}
+
+.detail-page .slab {
+	margin-top: 6mm;
+	padding: 8mm 4mm 4mm;
+}
+
+.detail-page .slab__body {
+	gap: 3mm;
+}
+
+.detail-page .comments-box {
+	min-height: 26mm;
+	padding-top: 8mm;
+}
+
+.detail-page .field-row__value {
+	min-height: 8.5mm;
+	font-size: 4.4mm;
+}
+
+.detail-page .field-row__value--address {
+	min-height: 32mm;
+	line-height: 1.22;
+}
+
+.detail-page .signature-grid {
+	gap: 2mm;
+}
+
+.detail-page .signature-grid__label {
+	margin-bottom: 2mm;
+	font-size: 4.3mm;
+}
+
+.detail-page .important-note {
+	margin-top: 5mm;
+	font-size: 3.1mm;
+	white-space: nowrap;
+}
+
+.detail-page .page-footer {
+	left: 8mm;
+	right: 8mm;
+	bottom: 4mm;
+	font-size: 3.2mm;
+}
+
+.detail-page .page-footer__right {
+	font-size: 4.2mm;
+}
+
+.meta-strip {
+	display: grid;
+	grid-template-columns: 42% 58%;
+	align-items: center;
+	background: var(--slab);
+	padding: 1.3mm 0;
+}
+
+.meta-strip__group {
+	display: grid;
+	align-items: center;
+	min-width: 0;
+}
+
+.meta-strip__group--date {
+	grid-template-columns: 15mm 46mm;
+	padding-left: 8mm;
+	column-gap: 2.5mm;
+}
+
+.meta-strip__group--ref {
+	grid-template-columns: 1fr 60mm;
+	padding-right: 5mm;
+	column-gap: 6mm;
+}
+
+.meta-strip__label {
+	font-size: 5.7mm;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.meta-strip__label--wide {
+	text-align: right;
+}
+
+.meta-strip__value {
+	background: var(--field);
+	border: 1px solid rgba(255, 255, 255, 0.85);
+	padding: 2.9mm 3.8mm;
+	font-size: 5.2mm;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.report-head {
+	display: grid;
+	grid-template-columns: minmax(0, 27mm) minmax(0, 1fr) minmax(0, 24mm);
+	align-items: center;
+	column-gap: 5mm;
+	padding: 8mm 1mm 3mm 4mm;
+}
+
+.report-head__brand {
+	text-align: center;
+	width: 100%;
+	height: 22mm;
+	max-width: 100%;
+	min-width: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.report-head__logo {
+	display: block;
+	width: auto;
+	height: auto;
+	max-width: 27mm;
+	max-height: 22mm;
+	object-fit: contain;
+	object-position: center;
+}
+
+/* When a custom issuer is selected, the company logo is already shown on page 1
+   via the static-logo-overlay. Hide it on all inner-page headers so only the
+   first page carries the logo. */
+html.issuer-export-brand .report-head__logo {
+	display: none;
+}
+
+/* Also collapse the empty brand cell so it doesn't leave dead space */
+html.issuer-export-brand .report-head__brand {
+	display: none;
+}
+
+.report-head__fire-logo {
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	max-height: 24mm;
+	object-fit: contain;
+	justify-self: end;
+	display: block;
+}
+
+.report-head__title {
+	color: var(--red);
+	font-size: 7.5mm;
+	font-weight: 700;
+	line-height: 1.03;
+	text-align: left;
+	min-width: 0;
+}
+
+.slab {
+	position: relative;
+	margin-top: 11mm;
+	background: var(--slab);
+	padding: 13mm 5mm 7mm;
+}
+
+.slab__tag {
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: translateY(-50%);
+	background: var(--red);
+	color: #fff;
+	font-size: 5.3mm;
+	font-weight: 700;
+	padding: 2.1mm 7mm;
+}
+
+.slab__tag--long {
+	padding-right: 8mm;
+}
+
+.slab__tag--table {
+	text-transform: uppercase;
+	font-size: 4.8mm;
+}
+
+.slab__body {
+	display: grid;
+	gap: 6mm;
+}
+
+.field-row {
+	display: grid;
+	grid-template-columns: 28mm minmax(0, 1fr);
+	align-items: center;
+	column-gap: 8mm;
+}
+
+.field-row__label {
+	font-size: 5.3mm;
+	font-weight: 700;
+}
+
+.field-row__value {
+	min-width: 0;
+	background: var(--field);
+	padding: 3.1mm 4.2mm;
+	min-height: 11.5mm;
+	font-size: 5.4mm;
+}
+
+.comments-box {
+	background: var(--field);
+	min-height: 48mm;
+	padding: 20mm 5mm 5mm;
+	font-size: 5.1mm;
+}
+
+.slab--contractor .slab__body {
+	gap: 7mm;
+}
+
+.field-row--title {
+	grid-template-columns: 29mm 1fr;
+}
+
+.field-row--address {
+	grid-template-columns: 29mm 1fr;
+	align-items: start;
+}
+
+.field-row__value--center {
+	text-align: center;
+	font-weight: 700;
+}
+
+.field-row__value--address {
+	min-height: 54mm;
+	line-height: 1.5;
+}
+
+.signature-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 3mm;
+	align-items: end;
+}
+
+.signature-grid__label {
+	margin-bottom: 4mm;
+	font-size: 5mm;
+	font-weight: 700;
+}
+
+.signature-grid__value {
+	background: var(--field);
+	min-height: 8.5mm;
+	padding: 2.2mm 3mm;
+	font-size: 4.1mm;
+}
+
+.signature-grid__value--center {
+	text-align: center;
+}
+
+.signature-grid__value--script {
+	text-align: center;
+	font-family: inherit;
+	font-size: 4.1mm;
+	color: inherit;
+}
+
+.important-note {
+	margin-top: 10mm;
+	text-align: center;
+	font-size: 4.8mm;
+	font-weight: 700;
+}
+
+.slab--table {
+	margin-top: 3mm;
+	padding-top: 16mm;
+	padding-bottom: 2mm;
+}
+
+.slab__body--table {
+	gap: 0;
+}
+
+.ext-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 2px;
+	table-layout: fixed;
+}
+
+.ext-table th,
+.ext-table td {
+	background: var(--field);
+	padding: 2.2mm 1.2mm;
+	font-size: 3.2mm;
+	line-height: 1.1;
+	vertical-align: middle;
+}
+
+.ext-table th {
+	background: transparent;
+	font-size: 3.2mm;
+	font-weight: 700;
+	text-align: center;
+	padding-top: 0;
+	padding-bottom: 1.4mm;
+}
+
+.ext-table td:nth-child(1),
+.ext-table td:nth-child(4),
+.ext-table td:nth-child(5),
+.ext-table td:nth-child(6),
+.ext-table td:nth-child(7),
+.ext-table td:nth-child(8) {
+	text-align: center;
+}
+
+.ext-table th:nth-child(1),
+.ext-table td:nth-child(1) {
+	width: 6.5%;
+}
+
+.ext-table th:nth-child(2),
+.ext-table td:nth-child(2) {
+	width: 16.5%;
+}
+
+.ext-table th:nth-child(3),
+.ext-table td:nth-child(3) {
+	width: 13.2%;
+}
+
+.ext-table th:nth-child(4),
+.ext-table td:nth-child(4) {
+	width: 14%;
+}
+
+.ext-table th:nth-child(5),
+.ext-table td:nth-child(5) {
+	width: 9%;
+}
+
+.ext-table th:nth-child(6),
+.ext-table td:nth-child(6) {
+	width: 8%;
+}
+
+.ext-table th:nth-child(7),
+.ext-table td:nth-child(7) {
+	width: 26%;
+}
+
+.ext-table th:nth-child(8),
+.ext-table td:nth-child(8) {
+	width: 11%;
+}
+
+.slab--intervals {
+	margin-top: 2px;
+	padding-top: 7mm;
+	padding-bottom: 7mm;
+}
+
+.intervals-title {
+	font-size: 5mm;
+	font-weight: 700;
+	margin-bottom: 8mm;
+}
+
+.intervals-grid {
+	display: grid;
+	grid-template-columns: 1.2fr 1fr 1fr 1fr;
+	row-gap: 4mm;
+	column-gap: 20mm;
+	font-size: 4mm;
+}
+
+.intervals-grid__head {
+	font-size: 4.3mm;
+	font-weight: 700;
+	margin-bottom: 1mm;
+}
+
+@media screen {
+	.page {
+		height: var(--page-h);
+		min-height: var(--page-h);
+		max-height: var(--page-h);
+	}
+}
+
+@media print {
+	html,
+	body {
+		background: #fff;
+	}
+
+	body {
+		padding: 0;
+	}
+
+	.document {
+		gap: 0;
+	}
+
+	.page {
+		height: var(--page-h);
+		min-height: var(--page-h);
+		max-height: var(--page-h);
+		box-shadow: none;
+		break-after: page;
+		page-break-after: always;
+	}
+
+	.page:last-child {
+		break-after: auto;
+		page-break-after: auto;
+	}
+}

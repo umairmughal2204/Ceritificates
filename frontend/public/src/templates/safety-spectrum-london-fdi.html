@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Fire Door Inspection Report</title>
+	<link rel="stylesheet" href="./safety-spectrum-london-fdi.css">
+</head>
+<body>
+	<div id="fdi-toolbar" style="position: fixed; top: 16px; right: 16px; z-index: 9999; display: flex; gap: 10px; align-items: center; font-family: Arial, Helvetica, sans-serif;">
+		<span id="download-status" style="color: #444; font-size: 12px;">Downloads the same visible layout.</span>
+		<button type="button" id="download-btn" onclick="downloadExactPdf(this)" style="border: 0; border-radius: 999px; padding: 10px 16px; background: #1f3b82; color: #fff; font-weight: 700; cursor: pointer;">Download PDF</button>
+	</div>
+	<div class="book">
+		<section class="page static" id="page-1">
+			<img class="full" id="fdi-p1-image" src="/src/assets/1.png" alt="Page 1">
+			<div class="cover-brand" id="fdi-p1-logo-wrap">
+				<div class="cover-brand__logo-shell">
+					<img class="cover-brand__logo static-logo-overlay" id="fdi-p1-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London logo">
+				</div>
+				<div class="cover-brand__name">Safety Spectrum London</div>
+			</div>
+		</section>
+
+		<section class="page created report-page page-report-details" id="page-2">
+			<div class="page-bg"></div>
+			<header class="fd-header">
+				<div class="fd-header-meta">
+					<span>Fire Door Inspection Report</span>
+					<span>Report Details</span>
+				</div>
+				<div class="fd-header-line"></div>
+			</header>
+
+			<h1 class="fd-page-title">Report Details</h1>
+
+			<section class="fd-section">
+				<table class="fd-table details-grid">
+					<tr>
+						<th>Report By</th>
+						<td id="fdi-p2-report-by">Safety Spectrum London</td>
+					</tr>
+					<tr>
+						<th>Client</th>
+						<td id="fdi-p2-client">Christianah</td>
+					</tr>
+					<tr>
+						<th>Project Site</th>
+						<td id="fdi-p2-project-site">P.5657668529</td>
+					</tr>
+					<tr>
+						<th>Address</th>
+						<td id="fdi-p2-address">7 Gurney close&nbsp;&nbsp;E15 1SJ</td>
+					</tr>
+					<tr class="map-row">
+						<th>Site Location</th>
+						<td>
+							<div class="map-frame">
+								<div class="map-image" id="fdi-p2-map"></div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>Site Description</th>
+						<td id="fdi-p2-site-description">Inspection carried out for main flat door.</td>
+					</tr>
+					<tr>
+						<th>Inspection Technicians</th>
+						<td id="fdi-p2-technicians">Muhammad Khokhar</td>
+					</tr>
+					<tr>
+						<th>Inspection Dates QC</th>
+						<td id="fdi-p2-inspection-dates-qc">13 March 2026</td>
+					</tr>
+					<tr>
+						<th>Date</th>
+						<td id="fdi-p2-date">13 March 2026</td>
+					</tr>
+				</table>
+			</section>
+
+			<section class="fd-summary">
+				<h2 class="fd-section-title">Totals</h2>
+				<p class="fd-summary-copy">An overview of the data collected on site, during the survey</p>
+				<table class="fd-table totals-grid">
+					<tr>
+						<th class="total-inspected">Inspected</th>
+						<th class="total-passed">Passed</th>
+						<th class="total-failed">Failed</th>
+					</tr>
+					<tr>
+						<td id="fdi-p2-total-inspected">1</td>
+						<td id="fdi-p2-total-passed">1</td>
+						<td id="fdi-p2-total-failed">0</td>
+					</tr>
+				</table>
+			</section>
+
+			<footer class="fd-footer">
+				<div class="fd-footer-line"></div>
+				<div class="fd-footer-row">
+					<span id="fdi-p2-footer-project">Safety Spectrum London &gt; Project: P.5657668529</span>
+					<span>Page 2 of 10</span>
+				</div>
+			</footer>
+		</section>
+
+		<section class="page static" id="page-3">
+			<img class="full" src="/src/assets/3.png" alt="Page 3">
+		</section>
+
+		<section class="page created report-page page-signoff" id="page-4">
+			<div class="page-bg"></div>
+			<header class="fd-header">
+				<div class="fd-header-meta">
+					<span>Fire Door Inspection Report</span>
+					<span>Sign Off</span>
+				</div>
+				<div class="fd-header-line"></div>
+			</header>
+
+			<h1 class="fd-page-title">Sign Off</h1>
+
+			<section class="qc-strip">
+				<div class="qc-label">Quality Control</div>
+				<div class="qc-name" id="fdi-p4-qc-name">Muhammad Khokhar</div>
+				<div class="qc-date" id="fdi-p4-qc-date">13 March 2026</div>
+				<div class="qc-signature" id="fdi-p4-qc-signature">M. Khokhar</div>
+			</section>
+
+			<section class="copy-block">
+				<h2 class="copy-heading">Introduction</h2>
+				<p id="fdi-p4-introduction">
+					Safety Spectrum London was instructed to undertake a fire door condition inspection of the selected doors within the property. The
+					inspection reviewed the visible condition of each door assembly and recorded whether the observed elements appeared suitable based on
+					the inspection criteria used during the survey.
+				</p>
+			</section>
+
+			<section class="copy-block">
+				<h2 class="copy-heading">Executive Summary</h2>
+				<p id="fdi-p4-executive-summary"></p>
+			</section>
+
+			<section class="copy-block">
+				<h2 class="copy-heading">Variations to Scope</h2>
+				<p class="italic-note" id="fdi-p4-variations">All areas within scope were accessed during the survey</p>
+			</section>
+
+			<section class="copy-block limited-access">
+				<h2 class="copy-heading">Limited or No Access Areas</h2>
+				<p id="fdi-p4-limited-access-note">These areas could not be fully accessed during survey.</p>
+			</section>
+
+			<section class="table-panel">
+				<table class="fd-table access-table">
+					<tr>
+						<th>Door Ref</th>
+						<th>Building / Level / Location</th>
+						<th>Access / Notes</th>
+						<th>Photo</th>
+						<th>Page</th>
+					</tr>
+					<tr>
+						<td id="fdi-p4-access-door-ref"></td>
+						<td class="center-copy" colspan="3" id="fdi-p4-access-notes">all locations and doors were fully accessed</td>
+						<td id="fdi-p4-access-page"></td>
+					</tr>
+				</table>
+			</section>
+
+			<footer class="fd-footer">
+				<div class="fd-footer-line"></div>
+				<div class="fd-footer-row">
+					<span id="fdi-p4-footer-project">Safety Spectrum London &gt; Project: P.5657668529</span>
+					<span>Page 4 of 10</span>
+				</div>
+			</footer>
+		</section>
+
+		<section class="page created report-page page-actions" id="page-5">
+			<div class="page-bg"></div>
+			<header class="fd-header">
+				<div class="fd-header-meta">
+					<span>Fire Door Inspection Report</span>
+					<span>Recommended Actions</span>
+				</div>
+				<div class="fd-header-line"></div>
+			</header>
+
+			<h1 class="fd-page-title">Recommended Actions</h1>
+			<p class="lead-copy">
+				Based on this inspection, the recommended actions are summarised below. Please see
+				<strong id="fdi-p5-inspection-details-ref">inspection details (p. 0)</strong> for more details
+			</p>
+
+			<section class="table-panel actions-panel">
+				<table class="fd-table actions-table">
+					<tr>
+						<th>Door Ref</th>
+						<th>Building/Level / Location</th>
+						<th>Remedial Actions</th>
+						<th>Needs Replacing?</th>
+						<th>Page</th>
+					</tr>
+					<tr>
+						<td id="fdi-p5-door-ref">Door 1</td>
+						<td id="fdi-p5-location">Main Flat / 0 / Main Flat door</td>
+						<td id="fdi-p5-remedial-actions"><em>please see inspection details</em></td>
+						<td id="fdi-p5-needs-replacing">No</td>
+						<td id="fdi-p5-page">8</td>
+					</tr>
+					<tr class="blank-area-row">
+						<td colspan="5"></td>
+					</tr>
+				</table>
+			</section>
+
+			<footer class="fd-footer">
+				<div class="fd-footer-line"></div>
+				<div class="fd-footer-row">
+					<span id="fdi-p5-footer-project">Safety Spectrum London &gt; Project: P.5657668529</span>
+					<span>Page 5 of 10</span>
+				</div>
+			</footer>
+		</section>
+
+		<section class="page created report-page page-health-check" id="page-6">
+			<div class="page-bg"></div>
+			<header class="fd-header">
+				<div class="fd-header-meta">
+					<span>Fire Door Inspection Report</span>
+					<span>Fire Door Health Check</span>
+				</div>
+				<div class="fd-header-line"></div>
+			</header>
+
+			<h1 class="fd-page-title">Fire Door Health Check</h1>
+			<p class="lead-copy small-gap">The fire door inspection findings are summarised below:</p>
+			<h2 class="route-title" id="fdi-p6-route-title">Main Flat &gt; Main Flat Door</h2>
+
+			<section class="table-panel health-panel">
+				<table class="fd-table health-table">
+					<tr>
+						<th>Door Ref</th>
+						<th>Overall Status</th>
+						<th>Door Rating Sufficient?</th>
+						<th>Door &amp; Frame</th>
+						<th>Hinges</th>
+						<th>Gaps</th>
+						<th>Seals</th>
+						<th>Closer</th>
+						<th>Lockset</th>
+						<th>Glazing</th>
+						<th>Signage</th>
+						<th>General Comments</th>
+						<th>Page</th>
+					</tr>
+					<tr>
+						<td id="fdi-p6-door-ref">Door 1</td>
+						<td class="status-pass" id="fdi-p6-overall-status">PASS</td>
+						<td class="status-pass" id="fdi-p6-rating-sufficient">YES&#10003;</td>
+						<td class="status-pass" id="fdi-p6-door-frame">PASS</td>
+						<td class="status-pass" id="fdi-p6-hinges">PASS</td>
+						<td class="status-pass" id="fdi-p6-gaps">PASS</td>
+						<td class="status-pass" id="fdi-p6-seals">PASS</td>
+						<td class="status-pass" id="fdi-p6-closer">PASS</td>
+						<td class="status-pass" id="fdi-p6-lockset">PASS</td>
+						<td class="status-na" id="fdi-p6-glazing">N/A</td>
+						<td class="status-na" id="fdi-p6-signage">N/A</td>
+						<td id="fdi-p6-general-comments"></td>
+						<td id="fdi-p6-page">8</td>
+					</tr>
+				</table>
+			</section>
+
+			<footer class="fd-footer">
+				<div class="fd-footer-line"></div>
+				<div class="fd-footer-row">
+					<span id="fdi-p6-footer-project">Safety Spectrum London &gt; Project: P.5657668529</span>
+					<span>Page 6 of 10</span>
+				</div>
+			</footer>
+		</section>
+
+		<section class="page static" id="page-7">
+			<img class="full" src="/src/assets/7.png" alt="Page 7">
+		</section>
+
+		<section class="page created report-page page-inspection-detail" id="page-8">
+			<div class="page-bg"></div>
+			<header class="fd-header">
+				<div class="fd-header-meta">
+					<span>Fire Door Inspection Report</span>
+					<span>Main Building &gt; 0 &gt; Main Flat Door &gt; Door 1</span>
+				</div>
+				<div class="fd-header-line"></div>
+			</header>
+
+			<h1 class="fd-page-title crumb-title">Main Building &gt; 0 &gt; Main Flat Door &gt; Door 1</h1>
+
+			<section class="overview-grid">
+				<div class="door-photo hero-door" id="fdi-p8-hero-door"></div>
+				<table class="fd-table overview-table">
+					<tr>
+						<th>Overall Result</th>
+						<td class="status-pass" id="fdi-p8-overall-result">Pass</td>
+					</tr>
+					<tr>
+						<th>Door Reference</th>
+						<td id="fdi-p8-door-reference">Door 1</td>
+					</tr>
+					<tr>
+						<th>Door Type</th>
+						<td id="fdi-p8-door-type">FD30</td>
+					</tr>
+					<tr>
+						<th>Dimensions (mm)</th>
+						<td id="fdi-p8-dimensions">Door 1: 838mm x 1975mm x 47mm</td>
+					</tr>
+					<tr>
+						<th>Door / Frame Material</th>
+						<td id="fdi-p8-material">Door:Timber /Frame:Timber</td>
+					</tr>
+					<tr>
+						<th>Wall Type</th>
+						<td id="fdi-p8-wall-type">Solid brickwork</td>
+					</tr>
+				</table>
+			</section>
+
+			<section class="gap-strip">
+				<div class="gap-strip-title">Door Gaps</div>
+				<div class="gap-item"><span>Top:</span><strong id="fdi-p8-gap-top">2mm</strong></div>
+				<div class="gap-item"><span>Left:</span><strong id="fdi-p8-gap-left">1mm</strong></div>
+				<div class="gap-item"><span>Right:</span><strong id="fdi-p8-gap-right">2mm</strong></div>
+				<div class="gap-item"><span>Bottom:</span><strong id="fdi-p8-gap-bottom">2mm</strong></div>
+				<div class="gap-item"><span>Meeting:</span><strong id="fdi-p8-gap-meeting">0mm</strong></div>
+			</section>
+
+			<section class="detail-section">
+				<h2 class="fd-section-title">Fire Door Rating &amp; Certification</h2>
+				<table class="fd-table rating-table">
+					<tr>
+						<th>Requirement</th>
+						<th>Certified / Rating</th>
+						<th>Sufficient Rating?</th>
+					</tr>
+					<tr>
+						<td id="fdi-p8-rating-requirement">FD30</td>
+						<td id="fdi-p8-rating-certified">Yes</td>
+						<td class="status-pass" id="fdi-p8-rating-sufficient">Yes</td>
+					</tr>
+				</table>
+			</section>
+
+			<section class="detail-section">
+				<h2 class="fd-section-title">Findings &amp; Action Plan</h2>
+				<table class="fd-table findings-table">
+					<tr>
+						<th>Category</th>
+						<th>Result</th>
+						<th>Details</th>
+					</tr>
+					<tr>
+						<td>Door &amp; Frame Condition</td>
+						<td class="status-pass" id="fdi-p8-cat1-result">Pass</td>
+						<td id="fdi-p8-cat1-details">Satisfactory condition of Frame. Door is of 47mm in thickness.</td>
+					</tr>
+					<tr>
+						<td>Hinges</td>
+						<td class="status-pass" id="fdi-p8-cat2-result">Pass</td>
+						<td id="fdi-p8-cat2-details">Satisfactory. 3 fire rated hinges present.</td>
+					</tr>
+					<tr>
+						<td>Gaps</td>
+						<td class="status-pass" id="fdi-p8-cat3-result">Pass</td>
+						<td id="fdi-p8-cat3-details">Gap around the door is acceptable. Each side not more than 4mm.</td>
+					</tr>
+					<tr>
+						<td>Seals</td>
+						<td class="status-pass" id="fdi-p8-cat4-result">Pass</td>
+						<td id="fdi-p8-cat4-details">Intumescent strips and smoke seals in satisfactory condition installed.</td>
+					</tr>
+					<tr>
+						<td>Closer</td>
+						<td class="status-pass" id="fdi-p8-cat5-result">Pass</td>
+						<td id="fdi-p8-cat5-details">Inner chain door closer present.</td>
+					</tr>
+					<tr>
+						<td>Handle/Latch</td>
+						<td class="status-pass" id="fdi-p8-cat6-result">Pass</td>
+						<td id="fdi-p8-cat6-details">Latch/Handle is fitted in the correct location.</td>
+					</tr>
+					<tr>
+						<td>Glazing</td>
+						<td class="status-na" id="fdi-p8-cat7-result">N/A</td>
+						<td id="fdi-p8-cat7-details"></td>
+					</tr>
+					<tr>
+						<td>Signage</td>
+						<td class="status-na" id="fdi-p8-cat8-result">N/A</td>
+						<td id="fdi-p8-cat8-details"></td>
+					</tr>
+				</table>
+			</section>
+
+			<section class="photo-grid">
+				<div class="detail-photo photo-one" id="fdi-p8-photo-1"></div>
+				<div class="detail-photo photo-two" id="fdi-p8-photo-2"></div>
+				<div class="detail-photo photo-three" id="fdi-p8-photo-3"></div>
+				<div class="detail-photo photo-four" id="fdi-p8-photo-4"></div>
+			</section>
+
+			<footer class="fd-footer">
+				<div class="fd-footer-line"></div>
+				<div class="fd-footer-row">
+					<span id="fdi-p8-footer-project">Safety Spectrum London &gt; Project: P.5657668529</span>
+					<span>Page 8 of 10</span>
+				</div>
+			</footer>
+		</section>
+
+		<section class="page static" id="page-9">
+			<img class="full" src="/src/assets/9.png" alt="Page 9">
+		</section>
+
+		<section class="page static" id="page-10">
+			<img class="full" src="/src/assets/10.png" alt="Page 10">
+		</section>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+	<script>
+		function setText(id, value) {
+			if (value === undefined || value === null || value === '') return
+			const el = document.getElementById(id)
+			if (!el) return
+			el.textContent = String(value)
+		}
+
+		function setHtml(id, value) {
+			if (value === undefined || value === null || value === '') return
+			const el = document.getElementById(id)
+			if (!el) return
+			el.innerHTML = String(value)
+		}
+
+		function setBgImage(id, url) {
+			if (!url) return
+			const el = document.getElementById(id)
+			if (!el) return
+			el.style.backgroundImage = `url("${url}")`
+		}
+
+		function setMapImage(id, url) {
+			if (!url) return
+			const el = document.getElementById(id)
+			if (!el) return
+			el.style.backgroundImage = `url("${url}")`
+			el.style.backgroundRepeat = 'no-repeat'
+			el.style.backgroundSize = 'cover'
+			el.style.backgroundPosition = 'center center'
+		}
+
+		function applyFdiData() {
+			const raw = localStorage.getItem('fdi_form_data')
+			if (!raw) return null
+			let data = null
+			try { data = JSON.parse(raw) } catch (_error) { return null }
+
+			const p1 = document.getElementById('fdi-p1-image')
+			if (data.page1ImageUrl && p1) {
+				p1.src = data.page1ImageUrl
+			}
+			// Issuer logo overlay is applied below via applyIssuerBranding
+
+			setText('fdi-p2-report-by', data.page2ReportBy)
+			setText('fdi-p2-client', data.page2Client)
+			setText('fdi-p2-project-site', data.page2ProjectSite)
+			setHtml('fdi-p2-address', String(data.page2Address || '').replace(/\n/g, '<br>'))
+			setText('fdi-p2-site-description', data.page2SiteDescription)
+			setText('fdi-p2-technicians', data.page2Technicians)
+			setText('fdi-p2-inspection-dates-qc', data.page2InspectionDatesQc)
+			setText('fdi-p2-date', data.page2Date)
+			setText('fdi-p2-total-inspected', data.page2TotalInspected)
+			setText('fdi-p2-total-passed', data.page2TotalPassed)
+			setText('fdi-p2-total-failed', data.page2TotalFailed)
+			setText('fdi-p2-footer-project', data.page2FooterProject)
+			setMapImage('fdi-p2-map', data.page2MapUrl)
+
+			setText('fdi-p4-qc-name', data.page4QcName)
+			setText('fdi-p4-qc-date', data.page4QcDate)
+			setText('fdi-p4-qc-signature', data.page4QcSignature)
+			setText('fdi-p4-introduction', data.page4Introduction)
+			setText('fdi-p4-executive-summary', data.page4ExecutiveSummary)
+			setText('fdi-p4-variations', data.page4Variations)
+			setText('fdi-p4-limited-access-note', data.page4LimitedAccessNote)
+			setText('fdi-p4-access-door-ref', data.page4AccessDoorRef)
+			setText('fdi-p4-access-notes', data.page4AccessNotes)
+			setText('fdi-p4-access-page', data.page4AccessPage)
+			setText('fdi-p4-footer-project', data.page4FooterProject)
+
+			setText('fdi-p5-inspection-details-ref', data.page5InspectionRef)
+			setText('fdi-p5-door-ref', data.page5DoorRef)
+			setText('fdi-p5-location', data.page5Location)
+			setHtml('fdi-p5-remedial-actions', data.page5RemedialActions)
+			setText('fdi-p5-needs-replacing', data.page5NeedsReplacing)
+			setText('fdi-p5-page', data.page5Page)
+			setText('fdi-p5-footer-project', data.page5FooterProject)
+
+			setText('fdi-p6-route-title', data.page6RouteTitle)
+			setText('fdi-p6-door-ref', data.page6DoorRef)
+			setText('fdi-p6-overall-status', data.page6OverallStatus)
+			setText('fdi-p6-rating-sufficient', data.page6RatingSufficient)
+			setText('fdi-p6-door-frame', data.page6DoorFrame)
+			setText('fdi-p6-hinges', data.page6Hinges)
+			setText('fdi-p6-gaps', data.page6Gaps)
+			setText('fdi-p6-seals', data.page6Seals)
+			setText('fdi-p6-closer', data.page6Closer)
+			setText('fdi-p6-lockset', data.page6Lockset)
+			setText('fdi-p6-glazing', data.page6Glazing)
+			setText('fdi-p6-signage', data.page6Signage)
+			setText('fdi-p6-general-comments', data.page6GeneralComments)
+			setText('fdi-p6-page', data.page6Page)
+			setText('fdi-p6-footer-project', data.page6FooterProject)
+
+			setText('fdi-p8-overall-result', data.page8OverallResult)
+			setText('fdi-p8-door-reference', data.page8DoorReference)
+			setText('fdi-p8-door-type', data.page8DoorType)
+			setText('fdi-p8-dimensions', data.page8Dimensions)
+			setText('fdi-p8-material', data.page8Material)
+			setText('fdi-p8-wall-type', data.page8WallType)
+			setText('fdi-p8-gap-top', data.page8GapTop)
+			setText('fdi-p8-gap-left', data.page8GapLeft)
+			setText('fdi-p8-gap-right', data.page8GapRight)
+			setText('fdi-p8-gap-bottom', data.page8GapBottom)
+			setText('fdi-p8-gap-meeting', data.page8GapMeeting)
+			setText('fdi-p8-rating-requirement', data.page8RatingRequirement)
+			setText('fdi-p8-rating-certified', data.page8RatingCertified)
+			setText('fdi-p8-rating-sufficient', data.page8RatingSufficient)
+			setText('fdi-p8-cat1-result', data.page8Cat1Result)
+			setText('fdi-p8-cat1-details', data.page8Cat1Details)
+			setText('fdi-p8-cat2-result', data.page8Cat2Result)
+			setText('fdi-p8-cat2-details', data.page8Cat2Details)
+			setText('fdi-p8-cat3-result', data.page8Cat3Result)
+			setText('fdi-p8-cat3-details', data.page8Cat3Details)
+			setText('fdi-p8-cat4-result', data.page8Cat4Result)
+			setText('fdi-p8-cat4-details', data.page8Cat4Details)
+			setText('fdi-p8-cat5-result', data.page8Cat5Result)
+			setText('fdi-p8-cat5-details', data.page8Cat5Details)
+			setText('fdi-p8-cat6-result', data.page8Cat6Result)
+			setText('fdi-p8-cat6-details', data.page8Cat6Details)
+			setText('fdi-p8-cat7-result', data.page8Cat7Result)
+			setText('fdi-p8-cat7-details', data.page8Cat7Details)
+			setText('fdi-p8-cat8-result', data.page8Cat8Result)
+			setText('fdi-p8-cat8-details', data.page8Cat8Details)
+			setText('fdi-p8-footer-project', data.page8FooterProject)
+			setBgImage('fdi-p8-hero-door', data.page8HeroDoorUrl)
+			setBgImage('fdi-p8-photo-1', data.page8Photo1Url)
+			setBgImage('fdi-p8-photo-2', data.page8Photo2Url)
+			setBgImage('fdi-p8-photo-3', data.page8Photo3Url)
+			setBgImage('fdi-p8-photo-4', data.page8Photo4Url)
+			applyIssuerBranding(data)
+			return data
+		}
+
+		function applyIssuerBranding(data) {
+			if (!data || !data.issuerLogoUrl) return
+			document.documentElement.classList.add('issuer-export-brand')
+			document.querySelectorAll('.static-logo-overlay').forEach((img) => {
+				if (!(img instanceof HTMLImageElement)) return
+				img.removeAttribute('width')
+				img.removeAttribute('height')
+				img.style.removeProperty('width')
+				img.style.removeProperty('height')
+				img.src = data.issuerLogoUrl
+				if (data.issuerName) img.alt = data.issuerName
+			})
+			const coverBrandName = document.querySelector('.cover-brand__name')
+			if (coverBrandName && data.issuerName) coverBrandName.textContent = data.issuerName
+		}
+
+		async function downloadExactPdf(button) {
+			const status = document.getElementById('download-status')
+			const pages = Array.from(document.querySelectorAll('.page'))
+			if (!pages.length) return
+			button.disabled = true
+			const originalText = button.textContent
+			button.textContent = 'Generating...'
+			if (status) status.textContent = 'Preparing exact PDF layout...'
+			try {
+				const { jsPDF } = window.jspdf
+				let pdf = null
+				for (let i = 0; i < pages.length; i += 1) {
+					const canvas = await html2canvas(pages[i], { scale: 2, useCORS: true, backgroundColor: '#ffffff', imageTimeout: 0 })
+					const image = canvas.toDataURL('image/jpeg', 0.92)
+					const widthPx = canvas.width
+					const heightPx = canvas.height
+					if (!pdf) pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [widthPx, heightPx] })
+					else pdf.addPage([widthPx, heightPx], 'portrait')
+					pdf.addImage(image, 'JPEG', 0, 0, widthPx, heightPx)
+				}
+				if (!pdf) throw new Error('No pages captured')
+				pdf.save('safety-spectrum-london-fdi.pdf')
+				if (status) status.textContent = 'PDF downloaded successfully.'
+			} catch (_error) {
+				if (status) status.textContent = 'Download failed. Please try again.'
+			} finally {
+				button.disabled = false
+				button.textContent = originalText
+			}
+		}
+
+		const params = new URLSearchParams(window.location.search)
+		applyFdiData()
+		if (params.get('autodownload') === '1') {
+			window.addEventListener('load', () => {
+				const button = document.getElementById('download-btn')
+				if (button instanceof HTMLButtonElement) window.setTimeout(() => downloadExactPdf(button), 350)
+			})
+		}
+	</script>
+</body>
+</html>

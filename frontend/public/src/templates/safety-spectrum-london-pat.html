@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>PAT Certificate</title>
+		<link rel="stylesheet" href="./safety-spectrum-london-pat.css" />
+	</head>
+	<body>
+		<div id="pat-toolbar" style="position: fixed; top: 16px; right: 16px; z-index: 9999; display: flex; gap: 10px; align-items: center; font-family: Arial, Helvetica, sans-serif;">
+			<span id="download-status" style="color: #444; font-size: 12px;">Downloads the same visible layout.</span>
+			<button type="button" id="download-btn" onclick="downloadExactPdf(this)" style="border: 0; border-radius: 999px; padding: 10px 16px; background: #1f3b82; color: #fff; font-weight: 700; cursor: pointer;">Download PDF</button>
+		</div>
+		<main class="doc">
+			<section class="page" aria-label="Portable Appliance Testing Certificate">
+				<header class="hero">
+					<div class="brand">
+						<img class="brand__logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London" />
+					</div>
+					<div class="hero__content">
+						<h1 class="hero__title">PORTABLE APPLIANCE TESTING CERTIFICATE</h1>
+						<div class="cert-number">
+							<div class="cert-number__label">Certificate Number:</div>
+							<div class="cert-number__value" id="pat-certificate-number">255045</div>
+						</div>
+					</div>
+				</header>
+
+				<section class="block">
+					<div class="ribbon">DETAILS OF THE CLIENT</div>
+					<div class="row row--client">
+						<div class="labelbox">Client and<br />address:</div>
+						<div class="valuebox" id="pat-client-address">Glets,5 Quadrant Rd, Croydon</div>
+						<div class="tailbox">
+							<span class="tailbox__label">Postcode:</span>
+							<span class="tailbox__value" id="pat-client-postcode">CR7 7DB</span>
+						</div>
+					</div>
+				</section>
+
+				<section class="block">
+					<div class="ribbon ribbon--wide">DETAILS OF THE INSTALLATION ADDRESS</div>
+					<div class="row row--client">
+						<div class="labelbox">Installation<br />address:</div>
+						<div class="valuebox" id="pat-installation-address">Glets,5 Quadrant Rd, Croydon</div>
+						<div class="tailbox">
+							<span class="tailbox__label">Postcode:</span>
+							<span class="tailbox__value" id="pat-installation-postcode">CR7 7DB</span>
+						</div>
+					</div>
+				</section>
+
+				<section class="block">
+					<div class="ribbon ribbon--xwide">DETAILS OF THE CONTRACTOR RESPONSIBLE FOR THE TESTING</div>
+					<div class="contractor">
+						<div class="contractor__left">
+							<div class="contractor__trade">
+								<div class="contractor__label">Trading Title:</div>
+								<div class="contractor__value contractor__value--full" id="pat-trading-title">Safety Spectrum London</div>
+							</div>
+							<div class="contractor__address">
+								<div class="contractor__label">Address:</div>
+								<div class="address-panel">
+									<div class="address-panel__top" id="pat-contractor-address">58A Tudor Road Hayes UB3 2QD</div>
+									<div class="address-panel__bottom">
+										<span class="address-panel__post-label">Postcode:</span>
+										<span class="address-panel__post-value" id="pat-contractor-postcode">UB3 2QD</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="contractor__right">
+							<div class="side-field">
+								<div class="side-field__label">Registration Number:</div>
+								<div class="side-field__value" id="pat-registration-number">16678881</div>
+							</div>
+							<div class="side-field">
+								<div class="side-field__label">Telephone Number:</div>
+								<div class="side-field__value" id="pat-telephone">+44 20 4628 6504</div>
+							</div>
+						</div>
+
+						<div class="contractor__statement">For the inspection and testing of the electrical equipment:</div>
+
+						<div class="person-row">
+							<div class="mini-field mini-field--name">
+								<div class="mini-field__label">Name:</div>
+								<div class="mini-field__value" id="pat-inspector-name">Giorgio Demetriou</div>
+							</div>
+							<div class="mini-field mini-field--position">
+								<div class="mini-field__label">Position:</div>
+								<div class="mini-field__value" id="pat-inspector-position">Qualified Supervisor</div>
+							</div>
+							<div class="mini-field mini-field--signature">
+								<div class="mini-field__label">Signature:</div>
+								<div class="mini-field__value mini-field__value--signature" id="pat-signature">GDemetriou</div>
+							</div>
+							<div class="mini-field mini-field--date">
+								<div class="mini-field__label">Date:</div>
+								<div class="mini-field__value" id="pat-date">17/12/2025</div>
+							</div>
+						</div>
+
+						<div class="person-row person-row--equipment">
+							<div class="mini-field mini-field--equipment">
+								<div class="mini-field__label">Test Equipment Used:</div>
+								<div class="mini-field__value" id="pat-equipment">Megger PAT4 Dv3</div>
+							</div>
+							<div class="mini-field mini-field--serial">
+								<div class="mini-field__label">Serial Number:</div>
+								<div class="mini-field__value" id="pat-equipment-serial">7812</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="block block--results">
+					<div class="ribbon ribbon--wide">APPLIANCE DETAILS AND TEST RESULTS</div>
+					<table class="results">
+						<thead>
+							<tr>
+								<th>Appliance ID</th>
+								<th>Test Date</th>
+								<th>Description</th>
+								<th>Location</th>
+								<th>Serial Number</th>
+								<th>Retest Period</th>
+								<th>Retest Date</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody id="pat-results-body">
+							<tr>
+								<td id="pat-row-1-id">00001</td>
+								<td id="pat-row-1-test-date">17/12/2025</td>
+								<td id="pat-row-1-description">Washing machine 1</td>
+								<td id="pat-row-1-location">Kitchen</td>
+								<td id="pat-row-1-serial"></td>
+								<td id="pat-row-1-retest-period">12</td>
+								<td id="pat-row-1-retest-date">17/12/2026</td>
+								<td id="pat-row-1-status">Pass</td>
+							</tr>
+							<tr>
+								<td id="pat-row-2-id">00002</td>
+								<td id="pat-row-2-test-date">17/12/2025</td>
+								<td id="pat-row-2-description">Washing machine 2</td>
+								<td id="pat-row-2-location">Kitchen</td>
+								<td id="pat-row-2-serial"></td>
+								<td id="pat-row-2-retest-period">12</td>
+								<td id="pat-row-2-retest-date">17/12/2026</td>
+								<td id="pat-row-2-status">Fail</td>
+							</tr>
+							<tr>
+								<td id="pat-row-3-id">00003</td>
+								<td id="pat-row-3-test-date">17/12/2025</td>
+								<td id="pat-row-3-description">Microwave</td>
+								<td id="pat-row-3-location">Kitchen</td>
+								<td id="pat-row-3-serial"></td>
+								<td id="pat-row-3-retest-period">12</td>
+								<td id="pat-row-3-retest-date">17/12/2026</td>
+								<td id="pat-row-3-status">Pass</td>
+							</tr>
+							<tr>
+								<td id="pat-row-4-id">00004</td>
+								<td id="pat-row-4-test-date">17/12/2025</td>
+								<td id="pat-row-4-description">Stove</td>
+								<td id="pat-row-4-location">Kitchen</td>
+								<td id="pat-row-4-serial"></td>
+								<td id="pat-row-4-retest-period">12</td>
+								<td id="pat-row-4-retest-date">17/12/2026</td>
+								<td id="pat-row-4-status">Pass</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="results-summary">
+						<div class="results-summary__spacer"></div>
+						<div class="results-summary__total" id="pat-total-appliances">Total Appliances for Report: 4</div>
+					</div>
+
+					<div class="blank-grid" aria-hidden="true">
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+						<div class="blank-grid__row"></div>
+					</div>
+				</section>
+
+				<footer class="footer">
+					<div class="footer__left">Report printed using Tysoft EasyPAT - Copyright Tysoft 2024.</div>
+					<div class="footer__right">Page: 1 of 1</div>
+				</footer>
+			</section>
+		</main>
+
+		<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+		<script>
+			function setText(id, value) {
+				if (value === undefined || value === null || value === '') return
+				const el = document.getElementById(id)
+				if (!el) return
+				el.textContent = String(value)
+			}
+
+			function renderPatRows(rows) {
+				const tbody = document.getElementById('pat-results-body')
+				if (!tbody || !Array.isArray(rows) || !rows.length) return
+				tbody.innerHTML = ''
+				for (const row of rows) {
+					const tr = document.createElement('tr')
+					const values = [
+						row.applianceId || '',
+						row.testDate || '',
+						row.description || '',
+						row.location || '',
+						row.serialNumber || '',
+						row.retestPeriod || '',
+						row.retestDate || '',
+						row.status || '',
+					]
+					for (const value of values) {
+						const td = document.createElement('td')
+						td.textContent = String(value)
+						tr.appendChild(td)
+					}
+					tbody.appendChild(tr)
+				}
+			}
+
+			function prepareIssuerLogo(img) {
+				if (!(img instanceof HTMLImageElement)) return
+				img.removeAttribute('width')
+				img.removeAttribute('height')
+				img.style.removeProperty('width')
+				img.style.removeProperty('height')
+			}
+
+			function applyIssuerBranding(data) {
+				if (!data || !data.issuerLogoUrl) return
+				document.documentElement.classList.add('issuer-export-brand')
+				const logo = document.querySelector('.brand__logo')
+				if (logo instanceof HTMLImageElement) {
+					prepareIssuerLogo(logo)
+					logo.src = data.issuerLogoUrl
+					if (data.issuerName) logo.alt = data.issuerName
+				}
+			}
+
+			function applyPatData() {
+				const raw = localStorage.getItem('pat_form_data')
+				if (!raw) return null
+				let data = null
+				try {
+					data = JSON.parse(raw)
+				} catch (_error) {
+					return null
+				}
+
+				setText('pat-certificate-number', data.certificateNumber)
+				setText('pat-client-address', data.clientAddress)
+				setText('pat-client-postcode', data.clientPostcode)
+				setText('pat-installation-address', data.installationAddress)
+				setText('pat-installation-postcode', data.installationPostcode)
+				setText('pat-trading-title', data.tradingTitle)
+				setText('pat-contractor-address', data.contractorAddress)
+				setText('pat-contractor-postcode', data.contractorPostcode)
+				setText('pat-registration-number', data.registrationNumber)
+				setText('pat-telephone', data.telephoneNumber)
+				setText('pat-inspector-name', data.inspectorName)
+				setText('pat-inspector-position', data.inspectorPosition)
+				setText('pat-signature', data.signature)
+				setText('pat-date', data.certificateDate)
+				setText('pat-equipment', data.testEquipmentUsed)
+				setText('pat-equipment-serial', data.equipmentSerialNumber)
+
+				const rows = Array.isArray(data.rows) ? data.rows : []
+				renderPatRows(rows)
+				const total = data.totalAppliances || `Total Appliances for Report: ${rows.length}`
+				setText('pat-total-appliances', total)
+				applyIssuerBranding(data)
+				return data
+			}
+
+			async function lockImageAspect(img) {
+				try {
+					if (!img.complete) {
+						await new Promise((resolve) => {
+							img.addEventListener('load', resolve, { once: true })
+							img.addEventListener('error', resolve, { once: true })
+						})
+					}
+					if (typeof img.decode === 'function') {
+						await img.decode().catch(() => null)
+					}
+				} catch (_error) {}
+				return img
+			}
+
+			async function downloadExactPdf(button) {
+				const status = document.getElementById('download-status')
+				const page = document.querySelector('.page')
+				if (!page) return
+
+				button.disabled = true
+				const originalText = button.textContent
+				button.textContent = 'Generating...'
+				if (status) status.textContent = 'Preparing exact PDF layout...'
+
+				try {
+					const logo = document.querySelector('.brand__logo')
+					if (logo instanceof HTMLImageElement) {
+						await lockImageAspect(logo)
+					}
+
+					const canvas = await html2canvas(page, {
+						scale: 2,
+						useCORS: true,
+						backgroundColor: '#ffffff',
+						imageTimeout: 0,
+					})
+					const image = canvas.toDataURL('image/jpeg', 0.92)
+					const widthPx = canvas.width
+					const heightPx = canvas.height
+
+					const { jsPDF } = window.jspdf
+					const pdf = new jsPDF({
+						orientation: widthPx > heightPx ? 'landscape' : 'portrait',
+						unit: 'px',
+						format: [widthPx, heightPx],
+					})
+					pdf.addImage(image, 'JPEG', 0, 0, widthPx, heightPx)
+					pdf.save('safety-spectrum-london-pat.pdf')
+					if (status) status.textContent = 'PDF downloaded successfully.'
+				} catch (_error) {
+					if (status) status.textContent = 'Download failed. Please try again.'
+				} finally {
+					button.disabled = false
+					button.textContent = originalText
+				}
+			}
+
+			const params = new URLSearchParams(window.location.search)
+			applyPatData()
+			if (params.get('autodownload') === '1') {
+				window.addEventListener('load', () => {
+					const button = document.getElementById('download-btn')
+					if (button instanceof HTMLButtonElement) {
+						window.setTimeout(() => downloadExactPdf(button), 350)
+					}
+				})
+			}
+		</script>
+	</body>
+</html>
