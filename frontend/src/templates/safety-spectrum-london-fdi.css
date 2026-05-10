@@ -59,7 +59,8 @@ body {
   max-width: calc(210mm - 16mm);
   min-height: 24mm;
   display: grid;
-  grid-template-columns: 26mm minmax(0, 1fr);
+  /* min-content prevents the title column collapsing to 0 (truncated “London” in some browsers / cached CSS) */
+  grid-template-columns: 26mm minmax(min-content, 1fr);
   align-items: center;
   gap: 3.5mm;
   z-index: 20;
@@ -89,7 +90,7 @@ body {
 
 .cover-brand__name {
   margin: 0;
-  min-width: 0;
+  min-width: min-content;
   color: #ffffff;
   font-size: 3.55mm;
   line-height: 1.25;
