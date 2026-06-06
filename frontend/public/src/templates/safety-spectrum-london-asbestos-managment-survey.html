@@ -18,9 +18,9 @@
 			<!-- Page-1 header brand (logo + name) shown in the same top-left area -->
 			<div class="cover-brand" id="page1-top-logo-wrap">
 				<div class="cover-brand__logo-shell">
-					<img class="cover-brand__logo static-logo-overlay" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
+					<img class="cover-brand__logo static-logo-overlay" src="/src/assets/safety-spectrum-logo.png" alt="">
 				</div>
-				<div class="cover-brand__name">Safety Spectrum London</div>
+				<!-- brand name removed to hide header text -->
 			</div>
 			<div class="page1-box">
 				<div class="box-grid">
@@ -42,10 +42,10 @@
 						</div>
 						<span class="box-value" data-field="page1Ref">P.2724</span>
 					</div>
-					<div class="box-item box-brand-row">
-						<span class="box-value" data-field="page1Company">Safety Spectrum London</span>
-						<img class="box-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London">
-					</div>
+						<div class="box-item box-brand-row">
+							<span class="box-value" data-field="page1Company"></span>
+							<img class="box-logo" src="/src/assets/safety-spectrum-logo.png" alt="">
+						</div>
 				</div>
 			</div>
 		</section>
@@ -547,6 +547,19 @@
 			button.textContent = 'Generating...'
 			if (status) status.textContent = 'Preparing exact PDF layout...'
 			try {
+				// wait for images to finish loading to avoid html2canvas capturing
+				// an unloaded or partially-loaded image which can result in
+				// incorrect aspect ratios in the exported canvas.
+				await (async function waitForAllImages() {
+					const imgs = Array.from(document.images).filter(i => i.src)
+					if (!imgs.length) return
+					await Promise.all(imgs.map((img) => new Promise((res) => {
+						if (img.complete && img.naturalWidth !== 0) return res()
+						const onFinish = () => { img.removeEventListener('load', onFinish); img.removeEventListener('error', onFinish); res() }
+						img.addEventListener('load', onFinish)
+						img.addEventListener('error', onFinish)
+					})))
+				})()
 				const { jsPDF } = window.jspdf
 				let pdf = null
 				for (let i = 0; i < pages.length; i += 1) {
