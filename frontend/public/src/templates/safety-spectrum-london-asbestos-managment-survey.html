@@ -22,6 +22,9 @@
 				</div>
 				<!-- brand name removed to hide header text -->
 			</div>
+			<div class="page1-photo-frame">
+				<img class="page1-photo" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="Page 1 photo" data-field-src="page1ImageUrl">
+			</div>
 			<div class="page1-box">
 				<div class="box-grid">
 					<div class="box-item">
@@ -298,7 +301,7 @@
 
 		<!-- Page 8 (static) -->
 		<section class="page static" id="page-8">
-			<img class="full" src="/src/assets/8.png" alt="Page 8">
+			<img class="full" src="/src/assets/a_8.png" alt="Page 8">
 		</section>
 
 		<!-- Page 9 (recreate) -->
@@ -328,7 +331,11 @@
 							<img src="/src/assets/9.png" alt="Location photo" class="photo-source" data-field-src="page9PhotoUrl">
 						</div>
 					</td>
-					<td colspan="2" data-field="page9SecondPhotoNote"></td>
+					<td colspan="2" class="photo-cell">
+						<div class="photo-crop">
+							<img src="/src/assets/9.png" alt="Second location photo" class="photo-source" data-field-src="page9SecondPhotoUrl">
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<th>Location Notes</th>
@@ -345,7 +352,7 @@
 
 		<!-- Page 10 (static) -->
 		<section class="page static" id="page-10">
-			<img class="full" src="/src/assets/10.png" alt="Page 10">
+			<img class="full" src="/src/assets/a_10.png" alt="Page 10">
 		</section>
 
 		<!-- Page 11 (static) -->
@@ -533,6 +540,9 @@
 				const value = data[key]
 				if (!value) return
 				el.style.backgroundImage = 'url(' + JSON.stringify(String(value)) + ')'
+				el.style.backgroundRepeat = 'no-repeat'
+				el.style.backgroundSize = 'cover'
+				el.style.backgroundPosition = 'center center'
 			})
 
 			applyIssuerBranding(data)

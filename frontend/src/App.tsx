@@ -278,13 +278,13 @@ type AsbestosFieldDef = {
 type AsbestosFormData = Record<string, string>
 
 const asbestosFieldDefs: AsbestosFieldDef[] = [
-  { key: 'page1Location', label: 'Location', page: 1 }, { key: 'page1InspectedOn', label: 'Inspected On', page: 1 }, { key: 'page1Ref', label: 'Our Ref', page: 1 }, { key: 'page1Company', label: 'Company', page: 1 },
+  { key: 'page1Location', label: 'Location', page: 1 }, { key: 'page1InspectedOn', label: 'Inspected On', page: 1 }, { key: 'page1Ref', label: 'Our Ref', page: 1 }, { key: 'page1Company', label: 'Company', page: 1 }, { key: 'page1ImageUrl', label: 'Page 1 image', page: 1, wide: true },
   { key: 'page2ReportBy', label: 'Report By', page: 2 }, { key: 'page2Client', label: 'Client', page: 2 }, { key: 'page2Project', label: 'Project', page: 2 }, { key: 'page2SiteAddress', label: 'Site Address', page: 2, wide: true }, { key: 'page2Coordinates', label: 'Site Coordinates', page: 2, wide: true }, { key: 'page2MapImageUrl', label: 'Site map image', page: 2, wide: true }, { key: 'page2SiteDescription', label: 'Site Description', page: 2, wide: true }, { key: 'page2Surveyors', label: 'Surveyors', page: 2 }, { key: 'page2SurveyDates', label: 'Survey Dates', page: 2 }, { key: 'page2QcDate', label: 'QC Date', page: 2 }, { key: 'page2TotalVeryLow', label: 'Total Very Low', page: 2 }, { key: 'page2TotalLow', label: 'Total Low', page: 2 }, { key: 'page2TotalMedium', label: 'Total Medium', page: 2 }, { key: 'page2TotalHigh', label: 'Total High', page: 2 }, { key: 'page2FooterProject', label: 'Footer Project Text', page: 2, wide: true },
   { key: 'page4QualityControlDate', label: 'Quality Control Date', page: 4 }, { key: 'page4SignoffParagraph', label: 'Sign Off Paragraph', page: 4, wide: true }, { key: 'page4VariationsToScope', label: 'Variations To Scope', page: 4, wide: true }, { key: 'page4SummaryAcm', label: 'Summary ACM', page: 4, wide: true }, { key: 'page4AcmTableNote', label: 'ACM Table Note', page: 4, wide: true }, { key: 'page4SummaryNonAcm', label: 'Summary Non-ACM', page: 4, wide: true }, { key: 'page4NonAcmTableNote', label: 'Non-ACM Table Note', page: 4, wide: true }, { key: 'page4FooterProject', label: 'Footer Project Text', page: 4, wide: true },
   { key: 'page5LimitedAccessCopy', label: 'Limited Access Copy', page: 5, wide: true }, { key: 'page5LimitedAccessTableNote', label: 'Limited Access Table Note', page: 5, wide: true }, { key: 'page5FooterProject', label: 'Footer Project Text', page: 5, wide: true },
   { key: 'page6RegisterNote', label: 'Register Note', page: 6, wide: true }, { key: 'page6FooterProject', label: 'Footer Project Text', page: 6, wide: true },
   { key: 'page7SummaryLine1', label: 'Summary Line 1', page: 7, wide: true }, { key: 'page7SummaryLine2', label: 'Summary Line 2', page: 7, wide: true }, { key: 'page7Row1Location', label: 'Row 1 Location', page: 7, wide: true }, { key: 'page7Row1Item', label: 'Row 1 Item', page: 7 }, { key: 'page7Row1Material', label: 'Row 1 Material', page: 7 }, { key: 'page7Row1AccessNotes', label: 'Row 1 Access/Notes', page: 7 }, { key: 'page7Row1MaterialScore', label: 'Row 1 Material Score', page: 7 }, { key: 'page7Row1Recommendation', label: 'Row 1 Recommendation', page: 7 }, { key: 'page7Row1Page', label: 'Row 1 Page', page: 7 }, { key: 'page7Row2Location', label: 'Row 2 Location', page: 7, wide: true }, { key: 'page7Row2Item', label: 'Row 2 Item', page: 7 }, { key: 'page7Row2Material', label: 'Row 2 Material', page: 7 }, { key: 'page7Row2AccessNotes', label: 'Row 2 Access/Notes', page: 7 }, { key: 'page7Row2MaterialScore', label: 'Row 2 Material Score', page: 7 }, { key: 'page7Row2Recommendation', label: 'Row 2 Recommendation', page: 7 }, { key: 'page7Row2Page', label: 'Row 2 Page', page: 7 }, { key: 'page7FooterProject', label: 'Footer Project Text', page: 7, wide: true },
-  { key: 'page9Building', label: 'Building', page: 9 }, { key: 'page9Level', label: 'Level', page: 9 }, { key: 'page9Location', label: 'Location', page: 9 }, { key: 'page9Item', label: 'Item', page: 9 }, { key: 'page9PhotoUrl', label: 'Location photo', page: 9, wide: true }, { key: 'page9SecondPhotoNote', label: 'Second Photo Note', page: 9, wide: true }, { key: 'page9LocationNotes', label: 'Location Notes', page: 9, wide: true }, { key: 'page9FooterProject', label: 'Footer Project Text', page: 9, wide: true },
+  { key: 'page9Building', label: 'Building', page: 9 }, { key: 'page9Level', label: 'Level', page: 9 }, { key: 'page9Location', label: 'Location', page: 9 }, { key: 'page9Item', label: 'Item', page: 9 }, { key: 'page9PhotoUrl', label: 'Location photo', page: 9, wide: true }, { key: 'page9SecondPhotoUrl', label: 'Second photo', page: 9, wide: true }, { key: 'page9LocationNotes', label: 'Location Notes', page: 9, wide: true }, { key: 'page9FooterProject', label: 'Footer Project Text', page: 9, wide: true },
   { key: 'page12IntroCopy', label: 'Intro Copy', page: 12, wide: true }, { key: 'page12OutroCopy', label: 'Outro Copy', page: 12, wide: true }, { key: 'page12FooterProject', label: 'Footer Project Text', page: 12, wide: true },
 ]
 
@@ -732,6 +732,7 @@ const defaultAsbestosForm: AsbestosFormData = {
   page1InspectedOn: '12 Dec 2025',
   page1Ref: 'P.2724',
   page1Company: 'Safety Spectrum London',
+  page1ImageUrl: '',
   page2ReportBy: 'Safety Spectrum London',
   page2Client: 'Timothy Denman and Lucy Haigh',
   page2Project: 'P.2724',
@@ -775,6 +776,7 @@ const defaultAsbestosForm: AsbestosFormData = {
   page9Level: '0',
   page9Location: 'Communal Hallway',
   page9PhotoUrl: '/src/assets/9.png',
+  page9SecondPhotoUrl: '',
   page9LocationNotes: 'Solid Painted Cement Wall',
   page9FooterProject: 'Safety Spectrum London > Project: P2724',
   page12IntroCopy:
@@ -804,7 +806,37 @@ const FDI_IMAGE_LABELS: Record<string, string> = {
   page8Photo4Url: 'Page 8 — detail photo 4',
 }
 
-const ASBESTOS_IMAGE_UPLOAD_KEYS = new Set<string>(['page2MapImageUrl', 'page9PhotoUrl'])
+const FDI_IMAGE_CROP_RATIOS: Record<string, number> = {
+  page1ImageUrl: 210 / 297,
+  page2MapUrl: 192 / 38,
+  page8HeroDoorUrl: 74 / 70,
+  page8Photo1Url: 45.9 / 31,
+  page8Photo2Url: 45.9 / 31,
+  page8Photo3Url: 45.9 / 31,
+  page8Photo4Url: 45.9 / 31,
+}
+
+const ASBESTOS_IMAGE_UPLOAD_KEYS = new Set<string>(['page1ImageUrl', 'page2MapImageUrl', 'page9PhotoUrl', 'page9SecondPhotoUrl'])
+
+const LEGIONELLA_IMAGE_CROP_RATIOS: Record<string, number> = {
+  page7PhotoUrl: 121 / 171,
+  page14PhotoUrl: 121 / 163,
+  page15PhotoUrl: 128 / 96,
+  page16PhotoUrl: 128 / 96,
+  page17PhotoUrl: 117 / 115,
+  page23Photo1Url: 82 / 87,
+  page23Photo2Url: 82 / 87,
+  page23Photo3Url: 82 / 102,
+  page23Photo4Url: 82 / 102,
+  page27SchematicUrl: 164 / 90,
+}
+
+const ASBESTOS_IMAGE_CROP_RATIOS: Record<string, number> = {
+  page1ImageUrl: 1,
+  page2MapImageUrl: 130.2 / 56,
+  page9PhotoUrl: 1,
+  page9SecondPhotoUrl: 1,
+}
 
 function MarkSelect({
   label,
@@ -1851,6 +1883,7 @@ function App() {
                 label="Page 7 photo"
                 value={legionellaForm.page7PhotoUrl}
                 onChange={(next) => updateLegionellaField('page7PhotoUrl', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page7PhotoUrl}
               />
               <label className="wide">Page 8 Note<input value={legionellaForm.page8Note} onChange={(e) => updateLegionellaField('page8Note', e.target.value)} /></label>
               <label className="wide">Page 9 Note<input value={legionellaForm.page9Note} onChange={(e) => updateLegionellaField('page9Note', e.target.value)} /></label>
@@ -1864,24 +1897,28 @@ function App() {
                 label="Page 14 photo"
                 value={legionellaForm.page14PhotoUrl}
                 onChange={(next) => updateLegionellaField('page14PhotoUrl', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page14PhotoUrl}
               />
               <FormImageUpload
                 wide
                 label="Page 15 photo"
                 value={legionellaForm.page15PhotoUrl}
                 onChange={(next) => updateLegionellaField('page15PhotoUrl', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page15PhotoUrl}
               />
               <FormImageUpload
                 wide
                 label="Page 16 photo"
                 value={legionellaForm.page16PhotoUrl}
                 onChange={(next) => updateLegionellaField('page16PhotoUrl', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page16PhotoUrl}
               />
               <FormImageUpload
                 wide
                 label="Page 17 photo"
                 value={legionellaForm.page17PhotoUrl}
                 onChange={(next) => updateLegionellaField('page17PhotoUrl', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page17PhotoUrl}
               />
               <label className="wide">Page 17 Note<input value={legionellaForm.page17Note} onChange={(e) => updateLegionellaField('page17Note', e.target.value)} /></label>
             </div>
@@ -1894,24 +1931,28 @@ function App() {
                 label="Page 23 photo 1"
                 value={legionellaForm.page23Photo1Url}
                 onChange={(next) => updateLegionellaField('page23Photo1Url', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page23Photo1Url}
               />
               <FormImageUpload
                 wide
                 label="Page 23 photo 2"
                 value={legionellaForm.page23Photo2Url}
                 onChange={(next) => updateLegionellaField('page23Photo2Url', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page23Photo2Url}
               />
               <FormImageUpload
                 wide
                 label="Page 23 photo 3"
                 value={legionellaForm.page23Photo3Url}
                 onChange={(next) => updateLegionellaField('page23Photo3Url', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page23Photo3Url}
               />
               <FormImageUpload
                 wide
                 label="Page 23 photo 4"
                 value={legionellaForm.page23Photo4Url}
                 onChange={(next) => updateLegionellaField('page23Photo4Url', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page23Photo4Url}
               />
             </div>
           )}
@@ -1934,6 +1975,7 @@ function App() {
                 label="Page 27 schematic (image)"
                 value={legionellaForm.page27SchematicUrl}
                 onChange={(next) => updateLegionellaField('page27SchematicUrl', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page27SchematicUrl}
               />
             </div>
           )}
@@ -2030,6 +2072,7 @@ function App() {
                       label={FDI_IMAGE_LABELS[name] ?? formatFieldLabel(name)}
                       value={fdiForm[key]}
                       onChange={(next) => updateFdiField(key, next)}
+                      cropAspectRatio={FDI_IMAGE_CROP_RATIOS[name] ?? 1}
                     />
                   )
                 }
@@ -2121,6 +2164,7 @@ function App() {
                     label={field.label}
                     value={asbestosForm[field.key] ?? ''}
                     onChange={(next) => updateAsbestosField(field.key, next)}
+                    cropAspectRatio={ASBESTOS_IMAGE_CROP_RATIOS[field.key] ?? 1}
                   />
                 ) : (
                   <label key={field.key} className={field.wide ? 'wide' : ''}>
