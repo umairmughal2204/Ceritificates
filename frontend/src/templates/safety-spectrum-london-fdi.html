@@ -455,6 +455,9 @@
 			const el = document.getElementById(id)
 			if (!el) return
 			el.style.backgroundImage = cssBackgroundUrl(url)
+			el.style.backgroundRepeat = 'no-repeat'
+			el.style.backgroundSize = 'cover'
+			el.style.backgroundPosition = 'center center'
 		}
 
 		function setMapImage(id, url) {

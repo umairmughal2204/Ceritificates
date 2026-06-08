@@ -12,13 +12,39 @@
 		<button type="button" id="download-btn" onclick="downloadExactPdf(this)" style="border: 0; border-radius: 999px; padding: 10px 16px; background: #1f3b82; color: #fff; font-weight: 700; cursor: pointer;">Download PDF</button>
 	</div>
 	<div class="book">
-		<section class="page static" id="page-1">
-			<img class="full" id="fdi-p1-image" src="/src/assets/1.png" alt="Page 1">
+		<section class="page static page-cover" id="page-1">
+			<div class="cover-overlay"></div>
 			<div class="cover-brand" id="fdi-p1-logo-wrap">
 				<div class="cover-brand__logo-shell">
 					<img class="cover-brand__logo static-logo-overlay" id="fdi-p1-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London logo">
 				</div>
 				<div class="cover-brand__name">Safety Spectrum London</div>
+			</div>
+			<div class="cover-copy">
+				<h1 class="cover-title">
+					<span>FIRE DOOR INSPECTION</span>
+					<strong>REPORT</strong>
+				</h1>
+
+				<section class="cover-info-panel" aria-label="Page 1 summary">
+					<div class="cover-info-text">
+						<div class="cover-info-row">
+							<div class="cover-info-label">LOCATION:</div>
+							<div class="cover-info-value" id="fdi-p1-location">7 Gurney close  E15 1SJ</div>
+						</div>
+						<div class="cover-info-row">
+							<div class="cover-info-label">INSPECTED ON:</div>
+							<div class="cover-info-value" id="fdi-p1-inspected-on">13 March 2026</div>
+						</div>
+						<div class="cover-info-row">
+							<div class="cover-info-label">OUR REF:</div>
+							<div class="cover-info-value" id="fdi-p1-our-ref">P.5657668529</div>
+						</div>
+					</div>
+					<div class="cover-photo-shell">
+						<div class="cover-photo" id="fdi-p1-photo"></div>
+					</div>
+				</section>
 			</div>
 		</section>
 
@@ -455,6 +481,9 @@
 			const el = document.getElementById(id)
 			if (!el) return
 			el.style.backgroundImage = cssBackgroundUrl(url)
+			el.style.backgroundRepeat = 'no-repeat'
+			el.style.backgroundSize = 'cover'
+			el.style.backgroundPosition = 'center center'
 		}
 
 		function setMapImage(id, url) {
@@ -474,10 +503,18 @@
 			try { data = JSON.parse(raw) } catch (_error) { return null }
 
 			const p1 = document.getElementById('fdi-p1-image')
-			if (data.page1ImageUrl && p1) {
-				p1.src = data.page1ImageUrl
+			const p1Photo = document.getElementById('fdi-p1-photo')
+			if (data.page1ImageUrl && p1Photo) {
+				p1Photo.style.backgroundImage = cssBackgroundUrl(data.page1ImageUrl)
+				p1Photo.style.backgroundRepeat = 'no-repeat'
+				p1Photo.style.backgroundSize = 'cover'
+				p1Photo.style.backgroundPosition = 'center center'
 			}
 			// Issuer logo overlay is applied below via applyIssuerBranding
+
+			setText('fdi-p1-location', data.page1Location)
+			setText('fdi-p1-inspected-on', data.page1InspectedOn)
+			setText('fdi-p1-our-ref', data.page1OurRef)
 
 			setText('fdi-p2-report-by', data.page2ReportBy)
 			setText('fdi-p2-client', data.page2Client)
