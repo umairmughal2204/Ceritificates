@@ -12,39 +12,15 @@
 		<button type="button" id="download-btn" onclick="downloadExactPdf(this)" style="border: 0; border-radius: 999px; padding: 10px 16px; background: #1f3b82; color: #fff; font-weight: 700; cursor: pointer;">Download PDF</button>
 	</div>
 	<div class="book">
-		<section class="page static page-cover" id="page-1">
-			<div class="cover-overlay"></div>
-			<div class="cover-brand" id="fdi-p1-logo-wrap">
-				<div class="cover-brand__logo-shell">
-					<img class="cover-brand__logo static-logo-overlay" id="fdi-p1-logo" src="/src/assets/safety-spectrum-logo.png" alt="Safety Spectrum London logo">
+		<section class="page static" id="page-1">
+			<img class="full" id="fdi-p1-image" src="/src/assets/1.png" alt="Page 1">
+			<div class="p1-glass-box">
+				<div class="p1-photo-frame" id="fdi-p1-photo"></div>
+				<div class="p1-details">
+					<div class="p1-detail-row"><strong>Location:</strong> <span id="fdi-p1-location"></span></div>
+					<div class="p1-detail-row"><strong>Ref No:</strong> <span id="fdi-p1-ref"></span></div>
+					<div class="p1-detail-row"><strong>Inspection Date:</strong> <span id="fdi-p1-date"></span></div>
 				</div>
-				<div class="cover-brand__name">Safety Spectrum London</div>
-			</div>
-			<div class="cover-copy">
-				<h1 class="cover-title">
-					<span>FIRE DOOR INSPECTION</span>
-					<strong>REPORT</strong>
-				</h1>
-
-				<section class="cover-info-panel" aria-label="Page 1 summary">
-					<div class="cover-info-text">
-						<div class="cover-info-row">
-							<div class="cover-info-label">LOCATION:</div>
-							<div class="cover-info-value" id="fdi-p1-location">7 Gurney close  E15 1SJ</div>
-						</div>
-						<div class="cover-info-row">
-							<div class="cover-info-label">INSPECTED ON:</div>
-							<div class="cover-info-value" id="fdi-p1-inspected-on">13 March 2026</div>
-						</div>
-						<div class="cover-info-row">
-							<div class="cover-info-label">OUR REF:</div>
-							<div class="cover-info-value" id="fdi-p1-our-ref">P.5657668529</div>
-						</div>
-					</div>
-					<div class="cover-photo-shell">
-						<div class="cover-photo" id="fdi-p1-photo"></div>
-					</div>
-				</section>
 			</div>
 		</section>
 
@@ -151,7 +127,10 @@
 				<div class="qc-label">Quality Control</div>
 				<div class="qc-name" id="fdi-p4-qc-name">Muhammad Khokhar</div>
 				<div class="qc-date" id="fdi-p4-qc-date">13 March 2026</div>
-				<div class="qc-signature" id="fdi-p4-qc-signature">M. Khokhar</div>
+				<div class="qc-signature-wrapper">
+					<div class="qc-label">Signature</div>
+					<div class="qc-signature" id="fdi-p4-qc-signature"></div>
+				</div>
 			</section>
 
 			<section class="copy-block">
@@ -502,19 +481,13 @@
 			let data = null
 			try { data = JSON.parse(raw) } catch (_error) { return null }
 
-			const p1 = document.getElementById('fdi-p1-image')
-			const p1Photo = document.getElementById('fdi-p1-photo')
-			if (data.page1ImageUrl && p1Photo) {
-				p1Photo.style.backgroundImage = cssBackgroundUrl(data.page1ImageUrl)
-				p1Photo.style.backgroundRepeat = 'no-repeat'
-				p1Photo.style.backgroundSize = 'cover'
-				p1Photo.style.backgroundPosition = 'center center'
-			}
-			// Issuer logo overlay is applied below via applyIssuerBranding
+			// Page 1 details box
+			setBgImage('fdi-p1-photo', data.page1PhotoUrl)
+			setText('fdi-p1-location', String(data.page2Address || '').replace(/\n/g, ', '))
+			setText('fdi-p1-ref', data.page2ProjectSite)
+			setText('fdi-p1-date', data.page2Date)
 
-			setText('fdi-p1-location', data.page1Location)
-			setText('fdi-p1-inspected-on', data.page1InspectedOn)
-			setText('fdi-p1-our-ref', data.page1OurRef)
+			// Issuer logo overlay is applied below via applyIssuerBranding
 
 			setText('fdi-p2-report-by', data.page2ReportBy)
 			setText('fdi-p2-client', data.page2Client)
@@ -532,7 +505,7 @@
 
 			setText('fdi-p4-qc-name', data.page4QcName)
 			setText('fdi-p4-qc-date', data.page4QcDate)
-			setText('fdi-p4-qc-signature', data.page4QcSignature)
+			setBgImage('fdi-p4-qc-signature', data.page4QcSignatureUrl)
 			setText('fdi-p4-introduction', data.page4Introduction)
 			setText('fdi-p4-executive-summary', data.page4ExecutiveSummary)
 			setText('fdi-p4-variations', data.page4Variations)

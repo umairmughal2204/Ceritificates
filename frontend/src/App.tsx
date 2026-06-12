@@ -183,7 +183,7 @@ type LegionellaFormData = {
 }
 
 type FdiFormData = {
-  page1ImageUrl: string
+  page1PhotoUrl: string
   page2ReportBy: string
   page2Client: string
   page2ProjectSite: string
@@ -199,7 +199,7 @@ type FdiFormData = {
   page2FooterProject: string
   page4QcName: string
   page4QcDate: string
-  page4QcSignature: string
+  page4QcSignatureUrl: string
   page4Introduction: string
   page4ExecutiveSummary: string
   page4Variations: string
@@ -641,7 +641,7 @@ const defaultLegionellaForm: LegionellaFormData = {
 }
 
 const defaultFdiForm: FdiFormData = {
-  page1ImageUrl: '/src/assets/1.png',
+  page1PhotoUrl: '',
   page2ReportBy: 'Safety Spectrum London',
   page2Client: 'Christianah',
   page2ProjectSite: 'P.5657668529',
@@ -657,7 +657,7 @@ const defaultFdiForm: FdiFormData = {
   page2FooterProject: 'Safety Spectrum London > Project: P.5657668529',
   page4QcName: 'Muhammad Khokhar',
   page4QcDate: '13 March 2026',
-  page4QcSignature: 'M. Khokhar',
+  page4QcSignatureUrl: '',
   page4Introduction: 'Safety Spectrum London was instructed to undertake a fire door condition inspection of the selected doors within the property. The inspection reviewed the visible condition of each door assembly and recorded whether the observed elements appeared suitable based on the inspection criteria used during the survey.',
   page4ExecutiveSummary: '',
   page4Variations: 'All areas within scope were accessed during the survey',
@@ -787,8 +787,9 @@ const defaultAsbestosForm: AsbestosFormData = {
 }
 
 const FDI_IMAGE_UPLOAD_KEYS = new Set<string>([
-  'page1ImageUrl',
+  'page1PhotoUrl',
   'page2MapUrl',
+  'page4QcSignatureUrl',
   'page8HeroDoorUrl',
   'page8Photo1Url',
   'page8Photo2Url',
@@ -797,8 +798,9 @@ const FDI_IMAGE_UPLOAD_KEYS = new Set<string>([
 ])
 
 const FDI_IMAGE_LABELS: Record<string, string> = {
-  page1ImageUrl: 'Page 1 — cover image',
+  page1PhotoUrl: 'Page 1 — photo box',
   page2MapUrl: 'Page 2 — site map image',
+  page4QcSignatureUrl: 'Page 4 — Quality Control Signature',
   page8HeroDoorUrl: 'Page 8 — main door photo',
   page8Photo1Url: 'Page 8 — detail photo 1',
   page8Photo2Url: 'Page 8 — detail photo 2',
@@ -807,8 +809,9 @@ const FDI_IMAGE_LABELS: Record<string, string> = {
 }
 
 const FDI_IMAGE_CROP_RATIOS: Record<string, number> = {
-  page1ImageUrl: 210 / 297,
+  page1PhotoUrl: 1,
   page2MapUrl: 192 / 38,
+  page4QcSignatureUrl: 3 / 1,
   page8HeroDoorUrl: 74 / 70,
   page8Photo1Url: 45.9 / 31,
   page8Photo2Url: 45.9 / 31,
