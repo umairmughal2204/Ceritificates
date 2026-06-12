@@ -46,6 +46,13 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center center;
+  background: #e6e6e6;
+}
+
+.page1-photo.is-empty,
+#page-9 .photo-source.is-empty,
+#page-2 .map-image.is-empty {
+  background: #e6e6e6;
 }
 
 .page1-box {
@@ -355,10 +362,10 @@ html.issuer-export-brand .page1-box .box-logo {
 .map-image {
   width: 100%;
   height: 100%;
-  background-image: url("../assets/2.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
+  background-color: #e6e6e6;
 }
 
 .totals-table {
@@ -583,6 +590,7 @@ html.issuer-export-brand .page1-box .box-logo {
   height: 100%;
   object-fit: cover;
   object-position: center center;
+  background: #e6e6e6;
 }
 #page-9 .report-footer { font-size: 9pt; bottom: 3mm; }
 #page-9 .report-page .report-footer-line { bottom: 7mm; }

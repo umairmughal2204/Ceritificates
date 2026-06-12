@@ -317,10 +317,19 @@
     }
 
     function setBgImage(id, url) {
-      if (!url) return
       const el = document.getElementById(id)
       if (!el) return
+      if (!url) {
+        el.style.backgroundImage = 'none'
+        el.style.backgroundColor = '#e6e6e6'
+        el.classList.add('is-empty')
+        el.classList.remove('has-image')
+        return
+      }
       el.style.backgroundImage = cssBackgroundUrl(url)
+      el.style.backgroundColor = 'transparent'
+      el.classList.add('has-image')
+      el.classList.remove('is-empty')
     }
 
     function prepareIssuerLogo(img) {

@@ -78,6 +78,10 @@ body {
   box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
 }
 
+.p1-photo-frame.is-empty {
+  background-color: #e6e6e6;
+}
+
 .p1-details {
   flex-grow: 1;
   text-align: left;
@@ -200,10 +204,10 @@ body {
 .map-image {
   width: 100%;
   height: 100%;
-  background-image: url("../assets/2.png");
   background-repeat: no-repeat;
-  background-size: 185mm auto;
-  background-position: center -56mm;
+  background-size: cover;
+  background-position: center center;
+  background-color: #e6e6e6;
 }
 
 .fd-summary {

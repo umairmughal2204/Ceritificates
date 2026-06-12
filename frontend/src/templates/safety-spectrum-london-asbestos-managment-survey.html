@@ -328,12 +328,12 @@
 				<tr>
 					<td colspan="2" class="photo-cell">
 						<div class="photo-crop">
-							<img src="/src/assets/9.png" alt="Location photo" class="photo-source" data-field-src="page9PhotoUrl">
+							<img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="Location photo" class="photo-source" data-field-src="page9PhotoUrl">
 						</div>
 					</td>
 					<td colspan="2" class="photo-cell">
 						<div class="photo-crop">
-							<img src="/src/assets/9.png" alt="Second location photo" class="photo-source" data-field-src="page9SecondPhotoUrl">
+							<img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="Second location photo" class="photo-source" data-field-src="page9SecondPhotoUrl">
 						</div>
 					</td>
 				</tr>
@@ -517,6 +517,7 @@
 			if (!raw) return
 			let data = null
 			try { data = JSON.parse(raw) } catch (_error) { return }
+			const emptyImageSrc = 'data:image/gif;base64,R0lGODlhAQABAAAAACw='
 
 			document.querySelectorAll('[data-field]').forEach((el) => {
 				const key = el.getAttribute('data-field')
@@ -530,19 +531,35 @@
 				const key = el.getAttribute('data-field-src')
 				if (!key) return
 				const value = data[key]
-				if (!value) return
+				if (!value) {
+					el.src = emptyImageSrc
+					el.classList.add('is-empty')
+					el.classList.remove('has-image')
+					return
+				}
 				el.src = String(value)
+				el.classList.add('has-image')
+				el.classList.remove('is-empty')
 			})
 
 			document.querySelectorAll('[data-field-bg]').forEach((el) => {
 				const key = el.getAttribute('data-field-bg')
 				if (!key) return
 				const value = data[key]
-				if (!value) return
+				if (!value) {
+					el.style.backgroundImage = 'none'
+					el.style.backgroundColor = '#e6e6e6'
+					el.classList.add('is-empty')
+					el.classList.remove('has-image')
+					return
+				}
 				el.style.backgroundImage = 'url(' + JSON.stringify(String(value)) + ')'
 				el.style.backgroundRepeat = 'no-repeat'
 				el.style.backgroundSize = 'cover'
 				el.style.backgroundPosition = 'center center'
+				el.style.backgroundColor = 'transparent'
+				el.classList.add('has-image')
+				el.classList.remove('is-empty')
 			})
 
 			applyIssuerBranding(data)
