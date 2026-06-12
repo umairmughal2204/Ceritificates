@@ -37,7 +37,7 @@
             <div class="cover-row small">Have contractors been approved and are they competent? <span id="leg-p1-contractors-approved">Unknown</span></div>
           </div>
 
-          <div class="cover-photo"></div>
+          <div class="cover-photo" id="leg-p1-cover-photo"></div>
         </div>
 
         <div class="section-bar cover-question">Does a written scheme of control currently exist for the property? <span id="leg-p1-written-scheme">Unknown</span></div>
@@ -322,12 +322,18 @@
       if (!url) {
         el.style.backgroundImage = 'none'
         el.style.backgroundColor = '#e6e6e6'
+        el.style.removeProperty('background-size')
+        el.style.removeProperty('background-position')
+        el.style.removeProperty('background-repeat')
         el.classList.add('is-empty')
         el.classList.remove('has-image')
         return
       }
       el.style.backgroundImage = cssBackgroundUrl(url)
       el.style.backgroundColor = 'transparent'
+      el.style.backgroundSize = 'cover'
+      el.style.backgroundPosition = 'center'
+      el.style.backgroundRepeat = 'no-repeat'
       el.classList.add('has-image')
       el.classList.remove('is-empty')
     }
@@ -377,6 +383,7 @@
       setText('leg-p1-inspected-on', data.page1InspectedOn)
       setText('leg-p1-our-ref', data.page1OurRef)
       setText('leg-p1-footer-company', data.page1FooterCompany)
+      setBgImage('leg-p1-cover-photo', data.page1PhotoUrl)
 
       setText('leg-p5-scope', data.page5Scope)
       setText('leg-p5-limitations', data.page5Limitations)

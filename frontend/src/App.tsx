@@ -132,6 +132,7 @@ type FetFormData = {
 }
 
 type LegionellaFormData = {
+  page1PhotoUrl: string
   page1PropertyAddress: string
   page1ClientName: string
   page1AssessorName: string
@@ -585,6 +586,7 @@ const defaultFetForm: FetFormData = {
 }
 
 const defaultLegionellaForm: LegionellaFormData = {
+  page1PhotoUrl: '',
   page1PropertyAddress: '13 Tudor Road , LU3 1RN',
   page1ClientName: 'Arete Health Limited',
   page1AssessorName: 'Mr. Muhammad Faizan',
@@ -822,6 +824,7 @@ const FDI_IMAGE_CROP_RATIOS: Record<string, number> = {
 const ASBESTOS_IMAGE_UPLOAD_KEYS = new Set<string>(['page1ImageUrl', 'page2MapImageUrl', 'page9PhotoUrl', 'page9SecondPhotoUrl'])
 
 const LEGIONELLA_IMAGE_CROP_RATIOS: Record<string, number> = {
+  page1PhotoUrl: 78 / 59,
   page7PhotoUrl: 121 / 171,
   page14PhotoUrl: 121 / 163,
   page15PhotoUrl: 128 / 96,
@@ -1843,6 +1846,13 @@ function App() {
         <section className="form-panel">
           {activeSection === 0 && (
             <div className="form-grid">
+              <FormImageUpload
+                wide
+                label="Page 1 cover photo"
+                value={legionellaForm.page1PhotoUrl}
+                onChange={(next) => updateLegionellaField('page1PhotoUrl', next)}
+                cropAspectRatio={LEGIONELLA_IMAGE_CROP_RATIOS.page1PhotoUrl}
+              />
               <label className="wide">Page 1 Property Address<input value={legionellaForm.page1PropertyAddress} onChange={(e) => updateLegionellaField('page1PropertyAddress', e.target.value)} /></label>
               <label>Page 1 Client Name<input value={legionellaForm.page1ClientName} onChange={(e) => updateLegionellaField('page1ClientName', e.target.value)} /></label>
               <label>Page 1 Assessor Name<input value={legionellaForm.page1AssessorName} onChange={(e) => updateLegionellaField('page1AssessorName', e.target.value)} /></label>

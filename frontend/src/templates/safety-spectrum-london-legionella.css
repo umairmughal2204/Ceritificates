@@ -191,9 +191,7 @@ body {
 .cover-photo {
   width: 78mm;
   height: 59mm;
-  background-image: url("../assets/Legionella.pdf-01.png");
-  background-size: 210mm auto;
-  background-position: -126mm -66mm;
+  background-color: #e6e6e6;
   background-repeat: no-repeat;
   border: 0.5mm solid #ddd;
 }
@@ -504,6 +502,13 @@ html.issuer-export-brand .page-25 .brand-logo {
 .gallery-photo {
   background-repeat: no-repeat;
   background-color: #ebebeb;
+}
+
+.cover-photo.is-empty,
+.photo-frame.is-empty,
+.gallery-photo.is-empty,
+.schematic.is-empty {
+  background-color: #e6e6e6;
 }
 
 .gallery-1,
