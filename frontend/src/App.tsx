@@ -33,8 +33,11 @@ type ElcFormData = {
   inspectorName: string
   signedDate: string
   nextInspectionInterval: string
+  /** Base64 data URL for the inspector signature image */
+  inspectorSignature: string
   notes: string[]
 }
+
 
 type FscMark = 'tick' | 'na' | 'blank'
 
@@ -356,6 +359,7 @@ const defaultElcForm: ElcFormData = {
   tradingTitle: 'Safety Spectrum London',
   contractorAddress: '58A Tudor Road Hayes UB3 2QD',
   inspectorName: 'Shahzil Pal',
+  inspectorSignature: '',
   signedDate: '2025-12-22',
   nextInspectionInterval: '6 Months',
   notes: [
@@ -366,6 +370,7 @@ const defaultElcForm: ElcFormData = {
     '3 emergency lights present in third floor',
   ],
 }
+
 
 const PREMISES_LABELS = [
   'Manual call points suitably sited',
@@ -1009,6 +1014,7 @@ function App() {
   const downloadElcPdf = async () => {
     const payload = {
       inspectionDate: toPdfDate(form.inspectionDate),
+
       certificateReference: form.certificateReference,
       postcode: form.postcode,
       clientName: form.clientName,
@@ -1020,10 +1026,12 @@ function App() {
       tradingTitle: form.tradingTitle,
       contractorAddress: form.contractorAddress,
       inspectorName: form.inspectorName,
+      inspectorSignature: form.inspectorSignature,
       signedDate: toPdfDate(form.signedDate),
       nextInspectionInterval: form.nextInspectionInterval,
       notes: form.notes,
     }
+
 
     setIsGenerating(true)
     localStorage.setItem('elc_form_data', JSON.stringify(mergeIssuerIntoPayload(payload, issuerForExport)))
@@ -1254,11 +1262,19 @@ function App() {
             <div className="form-grid">
               <label>Trading Title<input value={form.tradingTitle} onChange={(e) => updateField('tradingTitle', e.target.value)} /></label>
               <label>Inspector Name<input value={form.inspectorName} onChange={(e) => updateField('inspectorName', e.target.value)} /></label>
+              <FormImageUpload
+                wide
+                label="Inspector signature image"
+                value={form.inspectorSignature}
+                onChange={(next) => updateField('inspectorSignature', next)}
+                cropAspectRatio={3 / 1}
+              />
               <label className="wide">Contractor Address<input value={form.contractorAddress} onChange={(e) => updateField('contractorAddress', e.target.value)} /></label>
               <label>Signed Date<input type="date" value={form.signedDate} onChange={(e) => updateField('signedDate', e.target.value)} /></label>
               <label>Next Inspection Interval<input value={form.nextInspectionInterval} onChange={(e) => updateField('nextInspectionInterval', e.target.value)} /></label>
             </div>
           )}
+
 
           {activeSection === 2 && (
             <div className="appliance-table">

@@ -123,7 +123,9 @@
               </div>
               <div class="sign-cell">
                 <div class="label">Inspecting Signature</div>
-                <div class="signature-line" aria-label="Signature line"></div>
+                <div class="signature-line" id="elc-signature-frame" aria-label="Signature line">
+                  <img id="elc-signature" alt="Inspector signature" />
+                </div>
               </div>
             </div>
             <div class="sign-row">
@@ -449,6 +451,12 @@
       setText('elc-inspector-name', data.inspectorName)
       setText('elc-signed-date', data.signedDate)
       setText('elc-next-interval', data.nextInspectionInterval)
+
+      // Inspector signature image (data URL base64)
+      const signatureImg = document.getElementById('elc-signature')
+      if (signatureImg instanceof HTMLImageElement && data.inspectorSignature) {
+        signatureImg.src = data.inspectorSignature
+      }
 
       const notes = Array.isArray(data.notes) ? data.notes : []
       for (let idx = 0; idx < 5; idx += 1) {

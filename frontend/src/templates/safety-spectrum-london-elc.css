@@ -6,6 +6,13 @@
   --border: #b7b7b7;
   --text: #111;
 
+  /* Base font for PDF export */
+  --elc-font-size: 9pt;
+
+
+
+
+
   /* Header logo sizing (use physical units for PDF consistency) */
   --logo-size: 35mm;
   --exit-size: 22mm;
@@ -16,6 +23,7 @@
   --page-pad-bottom: 6mm;
   --section-gap: 2.5mm;
 }
+
 
 * { box-sizing: border-box; }
 
@@ -68,7 +76,20 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  font-size: var(--elc-font-size);
+  line-height: 1.25;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
+
+
+/* Ensure consistent larger typography across the whole ELC template */
+.document, .page, .page * {
+  font-size: inherit;
+  line-height: inherit;
+}
+
+
 
 @media screen {
   html, body { background: #efefef; }
@@ -93,8 +114,11 @@ body {
   gap: 0;
   border: 1px solid var(--border);
   background: #f7f7f7;
-  font-size: 11px;
+  font-size: 12pt;
 }
+
+
+
 
 .meta-cell {
   padding: 5px 8px;
@@ -215,10 +239,11 @@ html.issuer-export-brand .logo-img {
   background: var(--blue2);
   color: #fff;
   font-weight: 800;
-  font-size: 11px;
+  font-size: 12pt;
   padding: 5px 8px;
   border: 1px solid #0a2f86;
 }
+
 
 .grid {
   border: 1px solid var(--border);
@@ -430,19 +455,28 @@ html.issuer-export-brand .logo-img {
 .signature-line {
   height: 22px;
   border: 1px solid var(--border);
-  background: #fff;
+  background: var(--field);
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.signature-line::after {
-  content: "";
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 55%;
-  border-bottom: 2px solid #0b0b0b;
-  opacity: 0.9;
-  transform: rotate(-7deg);
+/* Prevent an extra 1px divider from showing above the signature when exporting to PDF */
+.sign-cell .signature-line {
+  border-top: 0;
+}
+
+.sign-cell:first-child .signature-line {
+  border-top: 1px solid var(--border);
+}
+
+
+.signature-line img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
 }
 
 /* --- Next inspection --- */
@@ -585,9 +619,12 @@ html.issuer-export-brand .logo-img {
 
 .results-head-left {
   padding: 6px 8px;
-  font-size: 9px;
+  font-size: 9pt;
   line-height: 1.15;
 }
+
+
+
 
 .results-head-note {
   color: #333;
@@ -601,13 +638,16 @@ html.issuer-export-brand .logo-img {
 
 .results-head-cell {
   padding: 6px 6px;
-  font-size: 9px;
+  font-size: 9pt;
   font-weight: 700;
+
   text-align: center;
   display: grid;
   align-content: center;
   gap: 4px;
 }
+
+
 
 .results-head-cell-title {
   line-height: 1.1;
@@ -620,8 +660,12 @@ html.issuer-export-brand .logo-img {
 
 .results-table thead th {
   background: #dcdcdc;
-  font-size: 10px;
+  font-size: 9pt;
+  padding: 4px 6px;
 }
+
+
+
 
 .results-table .col-ref {
   width: 64px;
@@ -635,27 +679,36 @@ html.issuer-export-brand .logo-img {
 
 .results-table tbody td {
   background: #f3f3f3;
-  font-size: 9.5px;
+  font-size: 9pt;
 }
+
+
+
 
 .notes-area {
   padding: 8px 8px 10px;
 }
 
 .notes-label {
-  font-size: 10px;
+  font-size: 9pt;
   font-weight: 800;
   margin-bottom: 6px;
 }
+
+
+
 
 .notes-box {
   border: 1px solid var(--border);
   background: #fff;
   min-height: 64px;
   padding: 7px 8px;
-  font-size: 9px;
+  font-size: 9pt;
   line-height: 1.25;
 }
+
+
+
 
 /* --- Page 4 recipient notes --- */
 .recipient {
@@ -684,12 +737,14 @@ html.issuer-export-brand .logo-img {
 
 .recipient-body {
   padding: 18px 34mm 0;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.4;
   text-align: left;
 }
 
-.recipient-body p { margin: 0; }
+
+.recipient-body p { margin: 0; font-size: 13.5px; }
+
 
 .recipient-preamble {
   font-size: 12.4px;

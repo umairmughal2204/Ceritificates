@@ -477,7 +477,7 @@ html.issuer-export-brand .brand__logo {
 	border-left: 0.35mm solid var(--line);
 	border-right: 0.35mm solid var(--line);
 	border-bottom: 0.35mm solid var(--line);
-	
+	height: 6.9mm;
 }
 
 .results-summary__total {
@@ -485,7 +485,7 @@ html.issuer-export-brand .brand__logo {
 	border-bottom: 0.35mm solid var(--line);
 	background: #dcdcdc;
 	padding: 0.7mm 1mm 0;
-	font-size: 3.2mm;
+	font-size: 3.9mm;
 	font-weight: 700;
 	line-height: 1.05;
 	text-align: center;
