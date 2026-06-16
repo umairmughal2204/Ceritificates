@@ -94,7 +94,9 @@
 							</div>
 							<div class="mini-field mini-field--signature">
 								<div class="mini-field__label">Signature:</div>
-								<div class="mini-field__value mini-field__value--signature" id="pat-signature">GDemetriou</div>
+								<div class="mini-field__value mini-field__value--signature" id="pat-signature-frame">
+									<img id="pat-signature" alt="Inspector signature" />
+								</div>
 							</div>
 							<div class="mini-field mini-field--date">
 								<div class="mini-field__label">Date:</div>
@@ -212,6 +214,19 @@
 				el.textContent = String(value)
 			}
 
+			function setImageSrc(id, value) {
+				const el = document.getElementById(id)
+				if (!(el instanceof HTMLImageElement)) return
+				if (value === undefined || value === null || value === '') {
+					el.removeAttribute('src')
+					el.style.display = 'none'
+					return
+				}
+				el.src = String(value)
+				el.alt = 'Inspector signature'
+				el.style.display = 'block'
+			}
+
 			function renderPatRows(rows) {
 				const tbody = document.getElementById('pat-results-body')
 				if (!tbody || !Array.isArray(rows) || !rows.length) return
@@ -278,7 +293,7 @@
 				setText('pat-telephone', data.telephoneNumber)
 				setText('pat-inspector-name', data.inspectorName)
 				setText('pat-inspector-position', data.inspectorPosition)
-				setText('pat-signature', data.signature)
+				setImageSrc('pat-signature', data.signature)
 				setText('pat-date', data.certificateDate)
 				setText('pat-equipment', data.testEquipmentUsed)
 				setText('pat-equipment-serial', data.equipmentSerialNumber)

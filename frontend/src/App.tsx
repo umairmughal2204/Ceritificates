@@ -1624,7 +1624,13 @@ function App() {
               <label>Telephone Number<input value={patForm.telephoneNumber} onChange={(e) => updatePatField('telephoneNumber', e.target.value)} /></label>
               <label>Inspector Name<input value={patForm.inspectorName} onChange={(e) => updatePatField('inspectorName', e.target.value)} /></label>
               <label>Inspector Position<input value={patForm.inspectorPosition} onChange={(e) => updatePatField('inspectorPosition', e.target.value)} /></label>
-              <label>Signature<input value={patForm.signature} onChange={(e) => updatePatField('signature', e.target.value)} /></label>
+              <FormImageUpload
+                wide
+                label="Signature image"
+                value={patForm.signature}
+                onChange={(next) => updatePatField('signature', next)}
+                cropAspectRatio={3 / 1}
+              />
               <label>Test Equipment Used<input value={patForm.testEquipmentUsed} onChange={(e) => updatePatField('testEquipmentUsed', e.target.value)} /></label>
               <label>Equipment Serial Number<input value={patForm.equipmentSerialNumber} onChange={(e) => updatePatField('equipmentSerialNumber', e.target.value)} /></label>
             </div>

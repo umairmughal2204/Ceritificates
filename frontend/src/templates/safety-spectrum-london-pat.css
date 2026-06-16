@@ -357,10 +357,23 @@ html.issuer-export-brand .brand__logo {
 }
 
 .mini-field__value--signature {
-	font-family: "Brush Script MT", "Segoe Script", cursive;
-	font-size: 5.4mm;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	height: 5.8mm;
+	min-height: 5.8mm;
+	padding: 0.2mm 1.1mm;
 	text-align: center;
 	color: #444444;
+}
+
+.mini-field__value--signature img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
 }
 
 .block--results {
