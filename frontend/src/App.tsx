@@ -42,6 +42,7 @@ type ElcFormData = {
 type FscMark = 'tick' | 'na' | 'blank'
 
 type FscFormData = {
+
   metaDate: string
   metaReference: string
   clientName: string
@@ -1391,7 +1392,14 @@ function App() {
               <label>Name<input value={fscForm.contractorName} onChange={(e) => updateFscField('contractorName', e.target.value)} /></label>
               <label>Position<input value={fscForm.contractorPosition} onChange={(e) => updateFscField('contractorPosition', e.target.value)} /></label>
               <label>Cert Date<input type="date" value={fscForm.certDate} onChange={(e) => updateFscField('certDate', e.target.value)} /></label>
-              <label>Signature<input value={fscForm.signature} onChange={(e) => updateFscField('signature', e.target.value)} /></label>
+              <FormImageUpload
+                wide
+                label="Signature image"
+                value={fscForm.signature}
+                onChange={(next) => updateFscField('signature', next)}
+                cropAspectRatio={3 / 1}
+              />
+
               <label className="wide">Variations<input value={fscForm.variations} onChange={(e) => updateFscField('variations', e.target.value)} /></label>
               <label className="wide">Related Reference Document 1<input value={fscForm.refDoc1} onChange={(e) => updateFscField('refDoc1', e.target.value)} /></label>
               <label className="wide">Related Reference Document 2<input value={fscForm.refDoc2} onChange={(e) => updateFscField('refDoc2', e.target.value)} /></label>

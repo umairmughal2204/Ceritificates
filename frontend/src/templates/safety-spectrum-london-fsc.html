@@ -113,11 +113,15 @@
 										<div class="kv__k">Date</div>
 										<div class="kv__v kv__v--short" id="fsc-cert-date">13/04/2026</div>
 									</div>
-									<div class="kv kv--sig">
-										<div class="kv__k">Signature</div>
-										<div class="kv__v kv__v--sig" id="fsc-signature">Jh</div>
+
+										<div class="kv kv--sig">
+											<div class="kv__k">Signature</div>
+											<div class="kv__v kv__v--sig">
+												<img id="fsc-signature-img" alt="" />
+											</div>
+										</div>
 									</div>
-								</div>
+
 							</div>
 							<p class="legal-small">
 								I/we being the competent person(s) responsible (as indicated by my/our signatures below) for the servicing of the fire detection and fire alarm system, particulars of which are set out below CERTIFY that the said work for which I/we have been responsible complies to the best of my/our knowledge and belief with the recommendations of BS 5839 quarterly inspection of vented batteries/periodic inspection and test inspection and test over a 12 month period (delete as applicable), except for the variations, if any, stated in this certificate.
@@ -594,7 +598,25 @@
 				setText('fsc-name', data.contractorName)
 				setText('fsc-position', data.contractorPosition)
 				setText('fsc-cert-date', data.certDate)
-				setText('fsc-signature', data.signature)
+
+
+				const sigImg = document.getElementById('fsc-signature-img')
+					if (sigImg instanceof HTMLImageElement) {
+						if (data.signature) {
+							sigImg.src = data.signature
+							sigImg.style.display = 'block'
+						} else {
+							sigImg.src = ''
+							sigImg.style.display = 'none'
+						}
+
+
+							// Give the image a microtask chance to update; html2canvas will capture after page render.
+							// (We avoid async/await here because applyFscData is not async.)
+
+						}
+
+
 				setText('fsc-variations', data.variations)
 				setText('fsc-ref-doc-1', data.refDoc1)
 				setText('fsc-ref-doc-2', data.refDoc2)
