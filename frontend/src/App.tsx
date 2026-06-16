@@ -1741,7 +1741,13 @@ function App() {
                 <textarea rows={3} value={fetForm.contractorAddress} onChange={(e) => updateFetField('contractorAddress', e.target.value)} />
               </label>
               <label>Contractor Name<input value={fetForm.contractorName} onChange={(e) => updateFetField('contractorName', e.target.value)} /></label>
-              <label>Signature<input value={fetForm.signature} onChange={(e) => updateFetField('signature', e.target.value)} /></label>
+              <FormImageUpload
+                wide
+                label="Signature image"
+                value={fetForm.signature}
+                onChange={(next) => updateFetField('signature', next)}
+                cropAspectRatio={3 / 1}
+              />
               <label>Position<input value={fetForm.contractorPosition} onChange={(e) => updateFetField('contractorPosition', e.target.value)} /></label>
               <label>Date<input type="date" value={fetForm.contractorDate} onChange={(e) => updateFetField('contractorDate', e.target.value)} /></label>
             </div>

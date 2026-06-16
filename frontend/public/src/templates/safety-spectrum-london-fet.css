@@ -78,6 +78,35 @@ body {
 	object-fit: cover;
 }
 
+.cover-page__premises {
+	position: absolute;
+	left: 32%;
+	top: 38%;
+	transform: translate(-50%, -50%);
+	width: min(126mm, calc(100% - 24mm));
+	padding: 6mm 8mm;
+	text-align: center;
+	z-index: 15;
+	border-radius: 2mm;
+}
+
+.cover-page__premises-name {
+	font-size: 10mm;
+	font-weight: 700;
+	line-height: 1.06;
+	letter-spacing: 0.2mm;
+	text-transform: uppercase;
+	word-break: break-word;
+}
+
+.cover-page__premises-address {
+	margin-top: 2.5mm;
+	font-size: 5.5mm;
+	font-weight: 700;
+	line-height: 1.18;
+	word-break: break-word;
+}
+
 /* ─── Cover-page brand (logo + name) ───────────────────────────────────────
    page-1.png no longer has a baked logo. Render a real brand block at the
    original top-left location, with a fixed logo box so any issuer logo fits.
@@ -444,10 +473,27 @@ html.issuer-export-brand .report-head__brand {
 }
 
 .signature-grid__value--script {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	width: 100%;
+	height: 8.5mm;
+	min-height: 8.5mm;
+	padding: 1mm 2mm;
 	text-align: center;
 	font-family: inherit;
 	font-size: 4.1mm;
 	color: inherit;
+}
+
+
+.signature-grid__value--script img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
 }
 
 .important-note {

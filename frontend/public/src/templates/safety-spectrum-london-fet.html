@@ -14,6 +14,10 @@
 		<main class="document" aria-label="Portable Fire Extinguisher Report">
 			<section class="page cover-page">
 				<img class="cover-page__image" src="/src/assets/page-1.png" alt="Portable Fire Extinguisher Report cover page" />
+				<div class="cover-page__premises" aria-label="Premises details">
+					<div class="cover-page__premises-name" id="fet-cover-premises-name">GLETS</div>
+					<div class="cover-page__premises-address" id="fet-cover-premises-address">Basement, F318 Coldharbour Lne, Lambeth, SW9 8SE</div>
+				</div>
 				<div class="cover-brand">
 					<div class="cover-brand__logo-shell">
 						<img class="cover-brand__logo static-logo-overlay" src="/src/assets/logo.png" alt="Safety Spectrum London logo" />
@@ -85,7 +89,9 @@
 							</div>
 							<div class="signature-grid__item">
 								<div class="signature-grid__label">Signature</div>
-								<div class="signature-grid__value signature-grid__value--script" id="fet-signature"></div>
+								<div class="signature-grid__value signature-grid__value--script" id="fet-signature-frame">
+									<img id="fet-signature" alt="Contractor signature" />
+								</div>
 							</div>
 							<div class="signature-grid__item">
 								<div class="signature-grid__label">Position</div>
@@ -177,6 +183,19 @@
 				el.innerHTML = String(value)
 			}
 
+			function setImageSrc(id, value) {
+				const el = document.getElementById(id)
+				if (!(el instanceof HTMLImageElement)) return
+				if (value === undefined || value === null || value === '') {
+					el.removeAttribute('src')
+					el.style.display = 'none'
+					return
+				}
+				el.src = String(value)
+				el.alt = 'Contractor signature'
+				el.style.display = 'block'
+			}
+
 			function renderRows(rows) {
 				const body = document.getElementById('fet-ext-body')
 				if (!body || !Array.isArray(rows) || !rows.length) return
@@ -241,13 +260,15 @@
 				setText('fet-reference', data.reference)
 				setText('fet-premises-name', data.premisesName)
 				setText('fet-premises-address', data.premisesAddress)
+				setText('fet-cover-premises-name', data.premisesName)
+				setText('fet-cover-premises-address', data.premisesAddress)
 				setText('fet-comments', data.comments)
 				setText('fet-trading-title', data.tradingTitle)
 				const brandTitle = document.querySelector('.report-head__title > div:first-child')
 				if (brandTitle) brandTitle.textContent = data.tradingTitle || brandTitle.textContent
 				setHtml('fet-contractor-address', String(data.contractorAddress || '').replace(/\n/g, '<br />'))
 				setText('fet-contractor-name', data.contractorName)
-				setText('fet-signature', data.signature)
+				setImageSrc('fet-signature', data.signature)
 				setText('fet-contractor-position', data.contractorPosition)
 				setText('fet-contractor-date', data.contractorDate)
 				renderRows(data.rows)
