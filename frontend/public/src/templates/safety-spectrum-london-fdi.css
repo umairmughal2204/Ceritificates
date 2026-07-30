@@ -113,14 +113,14 @@ body {
 }
 
 .page-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(152deg, transparent 0 23%, rgba(209, 209, 209, 0.22) 23.2% 23.8%, transparent 24%),
-    linear-gradient(28deg, transparent 0 54%, rgba(208, 208, 208, 0.18) 54.2% 54.7%, transparent 55%),
-    linear-gradient(116deg, transparent 0 66%, rgba(212, 212, 212, 0.16) 66.1% 66.6%, transparent 66.8%),
-    linear-gradient(white, white);
-  pointer-events: none;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  background-image: url("../assets/fdi_background.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  pointer-events: none !important;
 }
 
 .report-page > * {
