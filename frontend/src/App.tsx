@@ -318,34 +318,38 @@ const monthMap: Record<string, string> = {
 
 const toCalendarValue = (value: string) => {
   if (!value) return ''
-  const isoMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
-  if (isoMatch) return value
-  const longMatch = value.match(/^(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+)\s+(\d{4})$/)
+  const isoMatch = value.match(/^(\d{4,})-(\d{2})-(\d{2})$/)
+  if (isoMatch) {
+    const [, y, m, d] = isoMatch
+    return `${y.slice(0, 4)}-${m}-${d}`
+  }
+  const longMatch = value.match(/^(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+)\s+(\d{4,})$/)
   if (longMatch) {
     const [, d, monthName, y] = longMatch
     const mm = monthMap[monthName.toLowerCase()]
     if (!mm) return ''
-    return `${y}-${mm}-${String(d).padStart(2, '0')}`
+    return `${y.slice(0, 4)}-${mm}-${String(d).padStart(2, '0')}`
   }
   return ''
 }
 
 const fromCalendarValue = (value: string) => {
-  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  const match = value.match(/^(\d{4,})-(\d{2})-(\d{2})$/)
   if (!match) return value
   const [, y, m, d] = match
+  const cleanY = y.slice(0, 4)
   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   const month = monthNames[Number(m) - 1] ?? m
-  return `${Number(d)} ${month} ${y}`
+  return `${Number(d)} ${month} ${cleanY}`
 }
 
 const toPdfDate = (value: string) => {
-  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  const match = value.match(/^(\d{4,})-(\d{2})-(\d{2})$/)
   if (!match) {
     return value
   }
   const [, yyyy, mm, dd] = match
-  return `${dd}/${mm}/${yyyy}`
+  return `${dd}/${mm}/${yyyy.slice(0, 4)}`
 }
 
 const defaultElcForm: ElcFormData = {
